@@ -1,3 +1,4 @@
+Controllers\Home.class
 Models\Detail_Order.class
 Models\Orders.class
 Models\UserAccount.class
