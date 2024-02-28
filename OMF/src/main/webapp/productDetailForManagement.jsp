@@ -1,7 +1,8 @@
 <%-- 
     Document   : productManagement
-    Created on : Oct 23, 2024, 10:31:00 AM
-    Author     : namti
+    Created on : Feb 23, 2024, 10:31:00 AM
+    Author     : Huy
+${listProduct.images[0]}
 --%>
 
 
@@ -67,6 +68,52 @@
             color: white;
             background: #5eb5ff;
         }
+        .img-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px; /* Điều chỉnh kích thước khung hình nếu cần */
+        }
+        .product-button-word:hover{
+            background: #5eb5ff;
+        }
+        #product-img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .button-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .button-footer button {
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+        .product-imgs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .large-img {
+            width: 100%; /* Điều chỉnh kích thước hình ảnh lớn */
+            max-height: 400px; /* Điều chỉnh kích thước hình ảnh lớn */
+        }
+
+        .thumbnail-images {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Điều chỉnh khoảng cách giữa các hình ảnh nhỏ */
+            overflow: auto;
+        }
+
+        .thumbnail {
+            width: 60px; /* Điều chỉnh kích thước hình ảnh nhỏ */
+            cursor: pointer;
+        }
     </style>
 
     <body>
@@ -104,7 +151,6 @@
                             <a href="/homeManagement/customerManagement" class="dropdown-item">Customer</a>
                             <a href="/homeManagement/staffManagement" class="dropdown-item">Staff</a>
                             <a href="/homeManagement/voucherManagement" class="dropdown-item">Voucher</a>
-                            <a href="/orderManagement" class="dropdown-item">Order</a>
                         </div>
                     </div>
                 </div>
@@ -146,78 +192,139 @@
                     <div class="col-12">
                         <div class="bg-light rounded h-100 p-4">
                             <div class="in-brand-management" style="background-color: white; padding: 15px; border-radius: 20px;">
-                                <h6 class="mb-4">PRODUCT MANAGEMENT</h6>
-                                <div class="d-flex justify-content-end">
-                                    <button class="product-button float-end" id="brand-button">
-                                        <a href="addNewProduct.jsp" class="product-button-word">Add new product</a>
-                                    </button>
-                                    <p>${msg}</p>
+                                <h6 class="mb-4">PRODUCT DETAIL MANAGEMENT</h6>
+                                <!-- Card Left Start -->
+                                <div class="product-imgs">
+                                    <div class="product-name">${listProduct.product_name}</div>
+                                    <div class="img-display">
+                                        <img id="product-img" src="/images/${listProduct.images[0]}" class="large-img">
+                                    </div>
+                                    <div class="thumbnail-images">
+                                        <c:forEach items="${listProduct.images}" var="image">
+                                            <img src="/images/${image}" class="thumbnail">
+                                        </c:forEach>
+                                    </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Food's ID</th>
-                                                <th>Food's Name</th>
-                                                <th>Food's Price</th>
-                                                <th>Category</th>
-                                                <th>Food's Quantity</th>
-                                                <th>Discount</th>     
-                                                <th>Status</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach items="${listProduct}" var="pro">
-                                                <tr>
-                                                    <td>${pro.product_id}</td>
-                                                    <td>${pro.product_name}</td>
-                                                    <td>$${pro.product_price}</td>
-                                                    <td>
-                                                        <c:forEach items="${listBrand}" var="brand">
-                                                            <c:if test="${pro.brand_id==brand.brand_id}">
-                                                                ${brand.brand_name}
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </td>
-                                                    <td>
-                                                        <c:forEach items="${listCategory}" var="cate">
-                                                            <c:if test="${pro.category_id==cate.category_id}">
-                                                                ${cate.category_name}
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </td>
-                                                    <td>${pro.product_quantity}</td>
-                                                    <td>${pro.discount}%</td>
-                                                    <td>${pro.status}</td>
-                                                    <td class="view-detail"><a href="productDetailForManagement.jsp?productId=${pro.product_id}">View Detail</a></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+
+                                <!-- Cart Left End -->
+
+                                <!-- Card right start -->
+                                <div class = "product-content" style="margin: 30px 60px;">
+                                    <c:set var="discountPrice" value="${listProduct.product_price-((listProduct.discount/100) * listProduct.product_price)}"/>
+                                    <fmt:formatNumber value="${discountPrice}" type="number" pattern="0.00" var="formattedPrice" />
+                                    <h2 class="product-title" style="font-weight: bold;">${listProduct.product_name}</h2>
+                                    <div class="product-price">
+                                        Price: $${listProduct.product_price}
+                                        <br>
+                                        Price after sale ${listProduct.discount}%: $${formattedPrice}
+                                    </div>
+
+                                    <div class="product-detail">
+                                        <h2><p>Detail</p></h2>
+                                        <ul>
+                                            <li>Available: <span> "${listProduct.product_quantity}" products remaining </span></li>
+                                            <li>Category: <span> "${listCate.category_name}" </span></li>
+                                         
+                                        </ul>
+                                    </div>
+                                    <div style="margin-right: 90%">
+                                        <button class="product-button float-end product-button-word" name="btnDeleteProduct" style="color: white">
+                                            <a href="editProduct.jsp?productId=${listProduct.product_id}" class="product-button-word">Edit product</a>
+                                        </button>                                        
+                                    </div>
                                 </div>
+                                <!-- Cart right end -->
+                                <!-- Footer start-->
+                                <div class="footer" style="margin-top: 200px">
+                                    <div class="button-footer" style="display: flex; align-items: center;">
+                                        <button class="product-button float-end product-button-word" id="button1">Description</button>
+                                    </div>
+
+                                    <div class="content" id="description-content">
+                                        <h2 style="margin-top: 20px">Description</h2>
+                                        <p contentEditable="false">${listProduct.product_description}</p>
+                                    </div>
+                                </div>
+                                <!-- Footer end-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Table End -->
-
-
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-            </div>
-            <!-- Footer End -->
         </div>
-        <!-- Content End -->
-
+        <div class="container-fluid pt-4 px-4" style="background-color: white;"></div>
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries -->
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+            var descriptionContent = document.getElementById("description-content");
+            var manufacturerContent = document.getElementById("manufacturer-content");
+            var button1 = document.getElementById("button1");
+            var button2 = document.getElementById("button2");
+
+
+            descriptionContent.style.display = "none";
+            manufacturerContent.style.display = "none";
+
+            button1.addEventListener("click", function () {
+                if (descriptionContent.style.display === "none" || descriptionContent.style.display === "") {
+                    descriptionContent.style.display = "block";
+                    manufacturerContent.style.display = "none";
+                } else {
+                    descriptionContent.style.display = "none";
+                }
+            });
+
+            button2.addEventListener("click", function () {
+                if (manufacturerContent.style.display === "none" || manufacturerContent.style.display === "") {
+                    manufacturerContent.style.display = "block";
+                    descriptionContent.style.display = "none";
+                } else {
+                    manufacturerContent.style.display = "none";
+                }
+            });
+
+            let currentIndex = 0;
+            const images = document.querySelectorAll('.thumbnail');
+            const largeImage = document.querySelector('.large-img');
+
+            function showImage(index) {
+                if (index < 0) {
+                    currentIndex = images.length - 1;
+                } else if (index >= images.length) {
+                    currentIndex = 0;
+                }
+
+                largeImage.src = images[currentIndex].src;
+            }
+
+            function nextImage() {
+                currentIndex++;
+                showImage(currentIndex);
+            }
+
+            function prevImage() {
+                currentIndex--;
+                showImage(currentIndex);
+            }
+
+            setInterval(nextImage, 3000); // Tự động chuyển hình mỗi 5 giây
+
+            images.forEach((image, index) => {
+                image.addEventListener('click', () => {
+                    currentIndex = index;
+                    showImage(currentIndex);
+                });
+            });
+    </script>
+
+    <!-- JavaScript Libraries -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/lib/chart/chart.min.js"></script>
     <script src="/lib/easing/easing.min.js"></script>
@@ -231,5 +338,4 @@
     <script src="/js/main.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </body>
-
 </html>
