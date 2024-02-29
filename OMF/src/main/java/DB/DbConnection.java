@@ -7,6 +7,8 @@ package DB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,13 +16,18 @@ import java.sql.SQLException;
  */
 public class DbConnection {
 
-    private static Connection conn = null;
+    private static Connection conn;
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        Connection conn = DriverManager.getConnection("jdbc:sqlserver:DESKTOP-MA7UCJO\\SQLEXPRESS:1433;"
-                + "databaseName=Gr5_Project;user=sa;password=1234;"
-                + "encrypt=true;trustServerCertificate=true;");
+    public static Connection getConnection() {
+
+        try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-3GSUN9K\\SQLEXPRESS:1433;databaseName=Gr5_Project;user=sa;password=tanhuykg001;;encrypt=true;trustServerCertificate=true;");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return conn;
     }
 }
