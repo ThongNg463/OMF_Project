@@ -1,22 +1,19 @@
-<%-- 
-    Document   : productManagement
-    Created on : Oct 23, 2024, 10:31:00 AM
-    Author     : namti
---%>
-
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="Models.Products" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8">
         <title>Product Management</title>
+        <!-- Include your CSS and JavaScript files here -->
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+eq6f4zffFz6l5r5w2oZKfObw5urpE4Ehnmz5b5BXzgf8Ud" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+              integrity="sha384-KyZXEAg3QhqLMpG8r+eq6f4zffFz6l5r5w2oZKfObw5urpE4Ehnmz5b5BXzgf8Ud" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <link href="/img/favicon.ico" rel="icon">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +25,7 @@
         <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
         <link href="/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,28 +41,39 @@
     </head>
 
     <style>
-        .bg-light{
+        .bg-light {
             background: #daecff;
         }
-        .product-button-word:hover{
+
+        .product-button-word:hover {
             color: white;
         }
+
         #brand-button {
             margin-bottom: 15px;
-            transition: all 0.3s; /* Thời gian chuyển tiếp khi hover (0.3 giây) */
+            transition: all 0.3s;
         }
 
         #brand-button:hover {
-            background-color: #5eb5ff; /* Màu nền khi hover */
-            transform: scale(0.95); /* Thu nhỏ nút khi hover (90% kích thước gốc) */
+            background-color: #5eb5ff;
+            transform: scale(0.95);
         }
-        .dropdown-item{
+
+        .dropdown-item {
             color: black;
             background: white;
         }
-        .dropdown-item:hover{
+
+        .dropdown-item:hover {
             color: white;
             background: #5eb5ff;
+        }
+
+        /* Additional styling from the old JSP */
+        .in-brand-management {
+            background-color: white;
+            padding: 15px;
+            border-radius: 20px;
         }
     </style>
 
@@ -79,7 +87,9 @@
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
                         <i style="color: black;" class="fas fa-user-tie fa-lg"></i>
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0">
@@ -97,9 +107,11 @@
                 <div class="navbar-nav w-100 bg-light">
                     <a href="homeManagement.jsp" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Manager</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i
+                                class="fa fa-laptop me-2"></i>Manager</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="productManagement.jsp" class="dropdown-item active">Product</a>
+                            <a href="/OMF/productManagement" class="dropdown-item active">Product</a>
+                            <a href="/homeManagement/brandManagement" class="dropdown-item">Brand</a>
                             <a href="/homeManagement/categoryManagement" class="dropdown-item">Category</a>
                             <a href="/homeManagement/customerManagement" class="dropdown-item">Customer</a>
                             <a href="/homeManagement/staffManagement" class="dropdown-item">Staff</a>
@@ -130,7 +142,7 @@
                             <i class="fas fa-user-tie fa-lg"></i>
                             <span class="d-none d-lg-inline-flex">${username}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-white rounded-0 rounded-bottom m-0" >
+                        <div class="dropdown-menu dropdown-menu-end bg-white rounded-0 rounded-bottom m-0">
                             <a href="/account/managerProfile" class="dropdown-item">My Profile</a>
                             <a href="/user/logout" class="dropdown-item">Log Out</a>
                         </div>
@@ -139,82 +151,56 @@
             </nav>
             <!-- Navbar End -->
 
-
             <!-- Table Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-12">
-                        <div class="bg-light rounded h-100 p-4">
-                            <div class="in-brand-management" style="background-color: white; padding: 15px; border-radius: 20px;">
-                                <h6 class="mb-4">PRODUCT MANAGEMENT</h6>
-                                <div class="d-flex justify-content-end">
-                                    <button class="product-button float-end" id="brand-button">
-                                        <a href="addNewProduct.jsp" class="product-button-word">Add new product</a>
-                                    </button>
-                                    <p>${msg}</p>
-                                </div>
-                                <div class="table-responsive">
-                                    <table id="example" class="display" style="width:100%">
-                                        <thead>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-30">
+                    <div class="bg-light rounded p-4 text-center">
+                        <div class="in-brand-management">
+                            <h6 class="mb-4">PRODUCT MANAGEMENT</h6>
+                            <div class="d-flex justify-content-end">
+                                <button class="product-button float-end" id="brand-button">
+                                    <a href="/OMF/addProduct" class="product-button-word">Add new product</a>
+                                </button>
+                                <p>${msg}</p>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="example" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Product ID</th>
+                                            <th>Name</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${products}" var="product">
                                             <tr>
-                                                <th>Food's ID</th>
-                                                <th>Food's Name</th>
-                                                <th>Food's Price</th>
-                                                <th>Category</th>
-                                                <th>Food's Quantity</th>
-                                                <th>Discount</th>     
-                                                <th>Status</th>
-                                                <th></th>
+                                                <td>${product.proID}</td>
+                                                <td>${product.proName}</td>
+                                                <td>${product.proStock}</td>
+                                                <td>${product.proPrice}</td>
+                                                <td>${product.proDes}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach items="${listProduct}" var="pro">
-                                                <tr>
-                                                    <td>${pro.product_id}</td>
-                                                    <td>${pro.product_name}</td>
-                                                    <td>$${pro.product_price}</td>
-                                                    <td>
-                                                        <c:forEach items="${listBrand}" var="brand">
-                                                            <c:if test="${pro.brand_id==brand.brand_id}">
-                                                                ${brand.brand_name}
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </td>
-                                                    <td>
-                                                        <c:forEach items="${listCategory}" var="cate">
-                                                            <c:if test="${pro.category_id==cate.category_id}">
-                                                                ${cate.category_name}
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </td>
-                                                    <td>${pro.product_quantity}</td>
-                                                    <td>${pro.discount}%</td>
-                                                    <td>${pro.status}</td>
-                                                    <td class="view-detail"><a href="productDetailForManagement.jsp?productId=${pro.product_id}">View Detail</a></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Table End -->
-
-
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-            </div>
-            <!-- Footer End -->
         </div>
-        <!-- Content End -->
+        <!-- Table End -->
 
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Footer and other elements go here -->
     </div>
+    <!-- Content End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

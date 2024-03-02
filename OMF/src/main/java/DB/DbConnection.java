@@ -16,18 +16,18 @@ import java.util.logging.Logger;
  */
 public class DbConnection {
 
-    private static Connection conn;
+    private static Connection connection;
 
     public static Connection getConnection() {
 
         try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-3GSUN9K\\SQLEXPRESS:1433;databaseName=Gr5_Project;user=sa;password=tanhuykg001;;encrypt=true;trustServerCertificate=true;");
+            connection = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-3GSUN9K\\SQLEXPRESS:1433;databaseName=Gr5_Project;user=sa;password=tanhuykg001;;encrypt=true;trustServerCertificate=true;");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return conn;
+        return connection;
     }
 }

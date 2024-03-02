@@ -3,13 +3,37 @@
     <welcome-file-list>
         <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>
+    <!-- Define the Home servlet -->
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>Controllers.Home</servlet-class>
     </servlet>
+    <!-- Map the Home servlet to a URL pattern -->
+    <servlet>
+        <servlet-name>managerController</servlet-name>
+        <servlet-class>Controllers.managerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <!-- Define the productController servlet -->
+    <servlet>
+        <servlet-name>ProductController</servlet-name>
+        <servlet-class>Controllers.ProductController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductController</servlet-name>
+        <url-pattern>/productManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductController</servlet-name>
+        <url-pattern>/addProduct</url-pattern>
+    </servlet-mapping>
+    <!-- Define other servlets and mappings if needed -->
+    <servlet-mapping>
+        <servlet-name>managerController</servlet-name>
+        <url-pattern>/managerController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

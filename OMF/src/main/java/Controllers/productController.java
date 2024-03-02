@@ -1,69 +1,71 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controllers;
 
-import DAOs.productDAO;
-import Models.Products;
-import java.io.IOException;
-import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import Models.Products;
+import DAOs.ProductDAO;
 
-public class productController extends HttpServlet {
+@WebServlet("/ProductController")
+public class ProductController extends HttpServlet {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        // Process request logic here if needed
+    private static final long serialVersionUID = 1L;
+    private ProductDAO productDAO;
+
+    public void init() {
+        productDAO = new ProductDAO();
     }
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = request.getRequestURI();
-
-        if (path.endsWith("/product/productList")) {
-            String type = request.getParameter("type");
-            int minPrice = Integer.parseInt(request.getParameter("minPrice"));
-            int maxPrice = Integer.parseInt(request.getParameter("maxPrice"));
-            String searchName = request.getParameter("searchName");
-
-            productDAO dao = new productDAO(); // Adjust DAO initialization based on your DAO class name
-            List<Products> productList;
-
-            if (type != null && !type.isEmpty()) {
-                productList = dao.getProductByType(type);
-            } else if (searchName != null && !searchName.isEmpty()) {
-                productList = dao.getProductByName(searchName);
-            } else {
-                productList = dao.getAllProducts();
-            }
-
-            request.setAttribute("productList", productList);
-            request.getRequestDispatcher("/shopList.jsp").forward(request, response);
-        } else if (path.endsWith("/product/productDetail")) {
-            String productId = request.getParameter("productId");
-
-            productDAO dao = new productDAO(); // Adjust DAO initialization based on your DAO class name
-            Products product = dao.getProductDetail(productId);
-
-            request.setAttribute("product", product);
-            request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
+        String action = request.getServletPath();
+        if ("/addProduct".equals(action)) {
+            // Forward to the AddNewproduct.jsp page
+            request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+        } else {
+            listProducts(request, response);
         }
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        addProduct(request, response);
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
+    private void listProducts(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Products> products = productDAO.getAllProducts();
+        request.setAttribute("products", products);
+        request.getRequestDispatcher("productManagement.jsp").forward(request, response);
+    }
+
+    private void addProduct(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Get parameters from the form
+        String ProID = request.getParameter("ProID");
+        String ProName = request.getParameter("ProName");
+        int ProStock = Integer.parseInt(request.getParameter("ProStock"));
+        String ProPrice = request.getParameter("ProPrice");
+        String ProDes = request.getParameter("ProDes");
+        String ProType = request.getParameter("ProType");
+        String ProPic = request.getParameter("ProPic");
+
+        // Create a new product object
+        Products newProduct = new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType);
+
+        // Call the DAO method to add the product
+        boolean success = productDAO.addNewProduct(newProduct);
+
+        if (success) {
+            // Redirect to a success page or display a success message
+            response.sendRedirect("success.jsp");
+        } else {
+            // Redirect to an error page or display an error message
+            response.sendRedirect("error.jsp");
+        }
     }
 }
