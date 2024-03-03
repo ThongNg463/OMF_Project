@@ -30,10 +30,9 @@
         <servlet-name>ProductController</servlet-name>
         <url-pattern>/addProduct</url-pattern>
     </servlet-mapping>
-    <!-- Define other servlets and mappings if needed -->
     <servlet-mapping>
-        <servlet-name>managerController</servlet-name>
-        <url-pattern>/managerController</url-pattern>
+        <servlet-name>ProductController</servlet-name>
+        <url-pattern>/updateProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

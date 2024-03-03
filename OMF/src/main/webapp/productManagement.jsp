@@ -173,6 +173,9 @@
                                             <th>Stock</th>
                                             <th>Price</th>
                                             <th>Description</th>
+                                            <th>Product Image</th>
+                                            <th>Product Type</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -183,6 +186,17 @@
                                                 <td>${product.proStock}</td>
                                                 <td>${product.proPrice}</td>
                                                 <td>${product.proDes}</td>
+                                                <td>${product.proPic}</td>
+                                                <td>${product.proType}</td>
+                                                <td>
+                                                    <a href="/OMF/updateProduct?productId=${product.proID}" class="btn btn-primary">Update</a>
+                                                    <!-- Delete form -->
+                                                    <form id="delete-form-${product.proID}" method="post" action="ProductController?action=deleteProduct">
+                                                        <input type="hidden" name="productId" value="${product.proID}">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -192,6 +206,8 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
         <!-- Table End -->
 

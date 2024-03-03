@@ -26,6 +26,13 @@ public class ProductController extends HttpServlet {
         if ("/addProduct".equals(action)) {
             // Forward to the AddNewproduct.jsp page
             request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+
+        } else if ("/updateProduct".equals(action)) {
+            String productId = request.getParameter("productId");
+            Products product = productDAO.getProductById(productId);
+            request.setAttribute("product", product);
+            request.getRequestDispatcher("updateProduct.jsp").forward(request, response);
+
         } else {
             listProducts(request, response);
         }
@@ -33,7 +40,18 @@ public class ProductController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        addProduct(request, response);
+        String action = request.getParameter("action"); // Assuming you pass action as a parameter from the form
+
+        if ("addProduct".equals(action)) {
+            addProduct(request, response);
+        } else if ("updateProduct".equals(action)) {
+            updateProduct(request, response);
+        } else if ("deleteProduct".equals(action)) {
+            deleteProduct(request, response);
+        } else {
+            // Handle other actions or provide a default behavior
+            response.sendRedirect("erroror.jsp");
+        }
     }
 
     private void listProducts(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +80,54 @@ public class ProductController extends HttpServlet {
 
         if (success) {
             // Redirect to a success page or display a success message
-            response.sendRedirect("success.jsp");
+            response.sendRedirect("/OMF/productManagement");
+        } else {
+            // Redirect to an error page or display an error message
+            response.sendRedirect("error.jsp");
+        }
+    }
+
+    private void updateProduct(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Get parameters from the form
+        String ProID = request.getParameter("ProID");
+        String ProName = request.getParameter("ProName");
+        String ProStockStr = request.getParameter("ProStock");
+        int ProStock = 0; // Default value or you can choose another appropriate default
+        if (ProStockStr != null && !ProStockStr.isEmpty()) {
+            ProStock = Integer.parseInt(ProStockStr);
+        }
+        String ProPrice = request.getParameter("ProPrice");
+        String ProDes = request.getParameter("ProDes");
+        String ProType = request.getParameter("ProType");
+        String ProPic = request.getParameter("ProPic");
+
+        // Create a new product object
+        Products updatedProduct = new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType);
+
+        // Call the DAO method to update the product
+        boolean success = productDAO.updateProduct(updatedProduct);
+
+        if (success) {
+            // Redirect to a success page or display a success message
+            response.sendRedirect("/OMF/productManagement");
+        } else {
+            // Redirect to an error page or display an error message
+            response.sendRedirect("error.jsp");
+        }
+    }
+
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Get the product ID to delete
+        String productId = request.getParameter("productId");
+
+        // Call the DAO method to delete the product
+        boolean success = productDAO.deleteProduct(productId);
+
+        if (success) {
+            // Redirect to a success page or display a success message
+            response.sendRedirect("/OMF/productManagement");
         } else {
             // Redirect to an error page or display an error message
             response.sendRedirect("error.jsp");
