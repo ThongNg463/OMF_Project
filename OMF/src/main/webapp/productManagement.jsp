@@ -23,8 +23,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
         <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/style.css" rel="stylesheet">
+        <link href="/OMF/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/OMF/css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
@@ -38,51 +38,52 @@
                 $('#example').DataTable();
             });
         </script>
+        <style>
+            .bg-light {
+                background: #daecff;
+            }
+
+            .product-button-word:hover {
+                color: white;
+            }
+
+            #brand-button {
+                margin-bottom: 15px;
+                transition: all 0.3s;
+            }
+
+            #brand-button:hover {
+                background-color: #5eb5ff;
+                transform: scale(0.95);
+            }
+
+            .dropdown-item {
+                color: black;
+                background: white;
+            }
+
+            .dropdown-item:hover {
+                color: white;
+                background: #5eb5ff;
+            }
+
+            /* Additional styling from the old JSP */
+            .in-brand-management {
+                background-color: white;
+                padding: 15px;
+                border-radius: 20px;
+            }
+        </style>
     </head>
 
-    <style>
-        .bg-light {
-            background: #daecff;
-        }
 
-        .product-button-word:hover {
-            color: white;
-        }
-
-        #brand-button {
-            margin-bottom: 15px;
-            transition: all 0.3s;
-        }
-
-        #brand-button:hover {
-            background-color: #5eb5ff;
-            transform: scale(0.95);
-        }
-
-        .dropdown-item {
-            color: black;
-            background: white;
-        }
-
-        .dropdown-item:hover {
-            color: white;
-            background: #5eb5ff;
-        }
-
-        /* Additional styling from the old JSP */
-        .in-brand-management {
-            background-color: white;
-            padding: 15px;
-            border-radius: 20px;
-        }
-    </style>
 
     <body>
         <!-- Sidebar Start -->
         <div class="sidebar bg-light pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="/homeManagement" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>HOME</h3>
+                    <h3 class="text-primary">HOME</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
