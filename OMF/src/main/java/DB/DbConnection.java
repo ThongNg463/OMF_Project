@@ -31,3 +31,43 @@ public class DbConnection {
         return connection;
     }
 }
+
+/* Cua Thong
+public class DbConnection {
+
+    private static Connection connection;
+
+    public static Connection getConnection() {
+
+        try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connection = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-MA7UCJO\\\\SQLEXPRESS:1433;databaseName=Gr5_Project;user=sa;password=1234;;encrypt=true;trustServerCertificate=true;");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return connection;
+    }
+}
+ */
+
+/* Cua Khoi
+public class DbConnection {
+
+    private static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String DB_URL = "jdbc:sqlserver://KBOOK\\SQLEXPRESS;databaseName=OMF;encrypt=true;trustServerCertificate=true;";
+    private static final String USER = "admin";
+    private static final String PASS = "123456";
+
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName(JDBC_DRIVER);
+            return DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new SQLException("JDBC Driver not found", e);
+        }
+    }
+}
+ */
