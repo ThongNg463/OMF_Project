@@ -25,8 +25,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
         <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/style.css" rel="stylesheet">
+        <link href="/OMF/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/OMF/css/style.css" rel="stylesheet">
     </head>
 
     <style>
@@ -75,7 +75,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Manager</a>
                             <div class="dropdown-menu bg-transparent border-0">
-                                <a href="productManagement.jsp" class="dropdown-item">Product</a>
+                                <a href="/OMF/productManagement" class="dropdown-item">Product</a>
                                 <a href="/homeManagement/categoryManagement" class="dropdown-item">Category</a>
                                 <a href="/homeManagement/customerManagement" class="dropdown-item">Customer</a>
                                 <a href="/homeManagement/staffManagement" class="dropdown-item">Staff</a>
