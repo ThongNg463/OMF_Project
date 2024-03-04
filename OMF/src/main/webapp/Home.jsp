@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@page import="DAOs.ProductDAO"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -246,7 +247,10 @@
             <!-- ============================================-->
             <!-- <section> begin ============================-->
             <section class="py-4 overflow-hidden">
-
+                <%
+                        String sql = proDAO.getAllProducts();
+                        while (rs.next()) {
+                    %>
                 <div class="container">
                     <div class="row h-100">
                         <div class="col-lg-7 mx-auto text-center mt-7 mb-5">
