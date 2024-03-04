@@ -10,10 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author mthon
- */
+/* Cua Huy
 public class DbConnection {
 
     private static Connection connection;
@@ -31,6 +28,7 @@ public class DbConnection {
         return connection;
     }
 }
+ */
 
 /* Cua Thong
 public class DbConnection {
@@ -68,6 +66,26 @@ public class DbConnection {
             e.printStackTrace();
             throw new SQLException("JDBC Driver not found", e);
         }
+    }
+}
+ */
+
+/* Cua Phung
+public class DbConnection {
+
+    private static Connection connection;
+
+    public static Connection getConnection() {
+
+        try {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connection = DriverManager.getConnection("jdbc:sqlserver://TVMP\\SQLEXPRESS:1433;databaseName=Gr5_Project;user=sa;password=1234;;encrypt=true;trustServerCertificate=true;");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return connection;
     }
 }
  */
