@@ -30,7 +30,7 @@ public class DbConnection {
 }
  */
 
-/* Cua Thong
+/** Cua Thong
 public class DbConnection {
 
     private static Connection connection;

@@ -187,7 +187,7 @@
                                                 <td>${product.proStock}</td>
                                                 <td>${product.proPrice}</td>
                                                 <td>${product.proDes}</td>
-                                                <td>${product.proPic}</td>
+                                                <td><img src="${product.proPic}" weight="100x" height="100px" alt="Error"</td>
                                                 <td>${product.proType}</td>
                                                 <td>
                                                     <a href="/OMF/updateProduct?productId=${product.proID}" class="btn btn-primary">Update</a>
