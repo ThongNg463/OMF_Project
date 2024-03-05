@@ -10,7 +10,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Restaurantly</title>
+        <title>OMF</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -89,7 +89,7 @@
         <header id="header" class="fixed-top d-flex align-items-cente">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="/Home">Restaurantly</a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="/Home">OMF</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -503,7 +503,7 @@
                 </div>
             </section><!-- End Gallery Section -->
 
-            <!-- ======= Chefs Section ======= -->
+<!--             ======= Chefs Section ======= 
             <section id="chefs" class="chefs">
                 <div class="container" data-aos="fade-up">
 
@@ -601,7 +601,7 @@
                     </div>
 
                 </div>
-            </section><!-- End Chefs Section -->
+            </section> End Chefs Section -->
 
             <!-- ======= Contact Section ======= -->
             <section id="contact" class="contact">
@@ -641,7 +641,7 @@
                                 <div class="email">
                                     <i class="bi bi-envelope"></i>
                                     <h4>Email:</h4>
-                                    <p>nhom1.fpt@hotmail.com</p>
+                                    <p>nhom5.fpt@hotmail.com</p>
                                 </div>
 
                                 <div class="phone">
@@ -701,7 +701,7 @@
                                     NVC District <br>
                                     FPT University, Can Tho<br><br>
                                     <strong>Phone:</strong> +84 123456789<br>
-                                    <strong>Email:</strong> nhom1.fpt@hotmail.com<br>
+                                    <strong>Email:</strong> nhom5.fpt@hotmail.com<br>
                                 </p>
                                 <div class="social-links mt-3">
                                     <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -750,10 +750,10 @@
 
             <div class="container">
                 <div class="copyright">
-                    &copy; Copyright <strong><span>Nhom 1</span></strong>. All Rights Reserved
+                    &copy; Copyright <strong><span>Nhom 5</span></strong>. All Rights Reserved
                 </div>
                 <div class="credits"> 
-                    Designed by <a href="#">Nhom 1 Mai Dinh</a>
+                    Designed by <a href="#">Nhom 5 Mai Dinh</a>
                 </div>
             </div>
         </footer><!-- End Footer -->
