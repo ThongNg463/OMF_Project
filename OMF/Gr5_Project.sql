@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Detail_Order;
+﻿DROP TABLE IF EXISTS Detail_Order;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS SupplierProducts;
 DROP TABLE IF EXISTS Products;
@@ -98,6 +98,20 @@ CREATE TABLE Detail_Order(
 )
 ALTER TABLE Detail_Order ADD CONSTRAINT Detail_Order_FK1 FOREIGN KEY(OrderID) REFERENCES Orders(OrderID)
 ALTER TABLE Detail_Order ADD CONSTRAINT Detail_Order_FK2 FOREIGN KEY(ProID) REFERENCES Products(ProID)
+
+INSERT INTO Products (ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType)
+VALUES
+('ProID1', 50, 'Cheese Burger', 'https://i.imgur.com/E7VL1YB.jpeg', 'Mô tả sản phẩm A', 3.88, 'Burger'),
+('ProID2', 30, 'Toffe Cake', 'duong_dan_anh_b.jpg', 'Mô tả sản phẩm B', 4.00, 'Cake'),
+('ProID3', 20, 'Dancake', 'duong_dan_anh_c.jpg', 'Mô tả sản phẩm C', 1.99, 'Cake'),
+('ProID4', 10, 'Crispy Sandwitch', 'duong_dan_anh_d.jpg', 'Mô tả sản phẩm D', 3.00, 'Sandwitch'),
+('ProID5', 30, 'Thai Soup', 'https://i.imgur.com/h2SWpzT.jpeg', 'Mô tả sản phẩm B', 2.79, 'Soup'),
+('ProID6', 40, 'Vegetable Pizza', 'https://i.imgur.com/lWOp2dF.jpeg', 'Pizza với đầy đủ rau củ quả tươi ngon', 5.50, 'Pizza'),
+('ProID7', 25, 'Chicken Wings', 'https://i.imgur.com/IgYinbl.png', 'Cánh gà chiên giòn với sốt cay nồng', 4.25, 'Fast Food'),
+('ProID8', 14, 'Beef Steak', 'https://i.imgur.com/jZ46GxA.jpeg', 'Bít tết bò thượng hạng với gia vị đặc biệt', 9.99, 'Steak'),
+('ProID9', 20, 'Salmon Sashimi', 'https://i.imgur.com/52jlEDK.jpeg', 'Sashimi cá hồi tươi ngon, thơm ngậy', 7.89, 'Sushi'),
+('ProID10', 35, 'Mango Smoothie', 'https://i.imgur.com/uQeeoTh.jpeg', 'Sinh tố xoài mát lạnh, ngọt lịm', 2.99, 'Drink');
+
 
 
 insert into Accounts (Username, Password, Role)

@@ -83,7 +83,7 @@
         <div class="sidebar bg-light pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="/homeManagement" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary">HOME</h3>
+                    <a href="Home.jsp"><h3 class="text-primary">HOME</h3></a>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -187,7 +187,7 @@
                                                 <td>${product.proStock}</td>
                                                 <td>${product.proPrice}</td>
                                                 <td>${product.proDes}</td>
-                                                <td>${product.proPic}</td>
+                                                <td><img src="${product.proPic}" weight="100x" height="100px" alt="Error"</td>
                                                 <td>${product.proType}</td>
                                                 <td>
                                                     <a href="/OMF/updateProduct?productId=${product.proID}" class="btn btn-primary">Update</a>
