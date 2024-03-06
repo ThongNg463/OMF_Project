@@ -37,7 +37,7 @@ public class accountDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                a = new account(rs.getString("username"), rs.getString("password"), rs.getString("role"));
+                a = new account(rs.getString("username"), rs.getString("password"), rs.getString("role"), rs.getString("accpic"));
             }
 
         } catch (SQLException ex) {

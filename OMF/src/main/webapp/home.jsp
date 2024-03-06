@@ -13,6 +13,14 @@
         <title>OMF</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <!-- Custom styles for this template -->
+        <link href="/UI/css/sb-admin-2.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this page -->
+        <link href="/UI/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
         <!-- Favicons -->
         <link href="./assets/img/favicon.png" rel="icon">
@@ -38,6 +46,28 @@
     </head>
 
     <body>
+        <%
+            accountDAO AccDAO = new accountDAO();
+            account userAcc = new account();
+
+            String username = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("User".equals(cookie.getName())) {
+                        username = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+
+            boolean isLogin = false;
+
+            if (username != null && !username.isEmpty()) {
+                isLogin = true;
+                userAcc = AccDAO.getAccount(username);
+            }
+        %>
         <!-- ======= Top Bar ======= -->
         <div id="topbar" class="d-flex align-items-center fixed-top">
             <div class="container d-flex justify-content-center justify-content-md-between">
@@ -45,41 +75,6 @@
                     <div>Contact: +84 123456789 |</div> <br>
                     <div>Opening: Mon-Sat: 7AM - 22PM</div>
                 </div>
-                <%
-                    accountDAO AccDAO = new accountDAO();
-                    account userAcc = new account();
-
-                    String username = null;
-                    Cookie[] cookies = request.getCookies();
-                    if (cookies != null) {
-                        for (Cookie cookie : cookies) {
-                            if ("User".equals(cookie.getName())) {
-                                username = cookie.getValue();
-                                break;
-                            }
-                        }
-                    }
-
-                    boolean isLogin = false;
-
-                    if (username != null && !username.isEmpty()) {
-                        isLogin = true;
-                        userAcc = AccDAO.getAccount(username);
-                        // Người dùng đã đăng nhập, hiển thị chào mừng với tên người dùng
-%>
-                <div class="languages d-none d-md-flex align-items-center">
-                    <h4><%= username%> | <a href="/logout" style="text-decoration: none;"> (Sign out)</a></h4>
-                </div>
-                <%
-                } else {
-                    // Người dùng chưa đăng nhập, hiển thị các tùy chọn đăng nhập/đăng ký
-                %>
-                <div class="languages d-none d-md-flex align-items-center">
-                    <h4><a href="/Login">Login</a> | <a href="/signup.jsp">Sign Up</a></h4>
-                </div>
-                <%
-                    }
-                %>
             </div>
 
 
@@ -115,6 +110,36 @@
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
                 <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Order food</a>
+
+                <%
+                    if (isLogin) {
+                %>
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <div class="vr" style="max-height: 100%;"></div>
+                        <li class="dropdown">
+                            <a href="#">
+                                    <span style="font-family: sans-serif; font-size: 25px" ><%= username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccpic()%>"></span>
+                            </a>
+                            <ul>
+                                <li><a href="#"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>
+                                <li><a href="#"><span><i class="fas fa-cogs" style="margin-right: 10px"></i>Settings</span></a></li>
+                                <li><hr class="hr hr-blurry" style="color: grey" /></li>
+                                <li><a href="/logout"><span><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i>Log out</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <%
+                } else {
+                    // Người dùng chưa đăng nhập, hiển thị các tùy chọn đăng nhập/đăng ký
+                %>
+                <div class="languages d-none d-md-flex align-items-center">
+                    <h4><a href="/Login">Login</a> | <a href="/signup.jsp">Sign Up</a></h4>
+                </div>
+                <%
+                    }
+                %>
 
             </div>
         </header><!-- End Header -->
@@ -503,105 +528,105 @@
                 </div>
             </section><!-- End Gallery Section -->
 
-<!--             ======= Chefs Section ======= 
-            <section id="chefs" class="chefs">
-                <div class="container" data-aos="fade-up">
-
-                    <div class="section-title">
-                        <h2>Group 1</h2>
-                        <p>Our Members</p>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                                <img src="assets/img/chefs/Toan.jpg" class="img-fluid" alt="">
-                                <div class="member-info">
-                                    <div class="member-info-content">
-                                        <h4>Thanh Toan</h4>
-                                        <span>Leader 1</span>
+            <!--             ======= Chefs Section ======= 
+                        <section id="chefs" class="chefs">
+                            <div class="container" data-aos="fade-up">
+            
+                                <div class="section-title">
+                                    <h2>Group 1</h2>
+                                    <p>Our Members</p>
+                                </div>
+            
+                                <div class="row">
+            
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                                            <img src="assets/img/chefs/Toan.jpg" class="img-fluid" alt="">
+                                            <div class="member-info">
+                                                <div class="member-info-content">
+                                                    <h4>Thanh Toan</h4>
+                                                    <span>Leader 1</span>
+                                                </div>
+                                                <div class="social">
+                                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
+            
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="member" data-aos="zoom-in" data-aos-delay="200">
+                                            <img src="assets/img/chefs/Hoa.jpg" class="img-fluid" alt="">
+                                            <div class="member-info">
+                                                <div class="member-info-content">
+                                                    <h4>Gia Hoa</h4>
+                                                    <span>Leader 3</span>
+                                                </div>
+                                                <div class="social">
+                                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="member" data-aos="zoom-in" data-aos-delay="300">
+                                            <img src="assets/img/chefs/Tan.jpg" class="img-fluid" alt="">
+                                            <div class="member-info">
+                                                <div class="member-info-content">
+                                                    <h4>Trong Tan</h4>
+                                                    <span>Leader 4</span>
+                                                </div>
+                                                <div class="social">
+                                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-3 col-md-6">
+                                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                                            <img src="assets/img/chefs/Thong.jpg" class="img-fluid" alt="">
+                                            <div class="member-info">
+                                                <div class="member-info-content">
+                                                    <h4>Minh Thong</h4>
+                                                    <span>Leader 2</span>
+                                                </div>
+                                                <div class="social">
+                                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                         <div class="member" data-aos="zoom-in" data-aos-delay="300">
+                                            <img src="assets/img/chefs/Hao.jpg" class="img-fluid" alt="">
+                                            <div class="member-info">
+                                                <div class="member-info-content">
+                                                    <h4>Nhut Hao</h4>
+                                                    <span>Member</span>
+                                                </div>
+                                                <div class="social">
+                                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+            
                             </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                                <img src="assets/img/chefs/Hoa.jpg" class="img-fluid" alt="">
-                                <div class="member-info">
-                                    <div class="member-info-content">
-                                        <h4>Gia Hoa</h4>
-                                        <span>Leader 3</span>
-                                    </div>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                                <img src="assets/img/chefs/Tan.jpg" class="img-fluid" alt="">
-                                <div class="member-info">
-                                    <div class="member-info-content">
-                                        <h4>Trong Tan</h4>
-                                        <span>Leader 4</span>
-                                    </div>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                         <div class="col-lg-3 col-md-6">
-                            <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                                <img src="assets/img/chefs/Thong.jpg" class="img-fluid" alt="">
-                                <div class="member-info">
-                                    <div class="member-info-content">
-                                        <h4>Minh Thong</h4>
-                                        <span>Leader 2</span>
-                                    </div>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div> 
-                            </div>
-                             <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                                <img src="assets/img/chefs/Hao.jpg" class="img-fluid" alt="">
-                                <div class="member-info">
-                                    <div class="member-info-content">
-                                        <h4>Nhut Hao</h4>
-                                        <span>Member</span>
-                                    </div>
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section> End Chefs Section -->
+                        </section> End Chefs Section -->
 
             <!-- ======= Contact Section ======= -->
             <section id="contact" class="contact">
