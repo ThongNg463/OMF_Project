@@ -19,6 +19,7 @@ CREATE TABLE Accounts (
     Username VARCHAR(20) PRIMARY KEY,
     Password VARCHAR(32) NOT NULL,
     Role VARCHAR(32) NOT NULL,
+	AccPic Varchar(100) Not null,
     UNIQUE (Username) -- Add UNIQUE constraint for additional safety
 );
 
@@ -101,12 +102,12 @@ ALTER TABLE Detail_Order ADD CONSTRAINT Detail_Order_FK2 FOREIGN KEY(ProID) REFE
 
 
 
-insert into Accounts (Username, Password, Role)
+insert into Accounts (Username, Password, Role, AccPic)
 Values
-('Thong' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Admin'),
-('Huy' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '234'), 2),'User'),
-('Phung' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '345'), 2),'User'),
-('Khoi' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '567'), 2),'User');
+('Thong' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Admin', https://i.imgur.com/JOKsNeT.jpeg),
+('Huy' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '234'), 2),'User', https://i.imgur.com/JOKsNeT.jpeg),
+('Phung' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '345'), 2),'User', https://i.imgur.com/JOKsNeT.jpeg),
+('Khoi' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '567'), 2),'User', https://i.imgur.com/JOKsNeT.jpeg);
 
 insert into Products(ProID, ProName, ProPic ,ProDes, ProPrice, ProType)
 values
