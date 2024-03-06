@@ -42,7 +42,7 @@ public class ProductDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                p = new Products(rs.getString("ProID"), rs.getString("ProName"), rs.getString("ProPic"), rs.getString("ProDes"), rs.getFloat("ProPrice"), rs.getString("ProType"));
+                p = new Products(rs.getString("ProID"), rs.getInt("ProStock"), rs.getString("ProName"), rs.getString("ProPic"), rs.getString("ProDes"), rs.getFloat("ProPrice"), rs.getString("ProType"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +61,7 @@ public class ProductDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                p = new Products(rs.getString("ProID"), rs.getString("ProName"), rs.getString("ProPic"), rs.getString("ProDes"), rs.getFloat("ProPrice"), rs.getString("ProType"));
+                p = new Products(rs.getString("ProID"), rs.getInt("ProStock"), rs.getString("ProName"), rs.getString("ProPic"), rs.getString("ProDes"), rs.getFloat("ProPrice"), rs.getString("ProType"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,16 +87,17 @@ public class ProductDAO {
 
     public int update(Products p) {
         int result = 0;
-        String sql = "UPDATE Products SET ProName=?, ProPic=?, ProDes=?, ProPrice=? , ProType=?  WHERE ProID=?";
+        String sql = "UPDATE Products SET ProStock=?, ProName=?, ProPic=?, ProDes=?, ProPrice=? , ProType=?  WHERE ProID=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, p.getProName());
-            ps.setString(2, p.getProPic());
-            ps.setString(3, p.getProDes());
-            ps.setFloat(4, p.getProPrice());
-            ps.setString(5, p.getProType());
-            ps.setString(6, p.getProID());
+            ps.setInt(1, p.getProStock());           
+            ps.setString(2, p.getProName());
+            ps.setString(3, p.getProPic());
+            ps.setString(4, p.getProDes());
+            ps.setFloat(5, p.getProPrice());
+            ps.setString(6, p.getProType());
+            ps.setString(7, p.getProID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,17 +108,18 @@ public class ProductDAO {
 
     public int add(Products p) {
         int result = 0;
-        String sql = "INSERT INTO Products VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Products VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, p.getProID());
-            ps.setString(2, p.getProName());
-            ps.setString(3, p.getProPic());
-            ps.setString(4, p.getProDes());
-            ps.setFloat(5, p.getProPrice());
-            ps.setString(6, p.getProType());
-
+            ps.setInt(2, p.getProStock());
+            ps.setString(3, p.getProName());
+            ps.setString(4, p.getProPic());
+            ps.setString(5, p.getProDes());
+            ps.setFloat(6, p.getProPrice());
+            ps.setString(7, p.getProType());
+            
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
