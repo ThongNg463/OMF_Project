@@ -118,6 +118,7 @@ public class ProductList extends HttpServlet {
         if (request.getParameter("btnUpdate") != null && request.getParameter("btnUpdate").equals("Update")) {
             try {
                 String ProID = request.getParameter("ProID");
+                int ProStock = Integer.parseInt(request.getParameter("ProStock"));
                 String ProName = request.getParameter("ProName");
                 String ProPic = request.getParameter("ProPic");
                 String ProDes = request.getParameter("ProDes");
@@ -125,7 +126,7 @@ public class ProductList extends HttpServlet {
                 String ProType = request.getParameter("ProType");
 
                 ProductDAO proDAO = new ProductDAO();
-                proDAO.update(new Products(ProID, ProName, ProPic, ProDes, ProPrice, ProType));
+                proDAO.update(new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType));
 
                 response.sendRedirect("/prlist/ds");
             } catch (Exception ex) {
@@ -142,12 +143,13 @@ public class ProductList extends HttpServlet {
                     ProID = "Pro_" + (proDAO.getTotalProductsCount() + ++i);
                 }
                 String ProName = request.getParameter("ProName");
+                int ProStock = Integer.parseInt(request.getParameter("ProStock"));
                 String ProPic = request.getParameter("ProPic");
                 String ProDes = request.getParameter("ProDes");
                 float ProPrice = Float.parseFloat(request.getParameter("ProPrice"));
                 String ProType = request.getParameter("ProType");
 
-                proDAO.add(new Products(ProID, ProName, ProPic, ProDes, ProPrice, ProType));
+                proDAO.add(new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType));
 
                 response.sendRedirect("/prlist/ds");
             } catch (Exception ex) {
