@@ -11,6 +11,7 @@ package Models;
 public class Products {
 
     private String ProID;
+    private int ProStock;
     private String ProName;
     private String ProPic;
     private String ProDes;
@@ -20,8 +21,9 @@ public class Products {
     public Products() {
     }
 
-    public Products(String ProID, String ProName, String ProPic, String ProDes, float ProPrice, String ProType) {
+    public Products(String ProID,int ProStock, String ProName, String ProPic, String ProDes, float ProPrice, String ProType) {
         this.ProID = ProID;
+        this.ProStock = ProStock;
         this.ProName = ProName;
         this.ProPic = ProPic;
         this.ProDes = ProDes;
@@ -35,6 +37,14 @@ public class Products {
 
     public void setProID(String ProID) {
         this.ProID = ProID;
+    }
+    
+    public int getProStock() {
+        return ProStock;
+    }
+
+    public void setProID(int ProStock) {
+        this.ProStock = ProStock;
     }
 
     public String getProName() {
