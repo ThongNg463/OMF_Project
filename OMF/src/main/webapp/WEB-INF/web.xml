@@ -24,6 +24,10 @@
         <servlet-name>Home</servlet-name>
         <servlet-class>Controllers.Home</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StaffList</servlet-name>
+        <servlet-class>Controllers.StaffList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>accountLogin</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -74,6 +78,10 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffList</servlet-name>
+        <url-pattern>/StaffList/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

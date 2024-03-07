@@ -104,10 +104,19 @@ ALTER TABLE Detail_Order ADD CONSTRAINT Detail_Order_FK2 FOREIGN KEY(ProID) REFE
 
 insert into Accounts (Username, Password, Role, AccPic)
 Values
-('Thong' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Admin', https://i.imgur.com/JOKsNeT.jpeg),
-('Huy' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '234'), 2),'User', https://i.imgur.com/JOKsNeT.jpeg),
-('Phung' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '345'), 2),'User', https://i.imgur.com/JOKsNeT.jpeg),
-('Khoi' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '567'), 2),'User', https://i.imgur.com/JOKsNeT.jpeg);
+('Thong' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Admin', 'https://i.imgur.com/JOKsNeT.jpeg'),
+('Huy' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '234'), 2),'User', 'https://i.imgur.com/JOKsNeT.jpeg'),
+('Phung' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '345'), 2),'User', 'https://i.imgur.com/JOKsNeT.jpeg'),
+('Khoi' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '567'), 2),'User', 'https://i.imgur.com/JOKsNeT.jpeg'),
+('Staff01' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Staff', 'https://i.imgur.com/JOKsNeT.jpeg'),
+('Staff02' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Staff', 'https://i.imgur.com/JOKsNeT.jpeg'),
+('Staff03' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '123'), 2),'Staff', 'https://i.imgur.com/JOKsNeT.jpeg');
+
+INSERT INTO StaffAccount (StaffID, Fullname, Mail, Phone) 
+VALUES 
+('Staff01', 'Nguyen Van A', 'anv@example.com', '1234567890'),
+('Staff02', 'Nguyen Van B', 'bnv@example.com', '0987654321'),
+('Staff03', 'Nguyen Van C', 'cnv@example.com', '1112223333');
 
 insert into Products(ProID, ProName, ProPic ,ProDes, ProPrice, ProType)
 values
@@ -140,6 +149,8 @@ INSERT INTO Detail_Order (OrderID, ProID, Quality) VALUES
 ('Order_4', 'Pro_5', 2),
 ('Order_4', 'Pro_8', 2),
 ('Order_5', 'Pro_4', 1);
+
+
 
 SELECT * FROM Accounts
 select * from Products

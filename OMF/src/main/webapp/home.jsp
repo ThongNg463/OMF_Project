@@ -103,6 +103,8 @@
                             <ul>
                                 <li><a href="/prlist/ds">Products List</a></li>
                                 <li><a href="/olist/ds">Orders List</a></li>
+                                 <li><a href="/StaffList/ds">Staff List</a></li>
+                                
                             </ul>
                         </li>       
                         <% }%>
