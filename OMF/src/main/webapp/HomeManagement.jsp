@@ -1,11 +1,10 @@
-<%-- 
-    Document   : HomeManagement
-    Created on : Mar 6, 2024, 8:04:43 AM
-    Author     : Kara
---%>
+<%@page import="Models.account"%>
+<%@page import="DAOs.accountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
     <head>
 
         <meta charset="utf-8">
@@ -14,19 +13,55 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Management - Dashboard</title>
+        <title>Admin - Dashboard</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-        <!-- Custom fonts for this template-->
-        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-              rel="stylesheet">
 
-        <!-- Custom styles for this template-->
-        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <title>Dashboard</title>
+
+        <!-- Custom fonts for this template -->
+        <link href="/UI/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="/UI/css/sb-admin-2.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this page -->
+        <link href="/UI/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     </head>
-    <body id="page-top">
 
+    <body id="page-top">
+        <%
+            accountDAO AccDAO = new accountDAO();
+            account UserAcc = new account();
+            String Username = null;
+            String Role = null;
+            boolean isLogin = false;
+
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("User")) {
+                        isLogin = true;
+                        UserAcc = AccDAO.getAccount(cookie.getValue());
+                        Username = UserAcc.getUsername();
+                        Role = UserAcc.getRole();
+                        break;
+                    }
+                }
+            }
+
+            if (!isLogin) {
+                response.sendRedirect("/Login");
+            } else if (!Role.equals("Admin")) {
+                request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+            }
+        %>
         <!-- Page Wrapper -->
         <div id="wrapper">
 
@@ -34,45 +69,36 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <li class="nav-item">
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                        <div class="sidebar-brand-icon rotate-n-15">
-                         
-                        </div>
-                        <div class="sidebar-brand-text mx-3">Management Home <sup></sup></div>
-                    </a>
-                </li>
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/Home">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fas fa-laugh-wink"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-3">OMF <sup></sup></div>
+                </a>
 
                 <!-- Divider -->
-                <li class="nav-item">
-                    <hr class="sidebar-divider my-0">
-                </li>
+                <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="HomeManagement.jsp">
-                        <img class="rounded-circle" src="img/dash.png" style="width: 20px; height: 20px;"  alt="...">
-                        <span>Dashboard</span>
-                    </a>
+                    <a class="nav-link" href="/HomeManagement.jsp">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
                 </li>
 
                 <!-- Divider -->
-                <li class="nav-item">
-                    <hr class="sidebar-divider">
-                </li>
+                <hr class="sidebar-divider">
 
                 <!-- Heading -->
-                <li class="nav-item">
-                    <div class="sidebar-heading">
-                        Interface
-                    </div>
-                </li>
+                <div class="sidebar-heading">
+                    Interface
+                </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
-                        <img class="rounded-circle" src="img/options_522233.png" style="width: 20px; height: 20px;"  alt="...">
+                        <i class="fas fa-fw fa-cog"></i>
                         <span>Components</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -88,7 +114,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                        aria-expanded="true" aria-controls="collapseUtilities">
-                        <img class="rounded-circle" src="img/wrench_3503287.png" style="width: 20px; height: 20px;"  alt="...">
+                        <i class="fas fa-fw fa-wrench"></i>
                         <span>Utilities</span>
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -104,34 +130,30 @@
                 </li>
 
                 <!-- Divider -->
-                <li class="nav-item">
-                    <hr class="sidebar-divider">
-                </li>
+                <hr class="sidebar-divider">
 
                 <!-- Heading -->
-                <li class="nav-item">
-                    <div class="sidebar-heading">
-                        Addons
-                    </div>
-                </li>
+                <div class="sidebar-heading">
+                    Addons
+                </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                        aria-expanded="true" aria-controls="collapsePages">
-                        <img class="rounded-circle" src="img/folder_1383970.png" style="width: 20px; height: 20px;"  alt="...">
+                        <i class="fas fa-fw fa-folder"></i>
                         <span>Pages</span>
                     </a>
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <h6 class="collapse-header">Management:</h6>
+                            <a class="collapse-item" href="/prlist/ds">Product Management</a>
+                            <a class="collapse-item" href="/olist/ds">Order Management</a>
+                            <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
                             <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
+                            <!--                            <h6 class="collapse-header">Other Pages:</h6>
+                                                        <a class="collapse-item" href="404.html">404 Page</a>
+                                                        <a class="collapse-item" href="blank.html">Blank Page</a>-->
                         </div>
                     </div>
                 </li>
@@ -139,32 +161,31 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
                     <a class="nav-link" href="charts.html">
-                        <img class="rounded-circle" src="img/bar-chart_478544.png" style="width: 20px; height: 20px;"  alt="...">
+                        <i class="fas fa-fw fa-chart-area"></i>
                         <span>Charts</span></a>
                 </li>
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
                     <a class="nav-link" href="tables.html">
-                        <img class="rounded-circle" src="img/schedule_4893577.png" style="width: 20px; height: 20px;"  alt="...">
+                        <i class="fas fa-fw fa-table"></i>
                         <span>Tables</span></a>
                 </li>
 
                 <!-- Divider -->
-                <li class="nav-item">
-                    <hr class="sidebar-divider d-none d-md-block">
-                </li>
+                <hr class="sidebar-divider d-none d-md-block">
 
-                    
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
 
-<!--                 Sidebar Message 
-                <li class="nav-item">
-                    <div class="sidebar-card d-none d-lg-flex">
-                        <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                        <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-                    </div>
-                </li>-->
+                <!-- Sidebar Message -->
+                <!--                <div class="sidebar-card d-none d-lg-flex">
+                                    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+                                    <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                                    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                                </div>-->
 
             </ul>
             <!-- End of Sidebar -->
@@ -191,7 +212,7 @@
                                        aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button">
-                                        <img class="rounded-circle" src="img/1024px-Magnifying_glass_icon.png" style="width: 20px; height: 20px;"  alt="...">
+                                        <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
                             </div>
@@ -204,7 +225,7 @@
                             <li class="nav-item dropdown no-arrow d-sm-none">
                                 <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img class="rounded-circle" src="img/folder_1383970.png" style="width: 20px; height: 20px;"  alt="...">
+                                    <i class="fas fa-search fa-fw"></i>
                                 </a>
                                 <!-- Dropdown - Messages -->
                                 <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
@@ -228,7 +249,7 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img class="rounded-circle" src="img/bell_1827420.png" style="width: 20px; height: 20px;"  alt="...">
+                                    <i class="fas fa-bell fa-fw"></i>
                                     <!-- Counter - Alerts -->
                                     <span class="badge badge-danger badge-counter">3+</span>
                                 </a>
@@ -241,7 +262,7 @@
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="mr-3">
                                             <div class="icon-circle bg-primary">
-
+                                                <i class="fas fa-file-alt text-white"></i>
                                             </div>
                                         </div>
                                         <div>
@@ -252,7 +273,7 @@
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="mr-3">
                                             <div class="icon-circle bg-success">
-
+                                                <i class="fas fa-donate text-white"></i>
                                             </div>
                                         </div>
                                         <div>
@@ -279,7 +300,7 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img class="rounded-circle" src="img/email_4546924.png" style="width: 20px; height: 20px;"  alt="...">
+                                    <i class="fas fa-envelope fa-fw"></i>
                                     <!-- Counter - Messages -->
                                     <span class="badge badge-danger badge-counter">7</span>
                                 </a>
@@ -291,7 +312,7 @@
                                     </h6>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/person1.png"
+                                            <img class="rounded-circle" src="img/undraw_profile_1.svg"
                                                  alt="...">
                                             <div class="status-indicator bg-success"></div>
                                         </div>
@@ -303,7 +324,7 @@
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/person2.png"
+                                            <img class="rounded-circle" src="img/undraw_profile_2.svg"
                                                  alt="...">
                                             <div class="status-indicator"></div>
                                         </div>
@@ -315,7 +336,7 @@
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/person3.png"
+                                            <img class="rounded-circle" src="img/undraw_profile_3.svg"
                                                  alt="...">
                                             <div class="status-indicator bg-warning"></div>
                                         </div>
@@ -341,38 +362,39 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item topbar-divider d-none d-sm-block"></li>
+                            <div class="topbar-divider d-none d-sm-block"></div>
 
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle" src="img/10__2850_29.jpg" alt="">
-
-
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=Username%></span>
+                                    <img class="img-profile rounded-circle"
+                                         src="../img/person1.png">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="#">
-
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
                                     <a class="dropdown-item" href="#">
-
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Settings
                                     </a>
                                     <a class="dropdown-item" href="#">
-
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="/logout" style="text-decoration: none;">
 
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
                                 </div>
+
                             </li>
 
                         </ul>
@@ -465,8 +487,8 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Pending Requests</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                    Pending Orders</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -567,31 +589,31 @@
                                         <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="small font-weight-bold">Server Migration <span
+                                        <h4 class="small font-weight-bold">Yearly Goals <span
                                                 class="float-right">20%</span></h4>
                                         <div class="progress mb-4">
                                             <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
                                                  aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <h4 class="small font-weight-bold">Sales Tracking <span
+                                        <h4 class="small font-weight-bold">Monthly Goals <span
                                                 class="float-right">40%</span></h4>
                                         <div class="progress mb-4">
                                             <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
                                                  aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <h4 class="small font-weight-bold">Customer Database <span
+                                        <h4 class="small font-weight-bold">Weekly Goals <span
                                                 class="float-right">60%</span></h4>
                                         <div class="progress mb-4">
                                             <div class="progress-bar" role="progressbar" style="width: 60%"
                                                  aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <h4 class="small font-weight-bold">Payout Details <span
+                                        <h4 class="small font-weight-bold">Daily Goals <span
                                                 class="float-right">80%</span></h4>
                                         <div class="progress mb-4">
                                             <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
                                                  aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <h4 class="small font-weight-bold">Account Setup <span
+                                        <h4 class="small font-weight-bold">Add New Menu <span
                                                 class="float-right">Complete!</span></h4>
                                         <div class="progress">
                                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
@@ -675,33 +697,25 @@
                                 <!-- Illustrations -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Management Notice</h6>
                                     </div>
                                     <div class="card-body">
                                         <div class="text-center">
-                                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                                 src="img/undraw_posting_photo.svg" alt="...">
+                                            
                                         </div>
-                                        <p>Add some quality, svg illustrations to your project courtesy of <a
-                                                target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                            constantly updated collection of beautiful svg images that you can use
-                                            completely free and without attribution!</p>
-                                        <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                            unDraw &rarr;</a>
+                                        <p>We will have new staff coming the next week, make sure you setup her account and role before she arrive. </p>
+                                        
                                     </div>
                                 </div>
 
                                 <!-- Approach -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Expanding Approach</h6>
                                     </div>
                                     <div class="card-body">
-                                        <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                            CSS bloat and poor page performance. Custom CSS classes are used to create
-                                            custom components and custom utility classes.</p>
-                                        <p class="mb-0">Before working with this theme, you should become familiar with the
-                                            Bootstrap framework, especially the utility classes.</p>
+                                        <p></p>
+                                        <p class="mb-0">Our best selling are consisted of rice and chicken, so we will add, purchase new working equipment.</p>
                                     </div>
                                 </div>
 
@@ -718,7 +732,7 @@
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2021</span>
+                            <span>Copyright &copy; OMF 2024</span>
                         </div>
                     </div>
                 </footer>
@@ -757,20 +771,21 @@
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="UI/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="UI/vendor/jquery-easing/jquery.easing.min.js"></script>
 
         <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+        <script src="UI/js/sb-admin-2.min.js"></script>
 
         <!-- Page level plugins -->
-        <script src="vendor/chart.js/Chart.min.js"></script>
+        <script src="UI/vendor/chart.js/Chart.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
+        <script src="UI/js/demo/chart-area-demo.js"></script>
+        <script src="UI/js/demo/chart-pie-demo.js"></script>
 
     </body>
+
 </html>
