@@ -1941,8 +1941,8 @@ a.btn.disabled,fieldset:disabled a.btn{
 }
 .btn-primary{
     color:#fff;
-    background-color:#4e73df;
-    border-color:#4e73df
+    background-color:#cda45e;
+    border-color:#cda45e
 }
 .btn-primary:hover{
     color:#fff;
@@ -9196,19 +9196,58 @@ body.sidebar-toggled footer.sticky-footer{
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.nav-borders .nav-link.active {
-    color: #0061f2;
-    border-bottom-color: #0061f2;
+.nav-borders {
+  position: relative;
+  display: flex;
 }
+
 .nav-borders .nav-link {
-    color: #69707a;
-    border-bottom-width: 0.125rem;
-    border-bottom-style: solid;
-    border-bottom-color: transparent;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 1rem;
-    margin-right: 1rem;
+  color: #FFFFFF;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  transition: color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Xác định gạch chân cho liên kết đang hoạt động */
+.nav-borders .nav-link.active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.125rem;
+  background-color: #cda45e;
+  bottom: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Ẩn gạch chân khi không hover và không phải liên kết active */
+.nav-borders .nav-link:not(.active)::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.125rem;
+  background-color: #cda45e;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: bottom left;
+}
+
+/* Khi hover vào liên kết không active, hiển thị gạch chân và ẩn gạch chân của liên kết active */
+.nav-borders .nav-link:not(.active):hover::after,
+.nav-borders .nav-link:not(.active):focus::after {
+  transform: scaleX(1);
+}
+
+/* Di chuyển gạch chân khỏi liên kết active khi hover vào liên kết khác */
+.nav-borders .nav-link:hover ~ .nav-link.active::after,
+.nav-borders .nav-link:focus ~ .nav-link.active::after {
+  transform: scaleX(0);
 }
