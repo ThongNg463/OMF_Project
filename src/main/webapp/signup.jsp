@@ -78,7 +78,7 @@
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="/Login">Already have an account? Login!</a>
+                                    <a class="small" href="/Logins">Already have an account? Login!</a>
                                 </div>
                             </div>
                         </div>
