@@ -124,7 +124,7 @@
                                     <span style="font-family: sans-serif; font-size: 25px" ><%= username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccpic()%>"></span>
                             </a>
                             <ul>
-                                <li><a href="#"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>
+                                <li><a href="userProfile"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>
                                 <li><a href="#"><span><i class="fas fa-cogs" style="margin-right: 10px"></i>Settings</span></a></li>
                                 <li><hr class="hr hr-blurry" style="color: grey" /></li>
                                 <li><a href="/logout"><span><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i>Log out</span></a></li>

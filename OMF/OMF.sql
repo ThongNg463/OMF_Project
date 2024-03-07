@@ -117,6 +117,7 @@ VALUES
 ('Staff01', 'Nguyen Van A', 'anv@example.com', '1234567890'),
 ('Staff02', 'Nguyen Van B', 'bnv@example.com', '0987654321'),
 ('Staff03', 'Nguyen Van C', 'cnv@example.com', '1112223333');
+('Khoi' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '567'), 2),'User', 'https://i.imgur.com/JOKsNeT.jpeg');
 
 insert into Products(ProID, ProName, ProPic ,ProDes, ProPrice, ProType)
 values
