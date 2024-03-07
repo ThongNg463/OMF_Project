@@ -110,7 +110,7 @@ public class accountLogin extends HttpServlet {
                     tk = dao.getAccount(username);
                     session.setAttribute("User", tk);                 
                     if (tk.getRole().equals("Admin")) {
-                        response.sendRedirect("/prlist/ds");
+                        response.sendRedirect("/HomeManagement.jsp");
                     } else {
                         response.sendRedirect("/Home");
 

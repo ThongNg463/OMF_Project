@@ -87,11 +87,11 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/Home">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                    <div class="sidebar-brand-text mx-3">OMF <sup></sup></div>
                 </a>
 
                 <!-- Divider -->
@@ -99,7 +99,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="/HomeManagement.jsp">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -164,14 +164,14 @@
                     </a>
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <h6 class="collapse-header">Management:</h6>
+                            <a class="collapse-item" href="/prlist/ds">Product Management</a>
+                            <a class="collapse-item" href="/olist/ds">Order Management</a>
+                            <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
                             <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
+                            <!--                            <h6 class="collapse-header">Other Pages:</h6>
+                                                        <a class="collapse-item" href="404.html">404 Page</a>
+                                                        <a class="collapse-item" href="blank.html">Blank Page</a>-->
                         </div>
                     </div>
                 </li>
@@ -382,8 +382,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=Username%></span>
-                                    <img class="img-profile rounded-circle"
-                                         src="../img/person1.png">
+                                    <img class="img-profile rounded-circle" src="../img/person1.png">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -472,7 +471,7 @@
                                                                     <label class="form-label h4">Product Stock:</label>
                                                                     <div><input class="form-control" type="number" name="ProStock" value="<%=rs.getInt("ProStock")%>" required></div> <br/>        
                                                                 </div>
-                                                                
+
                                                                 <div class="form-group">
                                                                     <label class="form-label h4">Product Name:</label>
                                                                     <div><input class="form-control" type="text" name="ProName" value="<%=rs.getString("ProName")%>" required></div> <br/>        
@@ -596,21 +595,21 @@
 
 
             <!-- Bootstrap core JavaScript-->
-            <script src="/UI/vendor/jquery/jquery.min.js"></script>
-            <script src="/UI/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="/vendor/jquery/jquery.min.js"></script>
+            <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
             <!-- Core plugin JavaScript-->
-            <script src="/UI/vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
             <!-- Custom scripts for all pages-->
-            <script src="/UI/js/sb-admin-2.min.js"></script>
+            <script src="/js/sb-admin-2.min.js"></script>
 
             <!-- Page level plugins -->
-            <script src="/UI/vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
             <!-- Page level custom scripts -->
-            <script src="/UI/js/demo/datatables-demo.js"></script>
+            <script src="/js/demo/datatables-demo.js"></script>
             <script>
 
                                                     // Get all buttons that opens a modal
