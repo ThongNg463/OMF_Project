@@ -92,7 +92,7 @@
                                         <!--Not available yet-->
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="/signups">Create an Account!</a>
+                                        <a class="small" href="/signup">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
