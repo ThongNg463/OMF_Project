@@ -21,6 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -165,15 +167,15 @@ public class Orderlist extends HttpServlet {
             try {
                 OrdersDAO ordersDAO = new OrdersDAO();
                 int i = 1;
-                String OderID = "Order_" + (ordersDAO.getTotalOrderCount() + i);
-                while (ordersDAO.getOrder(OderID) != null) {
-                    OderID = "Order_" + (ordersDAO.getTotalOrderCount() + ++i);
+                String OrderID = "Order_" + (ordersDAO.getTotalOrderCount() + i);
+                while (ordersDAO.getOrder(OrderID) != null) {
+                    OrderID = "Order_" + (ordersDAO.getTotalOrderCount() + ++i);
                 }
-                String Username = request.getParameter("Username");
+                String UserID = request.getParameter("Username");
                 String Status = "Confirming";
-                float totalPrice = 0;
+                float TotalPrice = 0;
                 
-                ordersDAO.add(new Orders(OderID, Username, Status, totalPrice));
+                ordersDAO.add(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
 
                 ProductDAO proDAO = new ProductDAO();
                 ResultSet rsPro = proDAO.getAll();
@@ -184,13 +186,13 @@ public class Orderlist extends HttpServlet {
                 while (rsPro.next()) {
                     int Quality = Integer.parseInt(request.getParameter("Quality_" + ++i));
                     if (Quality > 0) {
-                        doDAO.add(new Detail_Order(OderID, rsPro.getString("ProID"), Quality));
+                        doDAO.add(new Detail_Order(OrderID, rsPro.getString("ProID"), Quality));
                         float tempTotal = Quality * Float.parseFloat(rsPro.getString("ProPrice"));
-                        totalPrice += tempTotal;
+                        TotalPrice += tempTotal;
                     }
                 }
 
-                ordersDAO.update(new Orders(OderID, Username, Status, totalPrice));
+                ordersDAO.update(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
 
                 response.sendRedirect("/olist/ds");
             } catch (Exception ex) {

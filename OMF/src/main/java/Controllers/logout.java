@@ -72,7 +72,7 @@ public class logout extends HttpServlet {
                     }
                 }
             }
-            response.sendRedirect("/Home");
+            response.sendRedirect("/");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

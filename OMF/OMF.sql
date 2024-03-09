@@ -26,7 +26,7 @@ CREATE TABLE Accounts (
 CREATE TABLE UserAccount (
     UserID VARCHAR(20) PRIMARY KEY,
     Fullname VARCHAR(20),
-    Mail VARCHAR(20),
+    Mail VARCHAR(50),
     Phone VARCHAR(20),
     Wallet DECIMAL(10, 2),
     VoucherID VARCHAR(20),
@@ -37,7 +37,7 @@ CREATE TABLE UserAccount (
 CREATE TABLE StaffAccount (
     StaffID VARCHAR(20) PRIMARY KEY,
     Fullname VARCHAR(20),
-    Mail VARCHAR(20),
+    Mail VARCHAR(50),
     Phone VARCHAR(20),
     CONSTRAINT StaffAccount_FK1 FOREIGN KEY (StaffID) REFERENCES Accounts(Username) ON DELETE CASCADE,
     CONSTRAINT StaffAccount_FK2 UNIQUE (StaffID) -- Add UNIQUE constraint for additional safety
@@ -80,10 +80,10 @@ ALTER TABLE SupplierProducts ADD CONSTRAINT SupplierProducts_FK2 FOREIGN KEY(Pro
 CREATE TABLE Orders(
 	OrderID varchar(20),
 	UserID varchar(20),
-	StaffID varchar(20),
+	StaffID varchar(20) NULL,
 	Status nvarchar(50) NULL,
 	TotalPrice Float NULL,
-	VoucherID Varchar(20),
+	VoucherID Varchar(20) NULL,
 	OrderDate DateTime,
 	Constraint OrderIDKey Primary Key (OrderID)
 )
@@ -132,36 +132,62 @@ values
 ('Pro_9','Lobster Roll','https://i.imgur.com/5cjaTBg.jpg','Plump lobster meat, mayo and crisp lettuce on a toasted bulky roll','12.95','specialty'),
 ('Pro_10','Red Wine','https://i.imgur.com/zI5C6ia.jpg','A luxurious light wine.','25.0','starters');
 
-INSERT INTO Orders (OrderID, Username, Status, TotalPrice) VALUES 
-('Order_1', 'Hoa', 'Confirming', 10000),
-('Order_2', 'Tan', 'Delivered', 1500),
-('Order_3', 'Tan', 'Delivered', 900),
-('Order_4', 'Thong', 'Delivering', 5000),
-('Order_5', 'Thong', 'Confirmed', 2000);
+INSERT INTO Voucher (VoucherID, VoucherStock, VoucherPercent) VALUES
+('None', 0, 0),
+('V001', 100, 10),
+('V002', 50, 15),
+('V003', 200, 5),
+('V004', 75, 20),
+('V005', 30, 25);
 
-INSERT INTO Detail_Order (OrderID, ProID, Quality) VALUES 
-('Order_1', 'Pro_1', 2),
-('Order_1', 'Pro_2', 2),
-('Order_1', 'Pro_6', 2),
-('Order_2', 'Pro_3', 1),
-('Order_2', 'Pro_1', 1),
-('Order_3', 'Pro_2', 3),
-('Order_3', 'Pro_1', 3),
-('Order_4', 'Pro_5', 2),
-('Order_4', 'Pro_8', 2),
-('Order_5', 'Pro_4', 1);
+INSERT INTO UserAccount (UserID, Fullname, Mail, Phone, Wallet, VoucherID) VALUES
+('Thong', 'John Doe', 'johndoe@example.com', '0123456789', 100.00, 'V001'),
+('Huy', 'Jane Smith', 'janesmith@example.com', '9876543210', 150.50, 'V002');
+
+INSERT INTO StaffAccount (StaffID, Fullname, Mail, Phone) VALUES
+('Thong', 'Alice Martin', 'alicemartin@example.com', '2223334445'),
+('Huy', 'Chris Lee', 'chrislee@example.com', '3334445556');
+
+INSERT INTO Supplier (SupID, SupName, SupAddress, SupPhone, SupTaxID, SupCountry, SupContractStatus, SupNotes, SupPrice, SupType) VALUES
+('Sup01', 'Supplier A', 'Address A', '1002003001', 'TAX001', 'Country A', 'Active', 'Notes A', 100.00, 'Type A'),
+('Sup02', 'Supplier B', 'Address B', '2003004002', 'TAX002', 'Country B', 'Inactive', 'Notes B', 200.00, 'Type B'),
+('Sup03', 'Supplier C', 'Address C', '3004005003', 'TAX003', 'Country C', 'Active', 'Notes C', 300.00, 'Type C'),
+('Sup04', 'Supplier D', 'Address D', '4005006004', 'TAX004', 'Country D', 'Inactive', 'Notes D', 400.00, 'Type D'),
+('Sup05', 'Supplier E', 'Address E', '5006007005', 'TAX005', 'Country E', 'Active', 'Notes E', 500.00, 'Type E');
+
+INSERT INTO SupplierProducts (SupID, ProID, Quality) VALUES
+('Sup01', 'Pro_1', 95),
+('Sup02', 'Pro_2', 90),
+('Sup03', 'Pro_3', 85),
+('Sup04', 'Pro_4', 80),
+('Sup05', 'Pro_5', 75);
+
+INSERT INTO Orders (OrderID, UserID, StaffID, Status, TotalPrice, VoucherID, OrderDate) VALUES
+('Order01', 'Thong', 'Thong', 'Pending', 100.00, 'V001', '2024-01-01'),
+('Order02', 'Thong', 'Thong', 'Completed', 200.00, 'V002', '2024-01-02'),
+('Order03', 'Thong', 'Thong', 'Shipped', 300.00, 'V003', '2024-01-03'),
+('Order04', 'Thong', 'Thong', 'Cancelled', 400.00, 'V004', '2024-01-04'),
+('Order05', 'Thong', 'Thong', 'Pending', 500.00, 'V005', '2024-01-05');
+
+INSERT INTO Detail_Order (OrderID, ProID, Quality) VALUES
+('Order01', 'Pro_1', 1),
+('Order02', 'Pro_2', 2),
+('Order03', 'Pro_3', 3),
+('Order04', 'Pro_4', 4),
+('Order05', 'Pro_5', 5);
 
 
 
 SELECT * FROM Accounts
+SELECT * FROM UserAccount
 select * from Products
 select * from Orders
 select * from Detail_Order
+select * from Voucher
 
-drop table Detail_Order
-drop table Orders
-drop tABLE Products
-drop table Accounts
 
-SELECT * FROM Detail_Order WHERE OrderID='Order_1'
+SELECT * FROM Accounts WHERE Username='Thong'
 SELECT * FROM Detail_Order WHERE ProID='Pro_1'
+
+
+INSERT INTO Orders VALUES('TO_1','Thong', null, '', 100, 'None', null)

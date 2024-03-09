@@ -19,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,9 +74,9 @@ public class Home extends HttpServlet {
         HttpSession session = request.getSession();
 
         try {
-            if (url.endsWith("/Home")) {
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            } 
+             if (url.equals(request.getContextPath() + "/Home")) {
+        request.getRequestDispatcher("/Home.jsp").forward(request, response);
+    }
         } catch (Exception e) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -92,21 +94,18 @@ public class Home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         if (request.getParameter("btnAddNew") != null && request.getParameter("btnAddNew").equals("AddNew")) {
             try {
+                String UserID = request.getParameter("Username");
                 OrdersDAO ordersDAO = new OrdersDAO();
                 int i = 1;
                 String OrderID = "Order_" + (ordersDAO.getTotalOrderCount() + i);
                 while (ordersDAO.getOrder(OrderID) != null) {
                     OrderID = "Order_" + (ordersDAO.getTotalOrderCount() + ++i);
                 }
-                String Username = request.getParameter("Username");
                 String Status = "Confirming";
-                float totalPrice = 0;
-
-                ordersDAO.add(new Orders(OrderID, Username, Status, totalPrice));
-
+                float TotalPrice = 0;
+                ordersDAO.add(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", Timestamp.valueOf(LocalDateTime.now())));
                 ProductDAO proDAO = new ProductDAO();
                 ResultSet rsPro = proDAO.getAll();
 
@@ -118,14 +117,14 @@ public class Home extends HttpServlet {
                     if (Quality > 0) {
                         doDAO.add(new Detail_Order(OrderID, rsPro.getString("ProID"), Quality));
                         float tempTotal = Quality * Float.parseFloat(rsPro.getString("ProPrice"));
-                        totalPrice += tempTotal;
+                        TotalPrice += tempTotal;
                     }
                 }
 
-                if (totalPrice == 0) {
+                if (TotalPrice == 0) {
                     ordersDAO.delete(OrderID);
                 } else {
-                    ordersDAO.update(new Orders(OrderID, Username, Status, totalPrice));
+                    ordersDAO.update(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", Timestamp.valueOf(LocalDateTime.now())));
                 }
 
                 response.sendRedirect("/Home");

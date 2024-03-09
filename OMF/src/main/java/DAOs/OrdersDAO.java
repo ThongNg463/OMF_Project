@@ -38,12 +38,12 @@ public class OrdersDAO {
         return rs;
     }
 
-    public ResultSet getAllFromUserName(String userName) {
+    public ResultSet getAllFromUserID(String userID) {
         ResultSet rs = null;
-        String sql = "SELECT * FROM Orders WHERE Username=?";
+        String sql = "SELECT * FROM Orders WHERE UserID=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, userName);
+            ps.setString(1, userID);
 
             rs = ps.executeQuery();
         } catch (SQLException ex) {
@@ -63,7 +63,7 @@ public class OrdersDAO {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                o = new Orders(id, rs.getString("Username"), rs.getString("Status"), rs.getFloat("TotalPrice"));
+                o = new Orders(id, rs.getString("UserID"), rs.getString("StaffID"), rs.getString("Status"), rs.getFloat("TotalPrice"), rs.getString("VoucherID") ,rs.getTimestamp("OrderDate"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,14 +74,17 @@ public class OrdersDAO {
     
     public int add(Orders o) {
         int result = 0;
-        String sql = "INSERT INTO Orders VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO Orders VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, o.getOrderID());
-            ps.setString(2, o.getUsername());
-            ps.setString(3, o.getStatus());
-            ps.setFloat(4, o.getTotalPrice());
+            ps.setString(2, o.getUserID());
+            ps.setString(3, o.getStaffID());
+            ps.setString(4, o.getStatus());
+            ps.setFloat(5, o.getTotalPrice());
+            ps.setString(6, o.getVoucherID());
+            ps.setTimestamp(7, o.getOrderDate());
 
             result = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -109,14 +112,17 @@ public class OrdersDAO {
 
     public int update(Orders o) {
         int result = 0;
-        String sql = "UPDATE Orders SET Username=?, Status=?, TotalPrice=? WHERE OrderID=?";
+        String sql = "UPDATE Orders SET UserID=?, StaffID=?, Status=?, TotalPrice=?, VoucherID=?, OrderDate=? WHERE OrderID=?";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, o.getUsername());
-            ps.setString(2, o.getStatus());
-            ps.setFloat(3, o.getTotalPrice());
-            ps.setString(4, o.getOrderID());
+            PreparedStatement ps = conn.prepareStatement(sql);   
+            ps.setString(1, o.getUserID());
+            ps.setString(2, o.getStaffID());
+            ps.setString(3, o.getStatus());
+            ps.setFloat(4, o.getTotalPrice());
+            ps.setString(5, o.getVoucherID());
+            ps.setTimestamp(6, o.getOrderDate());
+            ps.setString(7, o.getOrderID());
 
             result = ps.executeUpdate();
         } catch (SQLException ex) {
