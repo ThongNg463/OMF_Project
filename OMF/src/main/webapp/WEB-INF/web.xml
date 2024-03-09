@@ -5,6 +5,10 @@
         <servlet-class>Controllers.accountLogin</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>loginController</servlet-name>
+        <servlet-class>Controllers.loginController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ProductList</servlet-name>
         <servlet-class>Controllers.ProductList</servlet-class>
     </servlet>
@@ -74,6 +78,18 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home/*</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/forgotPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/otpConfirm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

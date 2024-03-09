@@ -4,7 +4,9 @@
  */
 package DAOs;
 
+import static DB.DbConnection.getConnection;
 import Models.account;
+import Models.UserAccount;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,7 +89,7 @@ public class accountDAO {
     }
 
     public boolean signup(String username, String password) {
-        String sql = "INSERT INTO Accounts (Username, Password, Role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Accounts (Username, Password, Role, AccPic) VALUES (?, ?, ?, ?)";
         try {
             // Create MD5 Hash
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -101,6 +106,7 @@ public class accountDAO {
             ps.setString(1, username);
             ps.setString(2, passwordHash);
             ps.setString(3, "User");
+            ps.setString(4, "https://i.imgur.com/mCHMpLT.png");
             int result = ps.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
@@ -109,6 +115,35 @@ public class accountDAO {
         } catch (NoSuchAlgorithmException e) {
             // Handle the error in case MD5 algorithm is not available
             Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
+
+    public boolean signupUserAccount(String username, String fullname, String email, String phone) {
+        String sql = "INSERT INTO UserAccount (UserID, Fullname, mail, phone) VALUES (?, ?, ?, ?)";
+
+        try {
+
+            // Prepare the SQL statement
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Set parameters
+            stmt.setString(1, username); // UserID
+            stmt.setString(2, fullname);
+            stmt.setString(3, email);
+            stmt.setString(4, phone);
+
+            // Execute the SQL statement
+            int rowsInserted = stmt.executeUpdate();
+
+            // Close resources
+            stmt.close();
+            conn.close();
+
+            // Return true if insertion was successful
+            return rowsInserted > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -141,6 +176,98 @@ public class accountDAO {
             Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs.next();
+    }
+
+    public String generateOTP() {
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return String.valueOf(otp);
+    }
+
+    public String getFullnameByEmail(String email) throws ClassNotFoundException {
+        String fullname = null;
+        String query = "SELECT fullname FROM UserAccount WHERE Mail = ?";
+        try ( Connection conn = DB.DbConnection.getConnection();  PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                fullname = resultSet.getString("fullname");
+            }
+        } catch (SQLException e) {
+        }
+        return fullname;
+    }
+
+    public UserAccount getCustomerByEmail(String email) throws ClassNotFoundException {
+        String sql = "SELECT * FROM UserAccount WHERE Mail = ?";
+        UserAccount userAccount = null;
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Retrieve data from the result set
+                String userID = rs.getString("UserID"); // New field
+                String fullname = rs.getString("Fullname");
+                String mail = rs.getString("Mail");
+                String phone = rs.getString("Phone");
+                float wallet = rs.getFloat("Wallet");
+                String voucherID = rs.getString("VoucherID");
+
+                // Create a UserAccount object with the retrieved data
+                userAccount = new UserAccount(userID, fullname, mail, phone, wallet, voucherID);
+            }
+
+            // Close resources
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userAccount;
+    }
+
+    public boolean changePasswordByEmail(String email, String pass) {
+        String updateAccountsSql = "UPDATE Accounts SET Password = ? WHERE Username IN (SELECT UserID FROM UserAccount WHERE Mail = ?)";
+
+        try {
+            
+             MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            md.update(pass.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            String passwordHash = sb.toString();
+            
+
+            // Update password in Accounts table
+            PreparedStatement updateAccountsStmt = conn.prepareStatement(updateAccountsSql);
+            updateAccountsStmt.setString(1, passwordHash);
+            updateAccountsStmt.setString(2, email);
+            int accountsUpdateResult = updateAccountsStmt.executeUpdate();
+            updateAccountsStmt.close();
+
+            // Close connection
+            conn.close();
+
+            // Return true if the update was successful
+            return accountsUpdateResult > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
 }
