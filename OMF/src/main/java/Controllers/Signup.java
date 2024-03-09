@@ -94,6 +94,11 @@ public class Signup extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("userpass");
         String re_pass = request.getParameter("repass");
+   
+        String fullname = request.getParameter("fullname");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
         accountDAO dao;
         try {
             if (!password.equals(re_pass)) {
@@ -104,14 +109,24 @@ public class Signup extends HttpServlet {
                 if (usernameExists) {
                     request.getRequestDispatcher("/signup.jsp?error=usernameexists").forward(request, response);
                 } else {
-                    boolean rs = dao.signup(username, password);
-                    Cookie cookie = new Cookie("User", username);
-                    cookie.setMaxAge(3 * 24 * 60 * 60);
-                    response.addCookie(cookie);
-                    response.sendRedirect("/Login");
+                    // Insert into Accounts table
+                    boolean rs1 = dao.signup(username, password);
+
+                    // Insert into UserAccount table
+                    boolean rs2 = dao.signupUserAccount(username, fullname, email, phone);
+
+                    // Redirect based on result
+                    if (rs1 && rs2) {
+                        Cookie cookie = new Cookie("User", username);
+                        cookie.setMaxAge(3 * 24 * 60 * 60);
+                        response.addCookie(cookie);
+                        response.sendRedirect("/Login");
+                    } else {
+                        // Handle the case where insertion failed for one or both tables
+                        // Redirect or show an error message to the user
+                    }
                 }
             }
-
         } catch (Exception e) {
             Logger.getLogger(accountLogin.class.getName()).log(Level.SEVERE, null, e);
         }
