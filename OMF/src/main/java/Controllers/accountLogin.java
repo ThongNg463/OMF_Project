@@ -76,7 +76,7 @@ public class accountLogin extends HttpServlet {
         }
         
         if (!isLogin) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/Login.jsp").forward(request, response);
         }
 
         //request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -110,7 +110,7 @@ public class accountLogin extends HttpServlet {
                     tk = dao.getAccount(username);
                     session.setAttribute("User", tk);                 
                     if (tk.getRole().equals("Admin")) {
-                        response.sendRedirect("/HomeManagement.jsp");
+                        response.sendRedirect("/HomeManagement");
                     } else {
                         response.sendRedirect("/Home");
 

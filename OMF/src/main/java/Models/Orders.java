@@ -4,24 +4,32 @@
  */
 package Models;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author Admin
  */
 public class Orders {
     private String OrderID;
-    private String Username;
+    private String UserID;
+    private String StaffID;
     private String Status;
     private float TotalPrice;
+    private String VoucherID;
+    private Timestamp OrderDate;
 
     public Orders() {
     }
 
-    public Orders(String OrderID, String Username, String Status, float TotalPrice) {
+    public Orders(String OrderID, String UserID, String StaffID, String Status, float TotalPrice, String VoucherID, Timestamp OrderDate) {
         this.OrderID = OrderID;
-        this.Username = Username;
+        this.UserID = UserID;
+        this.StaffID = StaffID;
         this.Status = Status;
         this.TotalPrice = TotalPrice;
+        this.VoucherID = VoucherID;
+        this.OrderDate = OrderDate;
     }
 
     public String getOrderID() {
@@ -32,12 +40,20 @@ public class Orders {
         this.OrderID = OrderID;
     }
 
-    public String getUsername() {
-        return Username;
+    public String getUserID() {
+        return UserID;
     }
 
-    public void setUsername(String Username) {
-        this.Username = Username;
+    public void setUserID(String UserID) {
+        this.UserID = UserID;
+    }
+
+    public String getStaffID() {
+        return StaffID;
+    }
+
+    public void setStaffID(String StaffID) {
+        this.StaffID = StaffID;
     }
 
     public String getStatus() {
@@ -56,7 +72,21 @@ public class Orders {
         this.TotalPrice = TotalPrice;
     }
 
-    
-    
-    
+    public String getVoucherID() {
+        return VoucherID;
+    }
+
+    public void setVoucherID(String VoucherID) {
+        this.VoucherID = VoucherID;
+    }
+
+    public Timestamp getOrderDate() {
+        return OrderDate;
+    }
+
+    public void setOrderDate(Timestamp OrderDate) {
+        this.OrderDate = OrderDate;
+    }
+
+
 }

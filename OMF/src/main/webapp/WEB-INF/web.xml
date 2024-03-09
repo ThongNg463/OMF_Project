@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
+        <servlet-name>HomeManagement</servlet-name>
+        <jsp-file>/HomeManagement.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HomeManagement</servlet-name>
+        <url-pattern>/HomeManagement</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    <servlet-name>userProfile</servlet-name>
+    <jsp-file>/userProfile.jsp</jsp-file>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>userProfile</servlet-name>
+    <url-pattern>/userProfile</url-pattern>
+</servlet-mapping>
+    
+    <servlet>
         <servlet-name>accountLogin</servlet-name>
         <servlet-class>Controllers.accountLogin</servlet-class>
     </servlet>
@@ -29,7 +49,7 @@
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>home.jsp</welcome-file>
+        <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
