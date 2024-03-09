@@ -76,7 +76,7 @@ public class accountLogin extends HttpServlet {
         }
         
         if (!isLogin) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/Login.jsp").forward(request, response);
         }
 
         //request.getRequestDispatcher("/index.jsp").forward(request, response);
