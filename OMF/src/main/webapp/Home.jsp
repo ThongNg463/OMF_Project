@@ -84,7 +84,13 @@
         <header id="header" class="fixed-top d-flex align-items-cente">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="/Home">OMF</a></h1>
+                <h1 class="logo me-auto me-lg-0">
+                    <% if (isLogin) { %>
+                    <a href="/Home">OMF</a>
+                    <% } else { %>
+                    <a href="/">OMF</a>
+                    <% } %>
+                </h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -119,7 +125,7 @@
                         <div class="vr" style="max-height: 100%;"></div>
                         <li class="dropdown">
                             <a href="#">
-                                    <span style="font-family: sans-serif; font-size: 25px" ><%= username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccpic()%>"></span>
+                                <span style="font-family: sans-serif; font-size: 25px" ><%= username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccpic()%>"></span>
                             </a>
                             <ul>
                                 <li><a href="userProfile"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>

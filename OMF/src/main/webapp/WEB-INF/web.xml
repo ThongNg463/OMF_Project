@@ -49,7 +49,7 @@
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>home.jsp</welcome-file>
+        <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
@@ -100,4 +100,20 @@
             30
         </session-timeout>
     </session-config>
+    <servlet>
+        <servlet-name>loginController</servlet-name>
+        <servlet-class>Controllers.loginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/forgotPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/otpConfirm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginController</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
 </web-app>
