@@ -196,7 +196,7 @@ INSERT INTO Orders VALUES('TO_1','Thong', null, '', 100, 'None', null)
 select * from StaffAccount
 select * from Accounts
 select * from UserAccount
-
+  
 select * from Accounts where Role ='User'
 
 INSERT  (StaffID, Fullname, Mail, Phone) VALUES ('Staff03121', 'Staff03', 'Staff03', 'Staff03')

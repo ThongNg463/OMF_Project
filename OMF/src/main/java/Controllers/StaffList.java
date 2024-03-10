@@ -147,8 +147,8 @@ public class StaffList extends HttpServlet {
                 Logger.getLogger(StaffList.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
+    }  
+   
     /**
      * Returns a short description of the servlet.
      *

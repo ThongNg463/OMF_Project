@@ -25,7 +25,7 @@ public class staffDAO {
     public staffDAO() throws SQLException, ClassNotFoundException {
         conn = DB.DbConnection.getConnection();
     }
-
+   
     public StaffAccount getStaff(String staffID) {
         StaffAccount staff = null;
         String sql = "SELECT * FROM StaffAccount WHERE StaffID=?";

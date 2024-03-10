@@ -35,7 +35,7 @@ public class StaffAccount {
     public void setStaffID(String StaffID) {
         this.StaffID = StaffID;
     }
-
+    
     public String getFullname() {
         return Fullname;
     }
