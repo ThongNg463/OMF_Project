@@ -4,8 +4,10 @@
  */
 package Controllers;
 
+import DAOs.accountDAO;
 import DAOs.staffDAO;
 import Models.StaffAccount;
+import Models.account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -70,6 +72,8 @@ public class StaffList extends HttpServlet {
                 String s[] = path.split("/");  //StaffList/ds/Staff01
                 String staID = s[s.length - 1];  //=> staID = Staff01;
                 staffDAO aO = new staffDAO();
+                accountDAO aO1 = new accountDAO();
+                aO1.delete(staID);
                 aO.delete(staID);
                 response.sendRedirect("/StaffList/ds");
             } catch (SQLException ex) {
@@ -96,12 +100,52 @@ public class StaffList extends HttpServlet {
         // method Create
 
         if (request.getParameter("btnAddNew") != null) {
-            String staffID = request.getParameter("txtStaffID");
-            String fullname = request.getParameter("txtFullname");
-            String txtEmail = request.getParameter("txtEmail");
-            String txtNumber = request.getParameter("txtNumber");
-            String txtdes = request.getParameter("txtdes");
-              
+            try {
+                String staffID = request.getParameter("txtStaffID");
+                String fullname = request.getParameter("txtFullname");
+                String txtEmail = request.getParameter("txtEmail");
+                String txtNumber = request.getParameter("txtNumber");
+                String txtdes = request.getParameter("txtdes");
+
+                staffDAO stadao = new staffDAO();
+                StaffAccount addSt = stadao.add(new StaffAccount(staffID, fullname, txtEmail, Integer.parseInt(txtNumber), txtdes));
+                if (addSt != null) {
+                    accountDAO aDao = new accountDAO();
+                    account updateRole = aDao.updateRoleUser("Staff", staffID);
+                    if (updateRole != null) {
+                        response.sendRedirect("/StaffList/ds");
+                    }
+                } else {
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(StaffList.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(StaffList.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        //Edit metthod
+        if (request.getParameter("btnUpdate") != null) {
+            try {
+                String staffID = request.getParameter("txtStaffID");
+                String fullname = request.getParameter("txtFullname");
+                String txtEmail = request.getParameter("txtEmail");
+                String txtNumber = request.getParameter("txtNumber");
+                String txtdes = request.getParameter("txtdes");
+                staffDAO stadao = new staffDAO();
+                StaffAccount addSt = stadao.updateStaff(new StaffAccount(staffID, fullname, txtEmail, Integer.parseInt(txtNumber), txtdes));
+                if (addSt != null) {
+                    response.sendRedirect("/StaffList/ds");
+                } else {
+                    response.sendRedirect("/StaffList/ds");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(StaffList.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(StaffList.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,41 @@ public class accountDAO {
         }
 
         return a;
+    }
+
+    public ResultSet getRoleUser() {
+        ResultSet rs = null;
+        try {
+            Statement st = conn.createStatement();
+            rs = st.executeQuery("select * from Accounts where Role ='User'");
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public account updateRoleUser(String role, String username) {
+        int count = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement("update Accounts set [Role] =? where Username=?");
+            ps.setString(1, role);
+            ps.setString(2, username);
+            count = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count == 0 ? null : new account("1", "1", "Staff", "");
+    }
+
+    public void delete(String staff) {
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("delete from Accounts where Username=?");
+            ps.setString(1, staff);
+            ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(staffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean login(account tk) throws SQLException {
@@ -115,7 +151,7 @@ public class accountDAO {
             return false;
         }
     }
-    
+
     public boolean signupUserAccount(String username, String fullname, String email, String phone) {
         String sql = "INSERT INTO UserAccount (UserID, Fullname, mail, phone) VALUES (?, ?, ?, ?)";
 
@@ -174,7 +210,7 @@ public class accountDAO {
         }
         return rs.next();
     }
-    
+
     public String generateOTP() {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000);
@@ -233,8 +269,8 @@ public class accountDAO {
         String updateAccountsSql = "UPDATE Accounts SET Password = ? WHERE Username IN (SELECT UserID FROM UserAccount WHERE Mail = ?)";
 
         try {
-            
-             MessageDigest md = null;
+
+            MessageDigest md = null;
             try {
                 md = MessageDigest.getInstance("MD5");
             } catch (NoSuchAlgorithmException ex) {
@@ -247,7 +283,6 @@ public class accountDAO {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             String passwordHash = sb.toString();
-            
 
             // Update password in Accounts table
             PreparedStatement updateAccountsStmt = conn.prepareStatement(updateAccountsSql);
@@ -266,6 +301,5 @@ public class accountDAO {
             return false;
         }
     }
-
 
 }

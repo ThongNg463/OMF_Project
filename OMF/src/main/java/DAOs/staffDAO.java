@@ -73,11 +73,35 @@ public class staffDAO {
         int count = 0;
         try {
 
-            PreparedStatement ps = conn.prepareStatement("");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO StaffAccount VALUES (?,?,?,?,?)");
+            ps.setString(1, account.getStaffID());
+            ps.setString(2, account.getFullname());
+            ps.setString(3, account.getMail());
+            ps.setInt(4, account.getPhone());
+            ps.setString(5, account.getDescription());
+            count = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(staffDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return count == 0 ? null : account;
+
+    }
+
+    public StaffAccount updateStaff(StaffAccount account) {
+        int count = 0;
+        try {
+
+            PreparedStatement ps = conn.prepareStatement("update StaffAccount set Fullname=?, Mail=?, Phone=?,[Description]=? where StaffID=?");
+            ps.setString(1, account.getFullname());
+            ps.setString(2, account.getMail());
+            ps.setInt(3, account.getPhone());
+            ps.setString(4, account.getDescription());
+            ps.setString(5, account.getStaffID());
+            count = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(staffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count == 0 ? null : account;
 
     }
 

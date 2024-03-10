@@ -117,7 +117,6 @@ VALUES
 ('Staff01', 'Nguyen Van A', 'anv@example.com', '1234567890'),
 ('Staff02', 'Nguyen Van B', 'bnv@example.com', '0987654321'),
 ('Staff03', 'Nguyen Van C', 'cnv@example.com', '1112223333');
-('Khoi' , CONVERT(VARCHAR(32), HASHBYTES('MD5', '567'), 2),'User', 'https://i.imgur.com/JOKsNeT.jpeg');
 
 insert into Products(ProID, ProName, ProPic ,ProDes, ProPrice, ProType)
 values
@@ -191,3 +190,20 @@ SELECT * FROM Detail_Order WHERE ProID='Pro_1'
 
 
 INSERT INTO Orders VALUES('TO_1','Thong', null, '', 100, 'None', null)
+
+
+
+select * from StaffAccount
+select * from Accounts
+select * from UserAccount
+
+select * from Accounts where Role ='User'
+
+INSERT  (StaffID, Fullname, Mail, Phone) VALUES ('Staff03121', 'Staff03', 'Staff03', 'Staff03')
+
+
+INSERT INTO StaffAccount VALUES ('Huy','Le Hoang Huy','hlhce11112@fpt.edu.vn','132685456','121212121')
+
+
+
+update StaffAccount set Fullname='1', Mail='1', Phone='1',[Description]='1' where StaffID='Huy'
