@@ -210,9 +210,9 @@ public class accountDAO {
                 String userID = rs.getString("UserID"); // New field
                 String fullname = rs.getString("Fullname");
                 String mail = rs.getString("Mail");
-                int phone = rs.getInt("Phone");
+                String phone = rs.getString("Phone");
                 float wallet = rs.getFloat("Wallet");
-                int voucherID = rs.getInt("VoucherID");
+                String voucherID = rs.getString("VoucherID");
 
                 // Create a UserAccount object with the retrieved data
                 userAccount = new UserAccount(userID, fullname, mail, phone, wallet, voucherID);

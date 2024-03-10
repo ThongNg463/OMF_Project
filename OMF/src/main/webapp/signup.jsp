@@ -43,7 +43,7 @@
                                 </div>
                                 <form class="user" action="signup" method="POST">
                                     <% String error = request.getParameter("error");
-        if ("usernameexists".equals(error)) { %>
+                                        if ("usernameexists".equals(error)) { %>
                                     <h2 style="color: #ff0000; text-align: center" class="error-msg">Account already exists! Please try again!</h2>
                                     <% } else if ("Password".equals(error)) { %>
                                     <h2 style="color: #ff0000; text-align: center" class="error-msg">Passwords do not match! Please try again!</h2>
@@ -52,7 +52,7 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="user-name" name="username" placeholder="Username" required>
                                     </div>
-                                   
+
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="user-fullname" name="fullname" placeholder="Fullname" required>
                                     </div>

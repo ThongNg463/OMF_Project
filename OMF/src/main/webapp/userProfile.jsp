@@ -4,6 +4,11 @@
     Author     : mthon
 --%>
 
+<%@page import="DAOs.UserAccountDAO"%>
+<%@page import="Models.UserAccount"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,11 +21,26 @@
 
     </head>
     <body class="bg-gradient-primary">
+        <%
+            String username = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("User".equals(cookie.getName())) {
+                        username = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+            UserAccountDAO AccDAO = new UserAccountDAO();
+            UserAccount userAcc = AccDAO.getUserAccount(username);
+        %>
         <div class="container-xl px-4 mt-4">
             <nav class="nav nav-borders">
                 <a class="nav-link active ms-0" href="#">Profile</a>
                 <a class="nav-link" href="/Home">Back to Home page</a>
             </nav>
+
             <hr class="mt-0 mb-4">
             <div class="row">
                 <div class="col-xl-4">
@@ -33,9 +53,9 @@
                             <!-- Profile picture help block-->
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                             <!-- Profile picture upload button-->
-                            <h4>John Doe</h4>
+                            <h4><%=userAcc.getUserID()%></h4>
                             <p class="text-secondary mb-1">Full Stack Developer</p>
-                            <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                            <p class="text-muted font-size-sm">Nguyen Van Cu, Ninh Kieu</p>
                             <button class="btn btn-primary" type="button">Upload new image</button>
                         </div>
                     </div>
@@ -49,19 +69,19 @@
                                 <!-- Form Group (username)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputUsername">Full Name</label>
-                                    <input class="form-control" id="inputUsername" type="text" placeholder="Enter your full name" value="Nguyen Van A">
+                                    <input class="form-control" id="inputUsername" type="text" placeholder="Enter your full name" value="<%=userAcc.getFullname()%>">
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (first name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputFirstName">UserID</label>
-                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your UserID" value="UserID">
+                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your UserID" value="<%=userAcc.getUserID()%>">
                                     </div>
                                     <!-- Form Group (last name)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputLastName">Wallet</label>
-                                        <input class="form-control" id="inputLastName" type="text" placeholder="Total Money" value="Wallet">
+                                        <input class="form-control" id="inputLastName" type="text" placeholder="Total Money" value="<%=userAcc.getWallet()%>">
                                     </div>
                                 </div>
                                 <!-- Form Row        -->
@@ -80,14 +100,14 @@
                                 <!-- Form Group (email address)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                    <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="name@example.com">
+                                    <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="<%=userAcc.getMail()%>">
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (phone number)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputPhone">Phone number</label>
-                                        <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567">
+                                        <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="<%=userAcc.getPhone()%>">
                                     </div>
                                     <!-- Form Group (birthday)-->
                                     <div class="col-md-6">

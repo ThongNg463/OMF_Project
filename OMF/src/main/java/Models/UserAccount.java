@@ -12,11 +12,11 @@ public class UserAccount {
     private String UserID;
     private String Fullname;
     private String Mail;
-    private int Phone;
+    private String Phone;
     private Float Wallet;
-    private int VouncherID;
+    private String VouncherID;
 
-    public UserAccount(String UserID, String Fullname, String Mail, int Phone, Float Wallet, int VouncherID) {
+    public UserAccount(String UserID, String Fullname, String Mail, String Phone, Float Wallet, String VouncherID) {
         this.UserID = UserID;
         this.Fullname = Fullname;
         this.Mail = Mail;
@@ -52,11 +52,11 @@ public class UserAccount {
         this.Mail = Mail;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return Phone;
     }
 
-    public void setPhone(int Phone) {
+    public void setPhone(String Phone) {
         this.Phone = Phone;
     }
 
@@ -68,11 +68,11 @@ public class UserAccount {
         this.Wallet = Wallet;
     }
 
-    public int getVouncherID() {
+    public String getVouncherID() {
         return VouncherID;
     }
 
-    public void setVouncherID(int VouncherID) {
+    public void setVouncherID(String VouncherID) {
         this.VouncherID = VouncherID;
     }
     
