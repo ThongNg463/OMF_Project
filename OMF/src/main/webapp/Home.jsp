@@ -18,7 +18,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <!-- Custom styles for this template -->
         <link href="/UI/css/sb-admin-2.min.css" rel="stylesheet">
-
         <!-- Custom styles for this page -->
         <link href="/UI/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -104,14 +103,28 @@
                         <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
                         <li><a class="nav-link scrollto" href="#chefs">Members</a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                            <%  if (isLogin && userAcc.getRole().equals("Admin")) { %>
-                        <li class="dropdown"><a href="#"><span>Admin</span></a>
+                            <% if (isLogin) { %>
+                            <% if (userAcc.getRole().equals("Admin")) { %>
+                        <li class="dropdown"><a href="#"><span>Admin</span> </a>
                             <ul>
-                                <li><a href="/ProductList/Ds">Products List</a></li>
-                                <li><a href="/OrderList/Ds">Orders List</a></li>
+                                <li><a href="/ProductList/Ds">Product Management</a></li>
+                                <li><a href="/OrderManagement/Ds">Order Management</a></li>
+                                <li><a href="/UserManagement/Ds">User Management</a></li>
+                                <li><a href="/StaffManagement/Ds">Staff Management</a></li>
+                                <li><a href="/VoucherManagement/Ds">Voucher Management</a></li> 
                             </ul>
-                        </li>       
-                        <% }%>
+                        </li>
+                        <% } else if (userAcc.getRole().equals("Staff")) { %>
+                        <li class="dropdown"><a href="#"><span>Staff</span> </a>
+                            <ul>
+                                <li><a href="/ProductList/Ds">Product Management</a></li>
+                                <li><a href="/OrderManagement/Ds">Order Management</a></li>
+                                <li><a href="/UserManagement/Ds">User Management</a></li>
+                                <li><a href="/VoucherManagement/Ds">Voucher Management</a></li>
+                            </ul>
+                        </li>
+                        <% } %>
+                        <% } %>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -534,105 +547,56 @@
                 </div>
             </section><!-- End Gallery Section -->
 
-            <!--             ======= Chefs Section ======= 
-                        <section id="chefs" class="chefs">
-                            <div class="container" data-aos="fade-up">
-            
-                                <div class="section-title">
-                                    <h2>Group 1</h2>
-                                    <p>Our Members</p>
-                                </div>
-            
-                                <div class="row">
-            
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                                            <img src="assets/img/chefs/Toan.jpg" class="img-fluid" alt="">
-                                            <div class="member-info">
-                                                <div class="member-info-content">
-                                                    <h4>Thanh Toan</h4>
-                                                    <span>Leader 1</span>
-                                                </div>
-                                                <div class="social">
-                                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
+            ======= Chefs Section ======= 
+            <section id="chefs" class="chefs">
+                <div class="container" data-aos="fade-up">
+
+                    <div class="section-title">
+                        <h2>Group 1</h2>
+                        <p>Our Members</p>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6">
+                            <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                                <img src="assets/img/chefs/Thong.jpg" class="img-fluid" alt="">
+                                <div class="member-info">
+                                    <div class="member-info-content">
+                                        <h4>Minh Thong</h4>
+                                        <span>Leader 1</span>
                                     </div>
-            
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                                            <img src="assets/img/chefs/Hoa.jpg" class="img-fluid" alt="">
-                                            <div class="member-info">
-                                                <div class="member-info-content">
-                                                    <h4>Gia Hoa</h4>
-                                                    <span>Leader 3</span>
-                                                </div>
-                                                <div class="social">
-                                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                                            <img src="assets/img/chefs/Tan.jpg" class="img-fluid" alt="">
-                                            <div class="member-info">
-                                                <div class="member-info-content">
-                                                    <h4>Trong Tan</h4>
-                                                    <span>Leader 4</span>
-                                                </div>
-                                                <div class="social">
-                                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     <div class="col-lg-3 col-md-6">
-                                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                                            <img src="assets/img/chefs/Thong.jpg" class="img-fluid" alt="">
-                                            <div class="member-info">
-                                                <div class="member-info-content">
-                                                    <h4>Minh Thong</h4>
-                                                    <span>Leader 2</span>
-                                                </div>
-                                                <div class="social">
-                                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                         <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                                            <img src="assets/img/chefs/Hao.jpg" class="img-fluid" alt="">
-                                            <div class="member-info">
-                                                <div class="member-info-content">
-                                                    <h4>Nhut Hao</h4>
-                                                    <span>Member</span>
-                                                </div>
-                                                <div class="social">
-                                                    <a href=""><i class="bi bi-twitter"></i></a>
-                                                    <a href=""><i class="bi bi-facebook"></i></a>
-                                                    <a href=""><i class="bi bi-instagram"></i></a>
-                                                    <a href=""><i class="bi bi-linkedin"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="social">
+                                        <a href=""><i class="bi bi-twitter"></i></a>
+                                        <a href=""><i class="bi bi-facebook"></i></a>
+                                        <a href=""><i class="bi bi-instagram"></i></a>
+                                        <a href=""><i class="bi bi-linkedin"></i></a>
                                     </div>
                                 </div>
-            
                             </div>
-                        </section> End Chefs Section -->
+                        </div>
+
+
+                        <div class="member" data-aos="zoom-in" data-aos-delay="300">
+                            <img src="assets/img/chefs/Hao.jpg" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>Nhut Hao</h4>
+                                    <span>Member</span>
+                                </div>
+                                <div class="social">
+                                    <a href=""><i class="bi bi-twitter"></i></a>
+                                    <a href=""><i class="bi bi-facebook"></i></a>
+                                    <a href=""><i class="bi bi-instagram"></i></a>
+                                    <a href=""><i class="bi bi-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </section> End Chefs Section -->
 
             <!-- ======= Contact Section ======= -->
             <section id="contact" class="contact">

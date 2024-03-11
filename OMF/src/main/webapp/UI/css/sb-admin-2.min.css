@@ -9158,6 +9158,7 @@ body.sidebar-toggled footer.sticky-footer{
 }
 
 .img-account-profile {
+    object-fit: cover;
     height: 10rem;
 }
 .rounded-circle {

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="DAOs.ProductDAO"%>
 <%@page import="Models.Account"%>
-<%@page import="DAOs.AccountDAO"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="DAOs.AccountDAO"%>
+<%@page import="Models.Orders"%>
+<%@page import="DAOs.OrdersDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -18,12 +16,10 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Product Management</title>
+        <title>Order Management</title>
         
         <!-- Favicons -->
         <link href="./assets/img/favicon.png" rel="icon">
-
-        <!-- Custom fonts for this template -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -42,83 +38,6 @@
 
         <!-- Custom styles for this page -->
         <link href="/UI/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>   
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-        <style>
-            /* The Modal (background) */
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: hidden; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            }
-
-            .modal-button {
-                cursor: pointer; /* Con trỏ chuột */
-            }
-
-            .modal-button:focus {
-                outline: none; /* Bỏ viền nổi */
-box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như Bootstrap */
-            }
-
-            /* Modal Content/Box */
-            .modal-content {
-                margin: 15px auto; /* Điều chỉnh lề */
-                padding: 20px; /* Điều chỉnh đệm */
-                border: 1px solid #888;
-                width: 80%; /* Chỉnh chiều rộng tùy theo nhu cầu */
-                max-width: 800px; /* Đặt giới hạn chiều rộng tối đa để tránh quá lớn trên màn hình rộng */
-                overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
-                background: #fff; /* Màu nền cho modal */
-                border-radius: 8px; /* Bo tròn góc */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
-                position: relative; /* Để thêm "close" button vào vị trí */
-                max-height: calc(100vh - 40px); /* Đảm bảo modal không quá cao */
-                overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
-            }
-
-            /* Định dạng cho bảng bên trong modal */
-            .modal-content table {
-                width: 100%; /* Chiều rộng tối đa */
-                max-width: 100%; /* Đảm bảo bảng không quá rộng */
-                margin-bottom: 1rem;
-                border-collapse: collapse; /* Bỏ các khoảng cách giữa các cell */
-            }
-
-            .modal-content th,
-            .modal-content td {
-                padding: .75rem; /* Đệm cho từng cell */
-                vertical-align: top; /* Căn đỉnh cho nội dung */
-                border-top: 1px solid #dee2e6; /* Đường viền trên mỗi cell */
-            }
-
-            .modal-content th {
-                vertical-align: bottom; /* Căn đáy cho header */
-                border-bottom: 2px solid #dee2e6; /* Đường viền đậm cho header */
-            }
-
-            /* Thêm phong cách cho nút đóng */
-            .close {
-                position: absolute; /* Định vị tuyệt đối so với .modal-content */
-                right: 20px; /* Lề phải */
-                top: 20px; /* Lề trên */
-                z-index: 2; /* Đảm bảo nút ở trên cùng */
-            }
-        </style>
 
     </head>
 
@@ -149,7 +68,6 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                 request.getRequestDispatcher("/AccessDenied.jsp").forward(request, response);
             }
         %>
-
         <!-- Page Wrapper -->
         <div id="wrapper">
 
@@ -168,7 +86,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Dashboard -->
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/HomeManagement.jsp">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
@@ -208,7 +126,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-<h6 class="collapse-header">Custom Utilities:</h6>
+                            <h6 class="collapse-header">Custom Utilities:</h6>
                             <a class="collapse-item" href="utilities-color.html">Colors</a>
                             <a class="collapse-item" href="utilities-border.html">Borders</a>
                             <a class="collapse-item" href="utilities-animation.html">Animations</a>
@@ -257,10 +175,10 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                 </li>
 
                 <!-- Nav Item - Tables -->
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="tables.html">
                         <i class="fas fa-fw fa-table"></i>
-<span>Tables</span></a>
+                        <span>Tables</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -270,6 +188,13 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                 <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
+
+                <!-- Sidebar Message -->
+                <!--                <div class="sidebar-card d-none d-lg-flex">
+                                    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
+                                    <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                                    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                                </div>-->
 
             </ul>
             <!-- End of Sidebar -->
@@ -284,11 +209,9 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
-                        <form class="form-inline">
-                            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                        </form>
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
 
                         <!-- Topbar Search -->
                         <form
@@ -318,7 +241,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                      aria-labelledby="searchDropdown">
                                     <form class="form-inline mr-auto w-100 navbar-search">
                                         <div class="input-group">
-<input type="text" class="form-control bg-light border-0 small"
+                                            <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Search for..." aria-label="Search"
                                                    aria-describedby="basic-addon2">
                                             <div class="input-group-append">
@@ -361,7 +284,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                             <div class="icon-circle bg-success">
                                                 <i class="fas fa-donate text-white"></i>
                                             </div>
-</div>
+                                        </div>
                                         <div>
                                             <div class="small text-gray-500">December 7, 2019</div>
                                             $290.29 has been deposited into your account!
@@ -403,7 +326,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                             <div class="status-indicator bg-success"></div>
                                         </div>
                                         <div class="font-weight-bold">
-<div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
                                                 problem I've been having.</div>
                                             <div class="small text-gray-500">Emily Fowler · 58m</div>
                                         </div>
@@ -441,7 +364,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
                                                 told me that people say this to all dogs, even if they aren't good...</div>
-<div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -490,237 +413,116 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <%
-                            ProductDAO proDAO = new ProductDAO();
-                            int totalCount = proDAO.getTotalProductsCount();
+                            OrdersDAO ordDAO = new OrdersDAO();
+
                         %>
-<!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
-
-
-                        <!-- DataTales Example -->
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-2 text-gray-800">Order Management</h1>
+                        <!--                        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                                                    For more information about DataTables, please visit the <a target="_blank"
+                                                                                                               href="https://datatables.net">official DataTables documentation</a>.</p>-->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
-                                <div style="float: right;">
-                                    <button class="btn btn-warning btn-sm text-light shadow-lg rounded modal-button" data-modal="myModalAddNew">
-                                        <i class="fa-solid fa-circle-plus"></i> Add New Product
-                                    </button>
-                                </div>
+                                <h6 class="m-0 font-weight-bold text-primary">Order List</h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Picture</th>
-                                                <th>Description</th>
-                                                <th>Price</th>  
-                                                <th>Type</th>  
-                                                <th>Update</th>
-                                                <th>Delete</th>                    
+                                                <th>OrderID</th>
+                                                <th>UserID</th>              
+                                                <th>StaffID</th>   
+                                                <th>Status</th>
+                                                <th>TotalPrice</th>
+                                                <th>OrderDate</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            <%
-                                                ResultSet rs = proDAO.getAll();
+                                            <%                                                ResultSet rs = ordDAO.getAll();
                                                 while (rs.next()) {
                                             %>
                                             <tr>
-                                                <td><%= rs.getString("ProID")%></td>
-                                                <td><%= rs.getString("ProName")%></td>
-                                                <td><img src="<%= rs.getString("ProPic")%>" style="max-height: 100px" alt="Picture"/></td>
-                                                <td><%= rs.getString("ProDes")%></td>
-                                                <td>$<%= rs.getFloat("ProPrice")%></td>    
-                                                <td><%= rs.getString("ProType")%></td>
-                                                <td>
-                                                    <div class="modal-button" data-modal="myModal<%=rs.getString("ProID")%>"><i class="fa-solid fa-file-pen" style="color: #000000; font-size: 200%;"></i></div>
-<div id="myModal<%=rs.getString("ProID")%>" class="modal">
-                                                        <!-- Modal content -->
-                                                        <div class="modal-content">
-                                                            <H1>Update Product - ProID: <%=rs.getString("ProID")%></H1>
-                                                            <span class="close" style="cursor: pointer">&times;</span>
-                                                            <br>
-                                                            <form method="post">
-                                                                <input type="hidden" name="ProID" value="<%=rs.getString("ProID")%>">
-                                                                <div class="form-group">
-                                                                    <label class="form-label h4">Product Stock:</label>
-                                                                    <div><input class="form-control" type="number" name="ProStock" value="<%=rs.getInt("ProStock")%>" required></div> <br/>        
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label class="form-label h4">Product Name:</label>
-                                                                    <div><input class="form-control" type="text" name="ProName" value="<%=rs.getString("ProName")%>" required></div> <br/>        
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="form-label h4">Product Picture Link:</label>
-                                                                    <div><input class="form-control" type="text" name="ProPic" value="<%=rs.getString("ProPic")%>" required></div> <br/>        
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="form-label h4">Product Description:</label> 
-                                                                    <div><textarea class="form-control" type="text" name="ProDes" required><%=rs.getString("ProDes")%></textarea></div> <br/>                
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="form-label h4">Product Price:</label>
-<div><input class="form-control" type="text" name="ProPrice" value="<%=rs.getString("ProPrice")%>" required></div> <br/>    
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label class="form-label h4">Product Type:</label>
-                                                                    <div>                                                              
-                                                                        <select id="ProType" name="ProType">
-                                                                            <option value="starters">Starters</option>
-                                                                            <option value="salads">Salads</option>
-                                                                            <option value="specialty">Specialty</option>
-                                                                        </select>
-
-                                                                    </div> <br/>        
-                                                                </div>
-                                                                <button onclick="return confirm('Update this product?')" class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnUpdate" value="Update">Update Product</button>         
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><a onclick="return confirm('Delete this product?')" href="/ProductList/delete/<%= rs.getString("ProID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                      
+                                                <td><%= rs.getString("OrderID")%></td>
+                                                <td><%= rs.getString("UserID")%></td>
+                                                <td><%= rs.getString("StaffID")%></td>
+                                                <td><%= rs.getString("Status")%></td>
+                                                <td><%= rs.getFloat("TotalPrice")%></td>
+                                                <td><%= rs.getTimestamp("OrderDate")%></td>               
                                             </tr>
-                                            <%
-                                                }
-                                            %>
+
                                         </tbody>
+                                        <%
+                                            }
+                                        %>
                                     </table>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="myModalAddNew" class="modal">
-                            <!-- Modal content -->
-
-                            <div class="modal-content">
-                                <%
-                                    int i = 1;
-                                    String ProID = "Pro_" + (proDAO.getTotalProductsCount() + i);
-                                    while (proDAO.getProducts(ProID) != null) {
-                                        ProID = "Pro_" + (proDAO.getTotalProductsCount() + ++i);
-                                    }
-%>
-                                <H1>Add new Product - ProID: <%=ProID%></H1>
-                                <span class="close" style="cursor: pointer">&times;</span>
-                                <br>
-                                <form method="post">
-                                    <input type="hidden" name="ProID">
-                                    <div class="form-group">
-                                        <label class="form-label h4">Product Stock:</label>
-                                        <div><input class="form-control" type="number" name="ProStock" required></div> <br/>        
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label h4">Product Name:</label>
-                                        <div><input class="form-control" type="text" name="ProName" required></div> <br/>        
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label h4">Product Picture Link:</label>
-                                        <div><input class="form-control" type="text" name="ProPic" required></div> <br/>        
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label h4">Product Description:</label> 
-                                        <div><textarea class="form-control" type="text" name="ProDes" required></textarea></div> <br/>                
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label h4">Product Price:</label> 
-                                        <div><input class="form-control" type="text" name="ProPrice" required></div> <br/>    
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label h4">Product Type:</label>
-                                        <div>                                                              
-                                            <select id="ProType" name="ProType">
-                                                <option value="starters">Starters</option>
-                                                <option value="salads">Salads</option>
-                                                <option value="specialty">Specialty</option>
-                                            </select>
-
-                                        </div> <br/>        
-                                    </div>
-                                    <button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Product</button>
-</form>
-                            </div>
-                        </div>
-
-                        <!-- /.container-fluid -->
-
                     </div>
-                    <!-- End of Main Content -->
-
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; OMF 2024</span>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- End of Footer -->
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- End of Content Wrapper -->
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; OMF 2024</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Page Wrapper -->
+            <!-- End of Content Wrapper -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
+        </div>
+        <!-- End of Page Wrapper -->
 
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="/vendor/jquery/jquery.min.js"></script>
-            <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Logout Modal-->
+        <!--        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="login.html">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
 
-            <!-- Core plugin JavaScript-->
-            <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="/js/sb-admin-2.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Page level plugins -->
-            <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-            <!-- Page level custom scripts -->
-            <script src="/js/demo/datatables-demo.js"></script>
-            <script>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-                                                    // Get all buttons that opens a modal
-                                                    var modalButtons = document.querySelectorAll('.modal-button');
-
-                                                    // Get all modals
-                                                    var modals = document.querySelectorAll('.modal');
-
-                                                    // Get all elements that closes the modal
-                                                    var closeSpans = document.querySelectorAll('.close');
-
-                                                    // Attach click event listener to modal buttons
-                                                    modalButtons.forEach(function (btn) {
-                                                        btn.onclick = function () {
-                                                            var modal = document.getElementById(btn.getAttribute('data-modal'));
-                                                            modal.style.display = "block";
-                                                        }
-                                                    });
-
-                                                    // Attach click event listener to close buttons
-closeSpans.forEach(function (span) {
-                                                        span.onclick = function () {
-                                                            span.closest('.modal').style.display = "none";
-                                                        }
-                                                    });
-
-                                                    // Click anywhere outside of the modal to close it
-                                                    window.onclick = function (event) {
-                                                        if (event.target.classList.contains('modal')) {
-                                                            event.target.style.display = "none";
-                                                        }
-                                                    }
-            </script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
 
     </body>
 

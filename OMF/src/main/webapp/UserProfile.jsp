@@ -17,6 +17,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>User Profile</title>
+        <!-- Favicons -->
+        <link href="./assets/img/favicon.png" rel="icon">
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
         <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
         <link href="/UI/css/sb-admin-2.min.css" rel="stylesheet">
@@ -54,7 +56,7 @@
                         <div class="card-header">Profile Picture</div>
                         <div class="card-body text-center">
                             <!-- Profile picture image-->
-                            <img class="img-account-profile rounded-circle mb-2" src="<%= UserAcc.getAccpic()%>" alt="">
+                            <img class="img-account-profile rounded-circle mb-2" src="<%= UserAcc.getAccpic()%>" alt="" style="height: 110px; width: 110px">
                             <!-- Profile picture help block-->
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                             <!-- Profile picture upload button-->
