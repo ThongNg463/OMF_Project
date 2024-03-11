@@ -112,4 +112,28 @@
         <servlet-name>loginController</servlet-name>
         <url-pattern>/ChangePassword</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>Controllers.UserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/UserManagement/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>StaffController</servlet-name>
+        <servlet-class>Controllers.StaffController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/StaffManagement/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>VoucherController</servlet-name>
+        <servlet-class>Controllers.VoucherController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VoucherController</servlet-name>
+        <url-pattern>/VoucherManagement/*</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -232,11 +232,11 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Management:</h6>
-                            <a class="collapse-item" href="/prlist/ds">Product Management</a>
-                            <a class="collapse-item" href="/olist/ds">Order Management</a>
-                            <a class="collapse-item" href="/cslist/ds">Customer Management</a>
-                            <a class="collapse-item" href="/stlist/ds">Staff Management</a>
-                            <a class="collapse-item" href="/vlist/ds">Voucher Management</a>
+                            <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
+                            <a class="collapse-item" href="/OrderList/Ds">Order Management</a>
+                            <a class="collapse-item" href="/UserManagement/Ds">Customer Management</a>
+                            <a class="collapse-item" href="/StaffManagement/Ds">Staff Management</a>
+                            <a class="collapse-item" href="/VoucherManagement/Ds">Voucher Management</a>
                             <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
                             <div class="collapse-divider"></div>
                             <!--                            <h6 class="collapse-header">Other Pages:</h6>

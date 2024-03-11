@@ -145,4 +145,18 @@ public class AccountDAO {
         }
         return rs.next();
     }
+    public int delete(String id) {
+        int result = 0;
+        String sql = "DELETE FROM Accounts WHERE Username=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
 }
