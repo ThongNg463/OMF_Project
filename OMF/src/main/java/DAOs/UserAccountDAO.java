@@ -6,10 +6,13 @@ package DAOs;
 
 import Models.Products;
 import Models.UserAccount;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,5 +113,97 @@ public class UserAccountDAO {
         }
 
         return result;
+    }
+    
+    public String generateOTP() {
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return String.valueOf(otp);
+    }
+
+    public String getFullnameByEmail(String email) throws ClassNotFoundException {
+        String fullname = null;
+        String query = "SELECT fullname FROM UserAccount WHERE Mail = ?";
+        try ( Connection conn = DB.DbConnection.getConnection();  PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                fullname = resultSet.getString("fullname");
+            }
+        } catch (SQLException e) {
+        }
+        return fullname;
+    }
+
+    public UserAccount getCustomerByEmail(String email) throws ClassNotFoundException {
+        String sql = "SELECT * FROM UserAccount WHERE Mail = ?";
+        UserAccount userAccount = null;
+
+        try {
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Retrieve data from the result set
+                String userID = rs.getString("UserID"); // New field
+                String fullname = rs.getString("Fullname");
+                String mail = rs.getString("Mail");
+                String phone = rs.getString("Phone");
+                float wallet = rs.getFloat("Wallet");
+                String voucherID = rs.getString("VoucherID");
+
+                // Create a UserAccount object with the retrieved data
+                userAccount = new UserAccount(userID, fullname, mail, phone, wallet, voucherID);
+            }
+
+            // Close resources
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userAccount;
+    }
+
+    public boolean changePasswordByEmail(String email, String pass) {
+        String updateAccountsSql = "UPDATE Accounts SET Password = ? WHERE Username IN (SELECT UserID FROM UserAccount WHERE Mail = ?)";
+
+        try {
+            
+             MessageDigest md = null;
+            try {
+                md = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            md.update(pass.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            String passwordHash = sb.toString();
+            
+
+            // Update password in Accounts table
+            PreparedStatement updateAccountsStmt = conn.prepareStatement(updateAccountsSql);
+            updateAccountsStmt.setString(1, passwordHash);
+            updateAccountsStmt.setString(2, email);
+            int accountsUpdateResult = updateAccountsStmt.executeUpdate();
+            updateAccountsStmt.close();
+
+            // Close connection
+            conn.close();
+
+            // Return true if the update was successful
+            return accountsUpdateResult > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }
