@@ -8,22 +8,22 @@ package Models;
  *
  * @author Mac
  */
-public class account {
+public class Account {
 
     private String username;
     private String password;
     private String role;
     private String accpic;
 
-    public account() {
+    public Account() {
     }
 
-    public account(String username, String password) {
+    public Account(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public account(String username, String password, String role, String accpic) {
+    public Account(String username, String password, String role, String accpic) {
         this.username = username;
         this.password = password;
         this.role = role;

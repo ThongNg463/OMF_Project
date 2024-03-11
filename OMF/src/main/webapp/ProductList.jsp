@@ -4,8 +4,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="DAOs.ProductDAO"%>
-<%@page import="Models.account"%>
-<%@page import="DAOs.accountDAO"%>
+<%@page import="Models.Account"%>
+<%@page import="DAOs.AccountDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
@@ -48,14 +48,81 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <style>
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: hidden; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
 
+            .modal-button {
+                cursor: pointer; /* Con trỏ chuột */
+            }
+
+            .modal-button:focus {
+                outline: none; /* Bỏ viền nổi */
+box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như Bootstrap */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+                margin: 15px auto; /* Điều chỉnh lề */
+                padding: 20px; /* Điều chỉnh đệm */
+                border: 1px solid #888;
+                width: 80%; /* Chỉnh chiều rộng tùy theo nhu cầu */
+                max-width: 800px; /* Đặt giới hạn chiều rộng tối đa để tránh quá lớn trên màn hình rộng */
+                overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+                background: #fff; /* Màu nền cho modal */
+                border-radius: 8px; /* Bo tròn góc */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+                position: relative; /* Để thêm "close" button vào vị trí */
+                max-height: calc(100vh - 40px); /* Đảm bảo modal không quá cao */
+                overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+            }
+
+            /* Định dạng cho bảng bên trong modal */
+            .modal-content table {
+                width: 100%; /* Chiều rộng tối đa */
+                max-width: 100%; /* Đảm bảo bảng không quá rộng */
+                margin-bottom: 1rem;
+                border-collapse: collapse; /* Bỏ các khoảng cách giữa các cell */
+            }
+
+            .modal-content th,
+            .modal-content td {
+                padding: .75rem; /* Đệm cho từng cell */
+                vertical-align: top; /* Căn đỉnh cho nội dung */
+                border-top: 1px solid #dee2e6; /* Đường viền trên mỗi cell */
+            }
+
+            .modal-content th {
+                vertical-align: bottom; /* Căn đáy cho header */
+                border-bottom: 2px solid #dee2e6; /* Đường viền đậm cho header */
+            }
+
+            /* Thêm phong cách cho nút đóng */
+            .close {
+                position: absolute; /* Định vị tuyệt đối so với .modal-content */
+                right: 20px; /* Lề phải */
+                top: 20px; /* Lề trên */
+                z-index: 2; /* Đảm bảo nút ở trên cùng */
+            }
+        </style>
 
     </head>
 
     <body id="page-top">
         <%
-            accountDAO AccDAO = new accountDAO();
-            account UserAcc = new account();
+            AccountDAO AccDAO = new AccountDAO();
+            Account UserAcc = new Account();
             String Username = null;
             String Role = null;
             boolean isLogin = false;
@@ -75,7 +142,7 @@
 
             if (!isLogin) {
                 response.sendRedirect("/Login");
-            } else if (!Role.equals("Admin")) {
+} else if (!Role.equals("Admin")) {
                 request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
             }
         %>
@@ -138,7 +205,7 @@
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Utilities:</h6>
+<h6 class="collapse-header">Custom Utilities:</h6>
                             <a class="collapse-item" href="utilities-color.html">Colors</a>
                             <a class="collapse-item" href="utilities-border.html">Borders</a>
                             <a class="collapse-item" href="utilities-animation.html">Animations</a>
@@ -167,6 +234,9 @@
                             <h6 class="collapse-header">Management:</h6>
                             <a class="collapse-item" href="/prlist/ds">Product Management</a>
                             <a class="collapse-item" href="/olist/ds">Order Management</a>
+                            <a class="collapse-item" href="/cslist/ds">Customer Management</a>
+                            <a class="collapse-item" href="/stlist/ds">Staff Management</a>
+                            <a class="collapse-item" href="/vlist/ds">Voucher Management</a>
                             <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
                             <div class="collapse-divider"></div>
                             <!--                            <h6 class="collapse-header">Other Pages:</h6>
@@ -187,7 +257,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="tables.html">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span></a>
+<span>Tables</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -245,7 +315,7 @@
                                      aria-labelledby="searchDropdown">
                                     <form class="form-inline mr-auto w-100 navbar-search">
                                         <div class="input-group">
-                                            <input type="text" class="form-control bg-light border-0 small"
+<input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Search for..." aria-label="Search"
                                                    aria-describedby="basic-addon2">
                                             <div class="input-group-append">
@@ -288,7 +358,7 @@
                                             <div class="icon-circle bg-success">
                                                 <i class="fas fa-donate text-white"></i>
                                             </div>
-                                        </div>
+</div>
                                         <div>
                                             <div class="small text-gray-500">December 7, 2019</div>
                                             $290.29 has been deposited into your account!
@@ -330,7 +400,7 @@
                                             <div class="status-indicator bg-success"></div>
                                         </div>
                                         <div class="font-weight-bold">
-                                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
+<div class="text-truncate">Hi there! I am wondering if you can help me with a
                                                 problem I've been having.</div>
                                             <div class="small text-gray-500">Emily Fowler · 58m</div>
                                         </div>
@@ -368,7 +438,7 @@
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
                                                 told me that people say this to all dogs, even if they aren't good...</div>
-                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
+<div class="small text-gray-500">Chicken the Dog · 2w</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -382,7 +452,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=Username%>
-                                    <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccpic()%>"></span>
+                                        <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccpic()%>"></span>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -420,7 +490,7 @@
                             ProductDAO proDAO = new ProductDAO();
                             int totalCount = proDAO.getTotalProductsCount();
                         %>
-                        <!-- Page Heading -->
+<!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
 
 
@@ -428,6 +498,11 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Product List</h6>
+                                <div style="float: right;">
+                                    <button class="btn btn-warning btn-sm text-light shadow-lg rounded modal-button" data-modal="myModalAddNew">
+                                        <i class="fa-solid fa-circle-plus"></i> Add New Product
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -459,7 +534,7 @@
                                                 <td><%= rs.getString("ProType")%></td>
                                                 <td>
                                                     <div class="modal-button" data-modal="myModal<%=rs.getString("ProID")%>"><i class="fa-solid fa-file-pen" style="color: #000000; font-size: 200%;"></i></div>
-                                                    <div id="myModal<%=rs.getString("ProID")%>" class="modal">
+<div id="myModal<%=rs.getString("ProID")%>" class="modal">
                                                         <!-- Modal content -->
                                                         <div class="modal-content">
                                                             <H1>Update Product - ProID: <%=rs.getString("ProID")%></H1>
@@ -485,8 +560,8 @@
                                                                     <div><textarea class="form-control" type="text" name="ProDes" required><%=rs.getString("ProDes")%></textarea></div> <br/>                
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label class="form-label h4">Product Price:</label> 
-                                                                    <div><input class="form-control" type="text" name="ProPrice" value="<%=rs.getString("ProPrice")%>" required></div> <br/>    
+                                                                    <label class="form-label h4">Product Price:</label>
+<div><input class="form-control" type="text" name="ProPrice" value="<%=rs.getString("ProPrice")%>" required></div> <br/>    
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-label h4">Product Type:</label>
@@ -504,7 +579,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><a onclick="return confirm('Delete this product?')" href="/prlist/delete/<%= rs.getString("ProID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                      
+                                                <td><a onclick="return confirm('Delete this product?')" href="/ProductList/delete/<%= rs.getString("ProID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                      
                                             </tr>
                                             <%
                                                 }
@@ -514,7 +589,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded modal-button" data-modal="myModalAddNew"><i class="fa-solid fa-circle-plus"></i> Add new Product</div>
+
                         <div id="myModalAddNew" class="modal">
                             <!-- Modal content -->
 
@@ -525,7 +600,7 @@
                                     while (proDAO.getProducts(ProID) != null) {
                                         ProID = "Pro_" + (proDAO.getTotalProductsCount() + ++i);
                                     }
-                                %>
+%>
                                 <H1>Add new Product - ProID: <%=ProID%></H1>
                                 <span class="close" style="cursor: pointer">&times;</span>
                                 <br>
@@ -562,8 +637,8 @@
 
                                         </div> <br/>        
                                     </div>
-                                    <button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Product</button>         
-                                </form>
+                                    <button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Product</button>
+</form>
                             </div>
                         </div>
 
@@ -630,7 +705,7 @@
                                                     });
 
                                                     // Attach click event listener to close buttons
-                                                    closeSpans.forEach(function (span) {
+closeSpans.forEach(function (span) {
                                                         span.onclick = function () {
                                                             span.closest('.modal').style.display = "none";
                                                         }

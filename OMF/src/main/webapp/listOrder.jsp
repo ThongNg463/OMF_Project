@@ -1,5 +1,5 @@
-<%@page import="Models.account"%>
-<%@page import="DAOs.accountDAO"%>
+<%@page import="Models.Account"%>
+<%@page import="DAOs.AccountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -37,8 +37,8 @@
 
     <body id="page-top">
         <%
-            accountDAO AccDAO = new accountDAO();
-            account UserAcc = new account();
+            AccountDAO AccDAO = new AccountDAO();
+            Account UserAcc = new Account();
             String Username = null;
             String Role = null;
             boolean isLogin = false;
@@ -148,8 +148,8 @@
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Management:</h6>
-                            <a class="collapse-item" href="/prlist/ds">Product Management</a>
-                            <a class="collapse-item" href="/olist/ds">Order Management</a>
+                            <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
+                            <a class="collapse-item" href="/OrderList/Ds">Order Management</a>
                             <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
                             <div class="collapse-divider"></div>
                             <!--                            <h6 class="collapse-header">Other Pages:</h6>

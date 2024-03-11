@@ -7,7 +7,7 @@ package Controllers;
 import DAOs.Detail_OrderDAO;
 import DAOs.OrdersDAO;
 import DAOs.ProductDAO;
-import DAOs.accountDAO;
+import DAOs.AccountDAO;
 import Models.Detail_Order;
 import Models.Products;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class ProductList extends HttpServlet {
         HttpSession session = request.getSession();
 
         try {
-            accountDAO adao = new accountDAO();
+            AccountDAO adao = new AccountDAO();
             Cookie[] cookies = request.getCookies();
             boolean isLogin = false;
             String Username = "";
@@ -77,11 +77,11 @@ public class ProductList extends HttpServlet {
                 }
             }
             if (!isLogin) {
-                response.sendRedirect("/Login");
+response.sendRedirect("/Login");
             } else {
-                if (url.endsWith("/prlist/ds")) {
+                if (url.endsWith("/ProductList/Ds")) {
                     request.getRequestDispatcher("/ProductList.jsp").forward(request, response);
-                } else if (url.startsWith("/prlist/delete")) {
+                } else if (url.startsWith("/ProductList/delete")) {
                     String[] datas = url.split(("/"));
                     String id = datas[datas.length - 1];
                     ProductDAO proDAO = new ProductDAO();
@@ -95,7 +95,7 @@ public class ProductList extends HttpServlet {
                     }
 
                     proDAO.delete(id);
-                    response.sendRedirect("/prlist/ds");
+                    response.sendRedirect("/ProductList/Ds");
                 }
             }
         } catch (Exception e) {
@@ -128,7 +128,7 @@ public class ProductList extends HttpServlet {
                 ProductDAO proDAO = new ProductDAO();
                 proDAO.update(new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType));
 
-                response.sendRedirect("/prlist/ds");
+                response.sendRedirect("/ProductList/Ds");
             } catch (Exception ex) {
                 Logger.getLogger(ProductList.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -142,7 +142,7 @@ public class ProductList extends HttpServlet {
                 while (proDAO.getProducts(ProID) != null) {
                     ProID = "Pro_" + (proDAO.getTotalProductsCount() + ++i);
                 }
-                String ProName = request.getParameter("ProName");
+String ProName = request.getParameter("ProName");
                 int ProStock = Integer.parseInt(request.getParameter("ProStock"));
                 String ProPic = request.getParameter("ProPic");
                 String ProDes = request.getParameter("ProDes");
@@ -151,7 +151,7 @@ public class ProductList extends HttpServlet {
 
                 proDAO.add(new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType));
 
-                response.sendRedirect("/prlist/ds");
+                response.sendRedirect("/ProductList/Ds");
             } catch (Exception ex) {
                 Logger.getLogger(ProductList.class.getName()).log(Level.SEVERE, null, ex);
             }

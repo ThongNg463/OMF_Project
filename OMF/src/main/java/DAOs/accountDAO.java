@@ -5,7 +5,7 @@
 package DAOs;
 
 import Models.UserAccount;
-import Models.account;
+import Models.Account;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -21,16 +21,16 @@ import java.util.logging.Logger;
  *
  * @author ACER
  */
-public class accountDAO {
+public class AccountDAO {
 
     private Connection conn = null;
 
-    public accountDAO() throws SQLException, ClassNotFoundException {
+    public AccountDAO() throws SQLException, ClassNotFoundException {
         conn = DB.DbConnection.getConnection();
     }
 
-    public account getAccount(String username) {
-        account a = null;
+    public Account getAccount(String username) {
+        Account a = null;
         String sql = "SELECT * FROM Accounts WHERE Username=?";
 
         try {
@@ -39,17 +39,17 @@ public class accountDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                a = new account(rs.getString("username"), rs.getString("password"), rs.getString("role"), rs.getString("accpic"));
+                a = new Account(rs.getString("username"), rs.getString("password"), rs.getString("role"), rs.getString("accpic"));
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return a;
     }
 
-    public boolean login(account tk) throws SQLException {
+    public boolean login(Account tk) throws SQLException {
         String sql = "Select * from Accounts where Username=? and Password=?";
         ResultSet rs = null;
 
@@ -60,7 +60,7 @@ public class accountDAO {
             //ps.setString(3, tk.getRole());
             rs = ps.executeQuery();
         } catch (SQLException ex) {
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs.next();
     }
@@ -107,45 +107,16 @@ public class accountDAO {
             int result = ps.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } catch (NoSuchAlgorithmException e) {
             // Handle the error in case MD5 algorithm is not available
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, e);
-            return false;
-        }
-    }
-    
-    public boolean signupUserAccount(String username, String fullname, String email, String phone) {
-        String sql = "INSERT INTO UserAccount (UserID, Fullname, mail, phone) VALUES (?, ?, ?, ?)";
-
-        try {
-
-            // Prepare the SQL statement
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            // Set parameters
-            stmt.setString(1, username); // UserID
-            stmt.setString(2, fullname);
-            stmt.setString(3, email);
-            stmt.setString(4, phone);
-
-            // Execute the SQL statement
-            int rowsInserted = stmt.executeUpdate();
-
-            // Close resources
-            stmt.close();
-            conn.close();
-
-            // Return true if insertion was successful
-            return rowsInserted > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, e);
             return false;
         }
     }
 
-    public boolean checkUserRole(account tk) throws SQLException {
+    public boolean checkUserRole(Account tk) throws SQLException {
         String sql = "Select * from Accounts where Username=? and Password=? and Role=?";
         ResultSet rs = null;
 
@@ -156,7 +127,7 @@ public class accountDAO {
             ps.setString(3, tk.getRole());
             rs = ps.executeQuery();
         } catch (SQLException ex) {
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs.next();
     }
@@ -170,7 +141,7 @@ public class accountDAO {
             ps.setString(1, username);
             rs = ps.executeQuery();
         } catch (SQLException ex) {
-            Logger.getLogger(accountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs.next();
     }
