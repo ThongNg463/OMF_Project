@@ -94,7 +94,6 @@ public class Signup extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("userpass");
         String re_pass = request.getParameter("repass");
-   
         String fullname = request.getParameter("fullname");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
