@@ -73,7 +73,7 @@
                                     </div>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="signup.jsp">Create an Account!</a>
+                                        <a class="small" href="Signup">Create an Account!</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="/Login">Already have an account? Login!</a>

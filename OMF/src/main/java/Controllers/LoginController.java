@@ -4,17 +4,14 @@
  */
 package Controllers;
 
-import DAOs.accountDAO;
 import DAOs.UserAccountDAO;
 import Models.UserAccount;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -33,7 +30,7 @@ import javax.mail.internet.MimeMessage;
  *
  * @author namti
  */
-public class loginController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -76,12 +73,12 @@ public class loginController extends HttpServlet {
         String path = request.getRequestURI();
 
         
-         if (path.endsWith("/otpConfirm")) {
-            request.getRequestDispatcher("/otpConfirm.jsp").forward(request, response);
-        } else if (path.endsWith("/changePassword")) {
-            request.getRequestDispatcher("/changePassword.jsp").forward(request, response);
-        } else if (path.endsWith("/forgotPassword")) {
-            request.getRequestDispatcher("/forgotPassword.jsp").forward(request, response);
+         if (path.endsWith("/OtpConfirm")) {
+            request.getRequestDispatcher("/OtpConfirm.jsp").forward(request, response);
+        } else if (path.endsWith("/ChangePassword")) {
+            request.getRequestDispatcher("/ChangePassword.jsp").forward(request, response);
+        } else if (path.endsWith("/ForgotPassword")) {
+            request.getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
         } 
     }
 
@@ -114,11 +111,11 @@ public class loginController extends HttpServlet {
             String OTP = characters1 + characters2 + characters3 + characters4 + characters5 + characters6;
             if (sendMailotp.equals(OTP)) {
                 // Chuyển hướng đến trang đổi mật khẩu
-                response.sendRedirect("/changePassword");
+                response.sendRedirect("/ChangePassword");
                 // Chuyển hướng đến trang "changePassword.jsp"
             } else {
                 // Chuyển hướng đến trang nhập OTP và hiển thị thông báo lỗi
-                response.sendRedirect("/otpConfirm?error=1");
+                response.sendRedirect("/OtpConfirm?error=1");
             }
         }
 
@@ -128,14 +125,14 @@ public class loginController extends HttpServlet {
             try {
                 dao = new UserAccountDAO();
             } catch (SQLException ex) {
-                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
             String email = request.getParameter("Mail");
             if (email == null || email.trim().isEmpty()) {
                 request.setAttribute("mess", "Email cannot be empty");
-                request.getRequestDispatcher("/forgotPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
                 return;
             }
 
@@ -143,7 +140,7 @@ public class loginController extends HttpServlet {
             try {
                 a = dao.getCustomerByEmail(email);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (a != null) {
                 request.getSession().setAttribute("email", email);
@@ -153,7 +150,7 @@ public class loginController extends HttpServlet {
                 try {
                     fullname = dao.getFullnameByEmail(email);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 // Lưu mã OTP vào session
                 request.getSession().setAttribute("otp", OTP);
@@ -194,13 +191,13 @@ public class loginController extends HttpServlet {
 
                 if (result) {
                     request.getSession().setAttribute("email", email);
-                    response.sendRedirect("/otpConfirm");
+                    response.sendRedirect("/OtpConfirm");
                 } else {
-                    response.sendRedirect("/user/forgotPassword");
+                    response.sendRedirect("/User/ForgotPassword");
                 }
             } else {
                 request.setAttribute("mess", "Wrong email");
-                request.getRequestDispatcher("/forgotPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("/ForgotPassword.jsp").forward(request, response);
             }
         }
 
@@ -213,15 +210,15 @@ public class loginController extends HttpServlet {
             try {
                 dao = new UserAccountDAO();
             } catch (SQLException ex) {
-                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
             boolean success = dao.changePasswordByEmail(email, pass);
             if (success == true) {
                 response.sendRedirect("/Login");
             } else {
-                response.sendRedirect("/changePassword");
+                response.sendRedirect("/ChangePassword");
             }
         }
         //---Kết thúc xử lý Forgot password---

@@ -1,5 +1,5 @@
-<%@page import="DAOs.accountDAO"%>
-<%@page import="Models.account"%>
+<%@page import="DAOs.AccountDAO"%>
+<%@page import="Models.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
 
 <!DOCTYPE html>
@@ -93,11 +93,11 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="/forgotPassword">Forgot Password?</a> 
+                                        <a class="small" href="/ForgotPassword">Forgot Password?</a> 
                                         <!--Not available yet-->
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="/signup.jsp">Create an Account!</a>
+                                        <a class="small" href="/Signup">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>

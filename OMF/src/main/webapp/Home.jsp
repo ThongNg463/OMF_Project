@@ -1,6 +1,6 @@
 <%@page import="DAOs.ProductDAO"%>
-<%@page import="Models.account"%>
-<%@page import="DAOs.accountDAO"%>
+<%@page import="Models.Account"%>
+<%@page import="DAOs.AccountDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,8 +47,8 @@
 
     <body>
         <%
-            accountDAO AccDAO = new accountDAO();
-            account userAcc = new account();
+            AccountDAO AccDAO = new AccountDAO();
+            Account userAcc = new Account();
 
             String username = null;
             Cookie[] cookies = request.getCookies();
@@ -107,8 +107,8 @@
                             <%  if (isLogin && userAcc.getRole().equals("Admin")) { %>
                         <li class="dropdown"><a href="#"><span>Admin</span></a>
                             <ul>
-                                <li><a href="/prlist/ds">Products List</a></li>
-                                <li><a href="/olist/ds">Orders List</a></li>
+                                <li><a href="/ProductList/Ds">Products List</a></li>
+                                <li><a href="/OrderList/Ds">Orders List</a></li>
                             </ul>
                         </li>       
                         <% }%>
@@ -124,14 +124,14 @@
                     <ul>
                         <div class="vr" style="max-height: 100%;"></div>
                         <li class="dropdown">
-                            <a href="#">
+                            <a href="UserProfile">
                                 <span style="font-family: sans-serif; font-size: 25px" ><%= username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccpic()%>"></span>
                             </a>
                             <ul>
-                                <li><a href="userProfile"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>
+                                <li><a href="UserProfile"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>
                                 <li><a href="#"><span><i class="fas fa-cogs" style="margin-right: 10px"></i>Settings</span></a></li>
                                 <li><hr class="hr hr-blurry" style="color: grey" /></li>
-                                <li><a href="/logout"><span><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i>Log out</span></a></li>
+                                <li><a href="/Logout"><span><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i>Log out</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -141,7 +141,7 @@
                     // Người dùng chưa đăng nhập, hiển thị các tùy chọn đăng nhập/đăng ký
                 %>
                 <div class="languages d-none d-md-flex align-items-center">
-                    <h4><a href="/Login">Login</a> | <a href="/signup.jsp">Sign Up</a></h4>
+                    <h4><a href="/Login">Login</a> | <a href="/Signup">Sign Up</a></h4>
                 </div>
                 <%
                     }
@@ -448,7 +448,7 @@
                     <h3>If you want to order food, please log in first or register if you don't have an account!</h3>
                     <div class="languages d-none d-md-flex align-items-center">
                         <br>
-                        <h4><a href="/Login">Login</a> | <a href="/signup.jsp">Sign Up</a></h4>
+                        <h4><a href="/Login">Login</a> | <a href="/Signup">Sign Up</a></h4>
                     </div>
                     <%
                     } else {

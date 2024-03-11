@@ -4,25 +4,21 @@
         <servlet-name>HomeManagement</servlet-name>
         <jsp-file>/HomeManagement.jsp</jsp-file>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>HomeManagement</servlet-name>
         <url-pattern>/HomeManagement</url-pattern>
     </servlet-mapping>
-    
     <servlet>
-    <servlet-name>userProfile</servlet-name>
-    <jsp-file>/userProfile.jsp</jsp-file>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>userProfile</servlet-name>
-    <url-pattern>/userProfile</url-pattern>
-</servlet-mapping>
-    
+        <servlet-name>userProfile</servlet-name>
+        <jsp-file>/UserProfile.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userProfile</servlet-name>
+        <url-pattern>/UserProfile</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>accountLogin</servlet-name>
-        <servlet-class>Controllers.accountLogin</servlet-class>
+        <servlet-class>Controllers.AccountLogin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductList</servlet-name>
@@ -30,12 +26,16 @@
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>Controllers.logout</servlet-class>
+        <servlet-class>Controllers.Logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Signup</servlet-name>
         <servlet-class>Controllers.Signup</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Signup</servlet-name>
+        <url-pattern>/Signup</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>OrderList</servlet-name>
         <servlet-class>Controllers.Orderlist</servlet-class>
@@ -51,10 +51,6 @@
     <welcome-file-list>
         <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>
-    <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
@@ -80,20 +76,20 @@
         <url-pattern>*.gif</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Signup</servlet-name>
-        <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderList</servlet-name>
-        <url-pattern>/olist/*</url-pattern>
+        <url-pattern>/OrderList/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductList</servlet-name>
-        <url-pattern>/prlist/*</url-pattern>
+        <url-pattern>/ProductList/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -102,18 +98,42 @@
     </session-config>
     <servlet>
         <servlet-name>loginController</servlet-name>
-        <servlet-class>Controllers.loginController</servlet-class>
+        <servlet-class>Controllers.LoginController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
-        <url-pattern>/forgotPassword</url-pattern>
+        <url-pattern>/ForgotPassword</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
-        <url-pattern>/otpConfirm</url-pattern>
+        <url-pattern>/OtpConfirm</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
-        <url-pattern>/changePassword</url-pattern>
+        <url-pattern>/ChangePassword</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>Controllers.UserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/UserManagement/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>StaffController</servlet-name>
+        <servlet-class>Controllers.StaffController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaffController</servlet-name>
+        <url-pattern>/StaffManagement/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>VoucherController</servlet-name>
+        <servlet-class>Controllers.VoucherController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VoucherController</servlet-name>
+        <url-pattern>/VoucherManagement/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -41,7 +41,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                 </div>
-                                <form class="user" action="signup" method="POST">
+                                <form class="user" action="Signup" method="POST">
                                     <% String error = request.getParameter("error");
                                         if ("usernameexists".equals(error)) { %>
                                     <h2 style="color: #ff0000; text-align: center" class="error-msg">Account already exists! Please try again!</h2>
@@ -70,7 +70,7 @@
                                             <input type="password" class="form-control form-control-user" id="user-repass" name="repass" placeholder="Repeat Password" required>
                                         </div>
                                     </div>
-                                    <input type="submit" class="btn btn-primary btn-user btn-block" id="signup" value="SIGNUP">
+                                    <input type="submit" class="btn btn-primary btn-user btn-block" id="Signup" value="SIGNUP">
                                     <hr>
                                     <a href="index.html" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Register with Google

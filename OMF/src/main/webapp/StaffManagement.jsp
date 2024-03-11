@@ -1,3 +1,5 @@
+<%@page import="DAOs.StaffDAO"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page import="Models.Account"%>
 <%@page import="DAOs.AccountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,12 +15,13 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin - Dashboard</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <title>SB Admin 2 - Dashboard</title>
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-
+         
+        
         <title>Dashboard</title>
 
         <!-- Custom fonts for this template -->
@@ -32,7 +35,83 @@
 
         <!-- Custom styles for this page -->
         <link href="/UI/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>   
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <style>
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: hidden; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
 
+            .modal-button {
+                cursor: pointer; /* Con trỏ chuột */
+            }
+
+            .modal-button:focus {
+                outline: none; /* Bỏ viền nổi */
+                box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như Bootstrap */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+margin: 15px auto; /* Điều chỉnh lề */
+                padding: 20px; /* Điều chỉnh đệm */
+                border: 1px solid #888;
+                width: 80%; /* Chỉnh chiều rộng tùy theo nhu cầu */
+                max-width: 800px; /* Đặt giới hạn chiều rộng tối đa để tránh quá lớn trên màn hình rộng */
+                overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+                background: #fff; /* Màu nền cho modal */
+                border-radius: 8px; /* Bo tròn góc */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+                position: relative; /* Để thêm "close" button vào vị trí */
+                max-height: calc(100vh - 40px); /* Đảm bảo modal không quá cao */
+                overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+            }
+
+            /* Định dạng cho bảng bên trong modal */
+            .modal-content table {
+                width: 100%; /* Chiều rộng tối đa */
+                max-width: 100%; /* Đảm bảo bảng không quá rộng */
+                margin-bottom: 1rem;
+                border-collapse: collapse; /* Bỏ các khoảng cách giữa các cell */
+            }
+
+            .modal-content th,
+            .modal-content td {
+                padding: .75rem; /* Đệm cho từng cell */
+                vertical-align: top; /* Căn đỉnh cho nội dung */
+                border-top: 1px solid #dee2e6; /* Đường viền trên mỗi cell */
+            }
+
+            .modal-content th {
+                vertical-align: bottom; /* Căn đáy cho header */
+                border-bottom: 2px solid #dee2e6; /* Đường viền đậm cho header */
+            }
+
+            /* Thêm phong cách cho nút đóng */
+            .close {
+                position: absolute; /* Định vị tuyệt đối so với .modal-content */
+                right: 20px; /* Lề phải */
+                top: 20px; /* Lề trên */
+                z-index: 2; /* Đảm bảo nút ở trên cùng */
+            }
+        </style>
     </head>
 
     <body id="page-top">
@@ -63,7 +142,7 @@
             }
         %>
         <!-- Page Wrapper -->
-        <div id="wrapper">
+<div id="wrapper">
 
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -122,7 +201,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Custom Utilities:</h6>
                             <a class="collapse-item" href="utilities-color.html">Colors</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
+<a class="collapse-item" href="utilities-border.html">Borders</a>
                             <a class="collapse-item" href="utilities-animation.html">Animations</a>
                             <a class="collapse-item" href="utilities-other.html">Other</a>
                         </div>
@@ -177,8 +256,7 @@
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
+<!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
@@ -231,7 +309,7 @@
                                     <i class="fas fa-search fa-fw"></i>
                                 </a>
                                 <!-- Dropdown - Messages -->
-                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                      aria-labelledby="searchDropdown">
                                     <form class="form-inline mr-auto w-100 navbar-search">
                                         <div class="input-group">
@@ -273,7 +351,7 @@
                                             <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                         </div>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+<a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="mr-3">
                                             <div class="icon-circle bg-success">
                                                 <i class="fas fa-donate text-white"></i>
@@ -315,7 +393,7 @@
                                     </h6>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/undraw_profile_1.svg"
+<img class="rounded-circle" src="img/undraw_profile_1.svg"
                                                  alt="...">
                                             <div class="status-indicator bg-success"></div>
                                         </div>
@@ -353,7 +431,7 @@
                                         <div class="dropdown-list-image mr-3">
                                             <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
                                                  alt="...">
-                                            <div class="status-indicator bg-success"></div>
+<div class="status-indicator bg-success"></div>
                                         </div>
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
@@ -372,7 +450,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=Username%>
-                                    <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccpic()%>"></span>
+                                        <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccpic()%>"></span>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -398,329 +476,101 @@
                                 </div>
 
                             </li>
-
-                        </ul>
+</ul>
 
                     </nav>
                     <!-- End of Topbar -->
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
+                        <%
+                            StaffDAO staffDAO = new StaffDAO();
+                        %>
                         <!-- Page Heading -->
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                        </div>
-
-                        <!-- Content Row -->
-                        <div class="row">
-
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Earnings (Monthly)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <h1 class="h3 mb-2 text-gray-800">Staff Management</h1>
+                        <!--                        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                                                    For more information about DataTables, please visit the <a target="_blank"
+                                                                                                               href="https://datatables.net">official DataTables documentation</a>.</p>-->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Staff List</h6>
+                                <div style="float: right;">
+                                    <button class="btn btn-warning btn-sm text-light shadow-lg rounded modal-button" data-modal="myModalAddNew">
+                                        <i class="fa-solid fa-circle-plus"></i> Add New Staff
+                                    </button>
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>              
+                                                <th>Fullname</th>   
+                                                <th>Mail</th>
+                                                <th>Phone</th>
+                                                <th>Delete</th>
 
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Earnings (Annual)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                            </tr>
+                                        </thead>
 
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                                </div>
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col-auto">
-                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="progress progress-sm mr-2">
-                                                            <div class="progress-bar bg-info" role="progressbar"
-                                                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                                 aria-valuemax="100"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Pending Requests Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Pending Orders</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Row -->
-
-                        <div class="row">
-
-                            <!-- Area Chart -->
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                 aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card Body -->
-                                    <div class="card-body">
-                                        <div class="chart-area">
-                                            <canvas id="myAreaChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Pie Chart -->
-                            <div class="col-xl-4 col-lg-5">
-                                <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                 aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card Body -->
-                                    <div class="card-body">
-                                        <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="myPieChart"></canvas>
-                                        </div>
-                                        <div class="mt-4 text-center small">
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> Direct
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> Social
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-info"></i> Referral
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Content Row -->
-                        <div class="row">
-
-                            <!-- Content Column -->
-                            <div class="col-lg-6 mb-4">
-
-                                <!-- Project Card Example -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="small font-weight-bold">Yearly Goals <span
-                                                class="float-right">20%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Monthly Goals <span
-                                                class="float-right">40%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Weekly Goals <span
-                                                class="float-right">60%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar" role="progressbar" style="width: 60%"
-                                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Daily Goals <span
-                                                class="float-right">80%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                                 aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Add New Menu <span
-                                                class="float-right">Complete!</span></h4>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Color System -->
-                                <div class="row">
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-primary text-white shadow">
-                                            <div class="card-body">
-                                                Primary
-                                                <div class="text-white-50 small">#4e73df</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-success text-white shadow">
-                                            <div class="card-body">
-                                                Success
-                                                <div class="text-white-50 small">#1cc88a</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-info text-white shadow">
-                                            <div class="card-body">
-                                                Info
-                                                <div class="text-white-50 small">#36b9cc</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-warning text-white shadow">
-                                            <div class="card-body">
-                                                Warning
-                                                <div class="text-white-50 small">#f6c23e</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-danger text-white shadow">
-                                            <div class="card-body">
-                                                Danger
-                                                <div class="text-white-50 small">#e74a3b</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-secondary text-white shadow">
-                                            <div class="card-body">
-                                                Secondary
-                                                <div class="text-white-50 small">#858796</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-light text-black shadow">
-                                            <div class="card-body">
-                                                Light
-                                                <div class="text-black-50 small">#f8f9fc</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="card bg-dark text-white shadow">
-                                            <div class="card-body">
-                                                Dark
-                                                <div class="text-white-50 small">#5a5c69</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-6 mb-4">
-
-                                <!-- Illustrations -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Management Notice</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="text-center">
+                                        <tbody>
+                                            <%                                                
+                                            ResultSet rs = staffDAO.getAllStaff();
+                                                while (rs.next()) {
+                                            %>
+                                            <tr>
+                                                <td><%= rs.getString("StaffID")%></td>
+                                                <td><%= rs.getString("FullName")%></td>
+                                                <td><%= rs.getString("Mail")%></td>
+                                                <td><%= rs.getString("Phone")%></td>
+<td><a onclick="return confirm('Delete this staff?')" href="/StaffManagement/delete/<%= rs.getString("StaffID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                
+                                            </tr>
                                             
-                                        </div>
-                                        <p>We will have new staff coming the next week, make sure you setup her account and role before she arrive. </p>
-                                        
-                                    </div>
-                                </div>
+                                              
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
 
-                                <!-- Approach -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Expanding Approach</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p></p>
-                                        <p class="mb-0">Our best selling are consisted of rice and chicken, so we will add, purchase new working equipment.</p>
-                                    </div>
+                                    </table>
                                 </div>
+                            </div>
+                        </div>
+                        
+                        <div id="myModalAddNew" class="modal">
+                            <!-- Modal content -->
 
+                            <div class="modal-content">
+
+                                <H1>Add new Staff</H1>
+                                <span class="close" style="cursor: pointer">&times;</span>
+                                <br>
+                                <form method="post">
+                                    
+                                    <input type="hidden" name="ProID">
+                                    <div class="form-group">
+                                        <label class="form-label h4">Username:</label>
+                                        <div><input class="form-control" type="text" name="username" required></div> <br/>        
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label h4">Password:</label>
+                                        <div><input class="form-control" type="text" name="userpass" required></div> <br/>        
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label h4">Fullname:</label>
+                                        <div><input class="form-control" type="text" name="fullname" required></div> <br/>        
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label h4">Mail:</label> 
+                                        <div><input class="form-control" type="text" name="email" required></div> <br/>                
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label h4">Phone:</label> 
+                                        <div><input class="form-control" type="number" name="phone" required></div> <br/>    
+                                    </div>
+<button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Staff</button>         
+                                </form>
                             </div>
                         </div>
 
@@ -752,41 +602,74 @@
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+        <!--        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="login.html">Logout</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </div>-->
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="UI/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Core plugin JavaScript-->
-        <script src="UI/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
         <!-- Custom scripts for all pages-->
-        <script src="UI/js/sb-admin-2.min.js"></script>
+        <script src="js/sb-admin-2.min.js"></script>
 
         <!-- Page level plugins -->
-        <script src="UI/vendor/chart.js/Chart.min.js"></script>
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="UI/js/demo/chart-area-demo.js"></script>
-        <script src="UI/js/demo/chart-pie-demo.js"></script>
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
+<script>
+
+                                                    // Get all buttons that opens a modal
+                                                    var modalButtons = document.querySelectorAll('.modal-button');
+
+                                                    // Get all modals
+                                                    var modals = document.querySelectorAll('.modal');
+
+                                                    // Get all elements that closes the modal
+                                                    var closeSpans = document.querySelectorAll('.close');
+
+                                                    // Attach click event listener to modal buttons
+                                                    modalButtons.forEach(function (btn) {
+                                                        btn.onclick = function () {
+                                                            var modal = document.getElementById(btn.getAttribute('data-modal'));
+                                                            modal.style.display = "block";
+                                                        }
+                                                    });
+
+                                                    // Attach click event listener to close buttons
+                                                    closeSpans.forEach(function (span) {
+                                                        span.onclick = function () {
+                                                            span.closest('.modal').style.display = "none";
+                                                        }
+                                                    });
+
+                                                    // Click anywhere outside of the modal to close it
+                                                    window.onclick = function (event) {
+                                                        if (event.target.classList.contains('modal')) {
+                                                            event.target.style.display = "none";
+                                                        }
+                                                    }
+            </script>
 
     </body>
 

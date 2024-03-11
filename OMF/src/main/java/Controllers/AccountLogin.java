@@ -4,8 +4,8 @@
  */
 package Controllers;
 
-import DAOs.accountDAO;
-import Models.account;
+import DAOs.AccountDAO;
+import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author ACER
  */
-public class accountLogin extends HttpServlet {
+public class AccountLogin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -96,10 +96,10 @@ public class accountLogin extends HttpServlet {
         if (request.getParameter("btnSubmit") != null && request.getParameter("btnSubmit").equals("Submit")) {
             String username = request.getParameter("username");
             String password = request.getParameter("userpass");
-            account tk = new account(username, password);
-            accountDAO dao;
+            Account tk = new Account(username, password);
+            AccountDAO dao;
             try {
-                dao = new accountDAO();
+                dao = new AccountDAO();
                 boolean ketqua = dao.login(tk);
                 if (ketqua) {
                     Cookie cookie = new Cookie("User", username);
@@ -117,7 +117,7 @@ public class accountLogin extends HttpServlet {
                     }
                 } else {
                     try {
-                        dao = new accountDAO();
+                        dao = new AccountDAO();
                         boolean usernameExists = dao.checkUsernameExists(username);
 
                         if (usernameExists) {
@@ -128,14 +128,14 @@ public class accountLogin extends HttpServlet {
                             response.sendRedirect("/Login?error=invalid");
                         }
                     } catch (SQLException | ClassNotFoundException ex) {
-                        Logger.getLogger(accountLogin.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(AccountLogin.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(accountLogin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountLogin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(accountLogin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

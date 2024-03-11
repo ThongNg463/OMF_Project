@@ -6,8 +6,8 @@
 
 <%@page import="DAOs.UserAccountDAO"%>
 <%@page import="Models.UserAccount"%>
-<%@page import="Models.account"%>
-<%@page import="DAOs.accountDAO"%>
+<%@page import="Models.Account"%>
+<%@page import="DAOs.AccountDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -37,8 +37,8 @@
             UserAccountDAO AccDAO = new UserAccountDAO();
             UserAccount userAcc = AccDAO.getUserAccount(username);
             
-            accountDAO accDAO = new accountDAO();
-            account UserAcc = accDAO.getAccount(username);
+            AccountDAO accDAO = new AccountDAO();
+            Account UserAcc = accDAO.getAccount(username);
         %>
         <div class="container-xl px-4 mt-4">
             <nav class="nav nav-borders">
