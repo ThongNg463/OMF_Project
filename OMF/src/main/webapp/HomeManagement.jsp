@@ -13,13 +13,15 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin - Dashboard</title>
+        
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 
         <title>Dashboard</title>
+        <!-- Favicons -->
+        <link href="./assets/img/favicon.png" rel="icon">
 
         <!-- Custom fonts for this template -->
         <link href="/UI/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -59,7 +61,7 @@
             if (!isLogin) {
                 response.sendRedirect("/Login");
             } else if (!Role.equals("Admin")) {
-                request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+                request.getRequestDispatcher("/AccessDenied.jsp").forward(request, response);
             }
         %>
         <!-- Page Wrapper -->
@@ -148,7 +150,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Management:</h6>
                             <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
-                            <a class="collapse-item" href="/OrderList/Ds">Order Management</a>
+                            <a class="collapse-item" href="/OrderManagement/Ds">Order Management</a>
                             <a class="collapse-item" href="/UserManagement/Ds">Customer Management</a>
                             <a class="collapse-item" href="/StaffManagement/Ds">Staff Management</a>
                             <a class="collapse-item" href="/VoucherManagement/Ds">Voucher Management</a>
@@ -377,7 +379,7 @@
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="UserProfile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>

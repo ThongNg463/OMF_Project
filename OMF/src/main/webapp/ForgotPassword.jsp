@@ -14,7 +14,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Forgot Password</title>
+    <title>Forgot Password</title>
+        <!-- Favicons -->
+        <link href="./assets/img/favicon.png" rel="icon">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

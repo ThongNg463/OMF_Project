@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  *
  * @author Admin
  */
-public class Orderlist extends HttpServlet {
+public class OrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -92,24 +92,24 @@ public class Orderlist extends HttpServlet {
             if (!isLogin) {
                 response.sendRedirect("/Login");
             } else {
-                if (url.endsWith("/OrderList/Ds")) {
-                    request.getRequestDispatcher("/ListOrder.jsp").forward(request, response);
-                } else if (url.startsWith("/OrderList/Delete")) {
+                if (url.endsWith("/OrderManagement/Ds")) {
+                    request.getRequestDispatcher("/OrderManagement.jsp").forward(request, response);
+                } else if (url.startsWith("/OrderManagement/Delete")) {
                     String[] datas = url.split("/");
                     String id = datas[datas.length - 1];
                     OrdersDAO odao = new OrdersDAO();
                     Detail_OrderDAO doDAO = new Detail_OrderDAO();
                     doDAO.delete(id);
                     odao.delete(id);
-                    response.sendRedirect("/OrderList/Ds");
-                } else if (url.startsWith("/OrderList/UpdateU")) {
+                    response.sendRedirect("/OrderManagement/Ds");
+                } else if (url.startsWith("/OrderManagement/UpdateU")) {
                     String[] datas = url.split("/");
                     String id = datas[datas.length - 1];
                     OrdersDAO odao = new OrdersDAO();
                     Orders o = odao.getOrder(id);
 
                     if (o == null) {
-                        response.sendRedirect("/OrderList/Ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     } else {
                         String Status = o.getStatus();
                         if (Status.equals("Confirming")) {
@@ -120,16 +120,16 @@ public class Orderlist extends HttpServlet {
                             o.setStatus("Delivered");
                         }
                         odao.update(o);
-                        response.sendRedirect("/OrderList/Ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     }
-                } else if (url.startsWith("/OrderList/UpdateD")) {
+                } else if (url.startsWith("/OrderManagementt/UpdateD")) {
                     String[] datas = url.split("/");
                     String id = datas[datas.length - 1];
                     OrdersDAO odao = new OrdersDAO();
                     Orders o = odao.getOrder(id);
 
                     if (o == null) {
-                        response.sendRedirect("/OrderList/Ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     } else {
                         String Status = o.getStatus();
                         if (Status.equals("Confirmed")) {
@@ -140,13 +140,13 @@ public class Orderlist extends HttpServlet {
                             o.setStatus("Delivering");
                         }
                         odao.update(o);
-                        response.sendRedirect("/OrderList/Ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     }
                 }
 
             }
         } catch (Exception ex) {
-            Logger.getLogger(Orderlist.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -193,9 +193,9 @@ public class Orderlist extends HttpServlet {
 
                 ordersDAO.update(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
 
-                response.sendRedirect("/OrderList/Ds");
+                response.sendRedirect("/OrderManagement/Ds");
             } catch (Exception ex) {
-                Logger.getLogger(Orderlist.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

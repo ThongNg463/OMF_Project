@@ -18,7 +18,10 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Tables</title>
+        <title>Product Management</title>
+        
+        <!-- Favicons -->
+        <link href="./assets/img/favicon.png" rel="icon">
 
         <!-- Custom fonts for this template -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
@@ -142,8 +145,8 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
 
             if (!isLogin) {
                 response.sendRedirect("/Login");
-} else if (!Role.equals("Admin")) {
-                request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+            } else if (!Role.equals("Admin") && !Role.equals("Staff")) {
+                request.getRequestDispatcher("/AccessDenied.jsp").forward(request, response);
             }
         %>
 
@@ -233,7 +236,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Management:</h6>
                             <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
-                            <a class="collapse-item" href="/OrderList/Ds">Order Management</a>
+                            <a class="collapse-item" href="/OrderManagement/Ds">Order Management</a>
                             <a class="collapse-item" href="/UserManagement/Ds">User Management</a>
                             <a class="collapse-item" href="/StaffManagement/Ds">Staff Management</a>
                             <a class="collapse-item" href="/VoucherManagement/Ds">Voucher Management</a>
@@ -457,7 +460,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="UserProfile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
