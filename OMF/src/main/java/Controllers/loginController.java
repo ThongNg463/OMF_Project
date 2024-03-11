@@ -5,6 +5,7 @@
 package Controllers;
 
 import DAOs.accountDAO;
+import DAOs.UserAccountDAO;
 import Models.UserAccount;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -123,9 +124,9 @@ public class loginController extends HttpServlet {
 
         //--Xử lý Confirm OTP
         if (request.getParameter("btnSendEmail") != null) {
-            accountDAO dao = null;
+            UserAccountDAO dao = null;
             try {
-                dao = new accountDAO();
+                dao = new UserAccountDAO();
             } catch (SQLException ex) {
                 Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -208,9 +209,9 @@ public class loginController extends HttpServlet {
             String email = request.getParameter("email");
             String pass = request.getParameter("newPassword");
             String rePass = request.getParameter("confirmPassword");
-            accountDAO dao = null;
+            UserAccountDAO dao = null;
             try {
-                dao = new accountDAO();
+                dao = new UserAccountDAO();
             } catch (SQLException ex) {
                 Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
