@@ -70,7 +70,7 @@
 
             /* Modal Content/Box */
             .modal-content {
-                margin: 15px auto; /* Điều chỉnh lề */
+margin: 15px auto; /* Điều chỉnh lề */
                 padding: 20px; /* Điều chỉnh đệm */
                 border: 1px solid #888;
                 width: 80%; /* Chỉnh chiều rộng tùy theo nhu cầu */
@@ -142,7 +142,7 @@
             }
         %>
         <!-- Page Wrapper -->
-        <div id="wrapper">
+<div id="wrapper">
 
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -201,7 +201,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Custom Utilities:</h6>
                             <a class="collapse-item" href="utilities-color.html">Colors</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
+<a class="collapse-item" href="utilities-border.html">Borders</a>
                             <a class="collapse-item" href="utilities-animation.html">Animations</a>
                             <a class="collapse-item" href="utilities-other.html">Other</a>
                         </div>
@@ -256,8 +256,7 @@
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
+<!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
@@ -310,7 +309,7 @@
                                     <i class="fas fa-search fa-fw"></i>
                                 </a>
                                 <!-- Dropdown - Messages -->
-                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                      aria-labelledby="searchDropdown">
                                     <form class="form-inline mr-auto w-100 navbar-search">
                                         <div class="input-group">
@@ -352,7 +351,7 @@
                                             <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                         </div>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+<a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="mr-3">
                                             <div class="icon-circle bg-success">
                                                 <i class="fas fa-donate text-white"></i>
@@ -394,7 +393,7 @@
                                     </h6>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
                                         <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/undraw_profile_1.svg"
+<img class="rounded-circle" src="img/undraw_profile_1.svg"
                                                  alt="...">
                                             <div class="status-indicator bg-success"></div>
                                         </div>
@@ -432,7 +431,7 @@
                                         <div class="dropdown-list-image mr-3">
                                             <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
                                                  alt="...">
-                                            <div class="status-indicator bg-success"></div>
+<div class="status-indicator bg-success"></div>
                                         </div>
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
@@ -477,8 +476,7 @@
                                 </div>
 
                             </li>
-
-                        </ul>
+</ul>
 
                     </nav>
                     <!-- End of Topbar -->
@@ -486,8 +484,7 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <%
-                            StaffDAO staDAO = new StaffDAO();
-
+                            StaffDAO staffDAO = new StaffDAO();
                         %>
                         <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Staff Management</h1>
@@ -518,15 +515,16 @@
                                         </thead>
 
                                         <tbody>
-                                            <%                                                ResultSet rs = staDAO.getAllStaff();
+                                            <%                                                
+                                            ResultSet rs = staffDAO.getAllStaff();
                                                 while (rs.next()) {
                                             %>
                                             <tr>
                                                 <td><%= rs.getString("StaffID")%></td>
                                                 <td><%= rs.getString("FullName")%></td>
                                                 <td><%= rs.getString("Mail")%></td>
-                                                <td><%= rs.getInt("Phone")%></td>
-                                                <td><a onclick="return confirm('Delete this staff?')" href="/StaffManagement/delete/<%= rs.getString("StaffID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                
+                                                <td><%= rs.getString("Phone")%></td>
+<td><a onclick="return confirm('Delete this staff?')" href="/StaffManagement/delete/<%= rs.getString("StaffID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                
                                             </tr>
                                             
                                               
@@ -571,8 +569,7 @@
                                         <label class="form-label h4">Phone:</label> 
                                         <div><input class="form-control" type="number" name="phone" required></div> <br/>    
                                     </div>
-                                    
-                                    <button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Staff</button>         
+<button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Staff</button>         
                                 </form>
                             </div>
                         </div>
@@ -640,7 +637,7 @@
         <!-- Page level custom scripts -->
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
-        <script>
+<script>
 
                                                     // Get all buttons that opens a modal
                                                     var modalButtons = document.querySelectorAll('.modal-button');

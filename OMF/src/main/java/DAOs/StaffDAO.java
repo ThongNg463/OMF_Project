@@ -36,6 +36,25 @@ public class StaffDAO {
         return rs;
     }
     
+    public StaffAccount getStaffs(String id) {
+        StaffAccount s = null;
+        String sql = "SELECT * FROM StaffAccount WHERE StaffID=?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                s = new StaffAccount(rs.getString("StaffID"), rs.getString("Fullname"), rs.getString("Mail"), rs.getString("Phone"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return s;
+    }
+    
     public boolean AddAccount(String username, String password) {
         String sql = "INSERT INTO Accounts (Username, Password, Role, AccPic) VALUES (?, ?, ?, ?)";
         try {

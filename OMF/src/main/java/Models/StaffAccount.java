@@ -12,10 +12,10 @@ public class StaffAccount {
     private String StaffID;
     private String Fullname;
     private String Mail;
-    private int Phone;
+    private String Phone;
     
     
-    public StaffAccount(String UserID, String Fullname, String Mail, int Phone ) {
+    public StaffAccount(String UserID, String Fullname, String Mail, String Phone ) {
         this.StaffID = UserID;
         this.Fullname = Fullname;
         this.Mail = Mail;
@@ -50,11 +50,11 @@ public class StaffAccount {
         this.Mail = Mail;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return Phone;
     }
 
-    public void setPhone(int Phone) {
+    public void setPhone(String Phone) {
         this.Phone = Phone;
     }
     

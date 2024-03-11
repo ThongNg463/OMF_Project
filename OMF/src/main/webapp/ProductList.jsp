@@ -234,7 +234,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                             <h6 class="collapse-header">Management:</h6>
                             <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
                             <a class="collapse-item" href="/OrderList/Ds">Order Management</a>
-                            <a class="collapse-item" href="/UserManagement/Ds">Customer Management</a>
+                            <a class="collapse-item" href="/UserManagement/Ds">User Management</a>
                             <a class="collapse-item" href="/StaffManagement/Ds">Staff Management</a>
                             <a class="collapse-item" href="/VoucherManagement/Ds">Voucher Management</a>
                             <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->

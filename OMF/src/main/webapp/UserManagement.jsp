@@ -160,7 +160,7 @@
                             <h6 class="collapse-header">Management:</h6>
                             <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
                             <a class="collapse-item" href="/OrderList/Ds">Order Management</a>
-                            <a class="collapse-item" href="/UserManagement/Ds">Customer Management</a>
+                            <a class="collapse-item" href="/UserManagement/Ds">User Management</a>
                             <a class="collapse-item" href="/StaffManagement/Ds">Staff Management</a>
                             <a class="collapse-item" href="/VoucherManagement/Ds">Voucher Management</a>
                             <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
@@ -440,7 +440,7 @@
                                                 <th>Mail</th>
                                                 <th>Phone</th>
                                                 <th>Wallet</th>
-                                                <th>VoucherID</th>
+                                                
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
@@ -454,9 +454,9 @@
                                                 <td><%= rs.getString("UserID")%></td>
                                                 <td><%= rs.getString("FullName")%></td>
                                                 <td><%= rs.getString("Mail")%></td>
-                                                <td><%= rs.getInt("Phone")%></td>
+                                                <td><%= rs.getString("Phone")%></td>
                                                 <td><%= rs.getFloat("Wallet")%></td>
-                                                <td><%= rs.getInt("VoucherID")%></td>
+                                                
                                                  <td><a onclick="return confirm('Delete this user?')" href="/UserManagement/delete/<%= rs.getString("UserID")%>"><i class="fa-solid fa-trash-can" style="color: #000000; font-size: 200%;"></i></a></td>                
                                             </tr>
 
