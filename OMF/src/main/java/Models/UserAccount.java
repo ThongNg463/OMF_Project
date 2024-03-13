@@ -12,20 +12,22 @@ public class UserAccount {
     private String UserID;
     private String Fullname;
     private String Mail;
+    private String Address;
+    private String City;
     private String Phone;
     private Float Wallet;
-    private String VouncherID;
 
-    public UserAccount(String UserID, String Fullname, String Mail, String Phone, Float Wallet, String VouncherID) {
+    public UserAccount() {
+    }
+
+    public UserAccount(String UserID, String Fullname, String Mail, String Address, String City, String Phone, Float Wallet) {
         this.UserID = UserID;
         this.Fullname = Fullname;
         this.Mail = Mail;
+        this.Address = Address;
+        this.City = City;
         this.Phone = Phone;
         this.Wallet = Wallet;
-        this.VouncherID = VouncherID;
-    }
-
-    public UserAccount() {
     }
 
     public String getUserID() {
@@ -52,6 +54,22 @@ public class UserAccount {
         this.Mail = Mail;
     }
 
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String Address) {
+        this.Address = Address;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String City) {
+        this.City = City;
+    }
+
     public String getPhone() {
         return Phone;
     }
@@ -68,13 +86,8 @@ public class UserAccount {
         this.Wallet = Wallet;
     }
 
-    public String getVouncherID() {
-        return VouncherID;
-    }
+   
 
-    public void setVouncherID(String VouncherID) {
-        this.VouncherID = VouncherID;
-    }
     
     
 }

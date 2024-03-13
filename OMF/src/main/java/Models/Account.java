@@ -10,56 +10,60 @@ package Models;
  */
 public class Account {
 
-    private String username;
-    private String password;
-    private String role;
-    private String accpic;
+    private String Username;
+    private String Password;
+    private String Role;
+    private String AccPic;
 
     public Account() {
     }
 
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Account(String Username, String Password, String Role, String AccPic) {
+        this.Username = Username;
+        this.Password = Password;
+        this.Role = Role;
+        this.AccPic = AccPic;
     }
 
-    public Account(String username, String password, String role, String accpic) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.accpic = accpic;
+    public Account(String Username, String Password) {
+        this.Username = Username;
+        this.Password = Password;
     }
-
+    
     public String getUsername() {
-        return username;
+        return Username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
     public String getRole() {
-        return role;
+        return Role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String Role) {
+        this.Role = Role;
     }
 
-    public String getAccpic() {
-        return accpic;
+    public String getAccPic() {
+        return AccPic;
     }
 
-    public void setAccpic(String accpic) {
-        this.accpic = accpic;
+    public void setAccPic(String AccPic) {
+        this.AccPic = AccPic;
     }
+
+    
+
+    
 
 }

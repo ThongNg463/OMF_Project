@@ -12,15 +12,16 @@ public class Voucher {
     private String VoucherID;
     private int VoucherStock;
     private int VoucherPercent;
-    
-    public Voucher(String VoucherID, int VoucherStock, int VoucherPercent) {
+    private String Username;
+
+    public Voucher() {
+    }
+
+    public Voucher(String VoucherID, int VoucherStock, int VoucherPercent, String Username) {
         this.VoucherID = VoucherID;
         this.VoucherStock = VoucherStock;
         this.VoucherPercent = VoucherPercent;
-     
-    }
-
-    public Voucher() {
+        this.Username = Username;
     }
 
     public String getVoucherID() {
@@ -47,6 +48,13 @@ public class Voucher {
         this.VoucherPercent = VoucherPercent;
     }
 
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
+    }
     
     
     

@@ -17,18 +17,20 @@ public class Orders {
     private String Status;
     private float TotalPrice;
     private String VoucherID;
+    private int VoucherPercent;
     private Timestamp OrderDate;
 
     public Orders() {
     }
 
-    public Orders(String OrderID, String UserID, String StaffID, String Status, float TotalPrice, String VoucherID, Timestamp OrderDate) {
+    public Orders(String OrderID, String UserID, String StaffID, String Status, float TotalPrice, String VoucherID, int VoucherPercent, Timestamp OrderDate) {
         this.OrderID = OrderID;
         this.UserID = UserID;
         this.StaffID = StaffID;
         this.Status = Status;
         this.TotalPrice = TotalPrice;
         this.VoucherID = VoucherID;
+        this.VoucherPercent = VoucherPercent;
         this.OrderDate = OrderDate;
     }
 
@@ -80,6 +82,14 @@ public class Orders {
         this.VoucherID = VoucherID;
     }
 
+    public int getVoucherPercent() {
+        return VoucherPercent;
+    }
+
+    public void setVoucherPercent(int VoucherPercent) {
+        this.VoucherPercent = VoucherPercent;
+    }
+
     public Timestamp getOrderDate() {
         return OrderDate;
     }
@@ -88,5 +98,5 @@ public class Orders {
         this.OrderDate = OrderDate;
     }
 
-
+    
 }

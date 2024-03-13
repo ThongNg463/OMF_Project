@@ -173,8 +173,8 @@ public class OrderController extends HttpServlet {
                 String UserID = request.getParameter("Username");
                 String Status = "Confirming";
                 float TotalPrice = 0;
-                
-                ordersDAO.add(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
+
+                ordersDAO.add(new Orders(OrderID, UserID, "", Status, TotalPrice, "", 0, Timestamp.valueOf(LocalDateTime.now())));
 
                 ProductDAO proDAO = new ProductDAO();
                 ResultSet rsPro = proDAO.getAll();
@@ -191,7 +191,7 @@ public class OrderController extends HttpServlet {
                     }
                 }
 
-                ordersDAO.update(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
+                ordersDAO.update(new Orders(OrderID, UserID, "", Status, TotalPrice, "", 0, Timestamp.valueOf(LocalDateTime.now())));
 
                 response.sendRedirect("/OrderManagement/Ds");
             } catch (Exception ex) {

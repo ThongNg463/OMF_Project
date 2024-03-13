@@ -63,7 +63,7 @@ public class OrdersDAO {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                o = new Orders(id, rs.getString("UserID"), rs.getString("StaffID"), rs.getString("Status"), rs.getFloat("TotalPrice"), rs.getString("VoucherID") ,rs.getTimestamp("OrderDate"));
+                o = new Orders(id, rs.getString("UserID"), rs.getString("StaffID"), rs.getString("Status"), rs.getFloat("TotalPrice"), rs.getString("VoucherID"),rs.getInt("VoucherPercent") ,rs.getTimestamp("OrderDate"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,7 +74,7 @@ public class OrdersDAO {
     
     public int add(Orders o) {
         int result = 0;
-        String sql = "INSERT INTO Orders VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Orders VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -84,7 +84,8 @@ public class OrdersDAO {
             ps.setString(4, o.getStatus());
             ps.setFloat(5, o.getTotalPrice());
             ps.setString(6, o.getVoucherID());
-            ps.setTimestamp(7, o.getOrderDate());
+            ps.setInt(7, o.getVoucherPercent());
+            ps.setTimestamp(8, o.getOrderDate());
 
             result = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -112,7 +113,7 @@ public class OrdersDAO {
 
     public int update(Orders o) {
         int result = 0;
-        String sql = "UPDATE Orders SET UserID=?, StaffID=?, Status=?, TotalPrice=?, VoucherID=?, OrderDate=? WHERE OrderID=?";
+        String sql = "UPDATE Orders SET UserID=?, StaffID=?, Status=?, TotalPrice=?, VoucherID=?, VoucherPercent=?, OrderDate=? WHERE OrderID=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);   
@@ -121,8 +122,9 @@ public class OrdersDAO {
             ps.setString(3, o.getStatus());
             ps.setFloat(4, o.getTotalPrice());
             ps.setString(5, o.getVoucherID());
-            ps.setTimestamp(6, o.getOrderDate());
-            ps.setString(7, o.getOrderID());
+            ps.setInt(6, o.getVoucherPercent());
+            ps.setTimestamp(7, o.getOrderDate());
+            ps.setString(8, o.getOrderID());
 
             result = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -131,6 +133,7 @@ public class OrdersDAO {
 
         return result;
     }
+    
     public int getTotalOrderCount() {
         int count = 0;
         try {

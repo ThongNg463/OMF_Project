@@ -10,7 +10,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>userProfile</servlet-name>
-        <jsp-file>/UserProfile.jsp</jsp-file>
+        <servlet-class>Controllers.UserProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>userProfile</servlet-name>
@@ -135,5 +135,13 @@
     <servlet-mapping>
         <servlet-name>VoucherController</servlet-name>
         <url-pattern>/VoucherManagement/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>Controllers.CartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/Cart/*</url-pattern>
     </servlet-mapping>
 </web-app>

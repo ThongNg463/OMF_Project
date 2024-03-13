@@ -49,7 +49,7 @@ public class UserAccountDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                ua = new UserAccount(rs.getString("UserID"), rs.getString("Fullname"), rs.getString("Mail"), rs.getString("Phone"), rs.getFloat("Wallet"), rs.getString("VoucherID"));
+                ua = new UserAccount(rs.getString("UserID"), rs.getString("Fullname"), rs.getString("Mail"), rs.getString("Address"), rs.getString("City"), rs.getString("Phone"), rs.getFloat("Wallet"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,16 +75,17 @@ public class UserAccountDAO {
 
     public int update(UserAccount ua) {
         int result = 0;
-        String sql = "UPDATE UserAccount SET Fullname=?, Mail=?, Phone=?, Wallet=?, VouncherID=?  WHERE UserID=?";
+        String sql = "UPDATE UserAccount SET Fullname=?, Mail=?, Address=?, City=?, Phone=?, Wallet=? WHERE UserID=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ua.getFullname());
             ps.setString(2, ua.getMail());
-            ps.setString(3, ua.getPhone());
-            ps.setFloat(4, ua.getWallet());
-            ps.setString(5, ua.getVouncherID());
-            ps.setString(6, ua.getUserID());
+            ps.setString(3, ua.getAddress());
+            ps.setString(4, ua.getCity());
+            ps.setString(5, ua.getPhone());
+            ps.setFloat(6, ua.getWallet());
+            ps.setString(7, ua.getUserID());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,17 +96,18 @@ public class UserAccountDAO {
 
     public int add(UserAccount ua) {
         int result = 0;
-        String sql = "INSERT INTO UserAccount VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO UserAccount VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ua.getUserID());
             ps.setString(2, ua.getFullname());
             ps.setString(3, ua.getMail());
-            ps.setString(4, ua.getPhone());
-            ps.setFloat(5, ua.getWallet());
-            ps.setString(6, ua.getVouncherID());
-
+            ps.setString(4, ua.getAddress());
+            ps.setString(5, ua.getPhone());
+            ps.setString(6, ua.getCity());
+            ps.setFloat(7, ua.getWallet());
+            
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,12 +151,13 @@ public class UserAccountDAO {
                 String userID = rs.getString("UserID"); // New field
                 String fullname = rs.getString("Fullname");
                 String mail = rs.getString("Mail");
+                String address = rs.getString("Address");
+                String city = rs.getString("City");
                 String phone = rs.getString("Phone");
                 float wallet = rs.getFloat("Wallet");
-                String voucherID = rs.getString("VoucherID");
 
                 // Create a UserAccount object with the retrieved data
-                userAccount = new UserAccount(userID, fullname, mail, phone, wallet, voucherID);
+                userAccount = new UserAccount(userID, fullname, mail, address, city, phone, wallet);
             }
 
             // Close resources

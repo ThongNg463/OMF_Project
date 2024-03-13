@@ -1,15 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package Controllers;
 
 import DAOs.Detail_OrderDAO;
 import DAOs.OrdersDAO;
 import DAOs.ProductDAO;
 import DAOs.AccountDAO;
+import DAOs.UserAccountDAO;
 import Models.Detail_Order;
 import Models.Products;
+import Models.Account;
+import Models.UserAccount;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProductList extends HttpServlet {
+public class UserProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -67,35 +67,22 @@ public class ProductList extends HttpServlet {
 
         try {
             AccountDAO adao = new AccountDAO();
+            UserAccountDAO uadao = new UserAccountDAO();
             Cookie[] cookies = request.getCookies();
             boolean isLogin = false;
-            String Username = "";
+            String username = "";
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("User")) {
                     isLogin = true;
-                    Username = cookie.getValue();
+                    username = cookie.getValue();
+                    break;
                 }
             }
             if (!isLogin) {
-                response.sendRedirect("/Login");
+                response.sendRedirect("/login");
             } else {
-                if (url.endsWith("/ProductList/Ds")) {
-                    request.getRequestDispatcher("/ProductList.jsp").forward(request, response);
-                } else if (url.startsWith("/ProductList/delete")) {
-                    String[] datas = url.split(("/"));
-                    String id = datas[datas.length - 1];
-                    ProductDAO proDAO = new ProductDAO();
-                    OrdersDAO oDAO = new OrdersDAO();
-                    Detail_OrderDAO doDAO = new Detail_OrderDAO();
-
-                    ResultSet rs = doDAO.getAllFromProID(id);
-                    doDAO.deleteByProID(id);
-                    while (rs.next()) {
-                        oDAO.delete(rs.getString("OrderID"));
-                    }
-
-                    proDAO.delete(id);
-                    response.sendRedirect("/ProductList/Ds");
+                if (url.endsWith("/UserProfile")) {
+                    request.getRequestDispatcher("/UserProfile.jsp").forward(request, response);
                 }
             }
         } catch (Exception e) {
@@ -116,44 +103,60 @@ public class ProductList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("btnUpdate") != null && request.getParameter("btnUpdate").equals("Update")) {
+            
+            Cookie[] cookies = request.getCookies();
+            String Username = null;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("User".equals(cookie.getName())) {
+                        Username = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+            if (Username == null) {
+                response.sendRedirect("/Login");
+                return;
+            }
             try {
-                String ProID = request.getParameter("ProID");
-                int ProStock = Integer.parseInt(request.getParameter("ProStock"));
-                String ProName = request.getParameter("ProName");
-                String ProPic = request.getParameter("ProPic");
-                String ProDes = request.getParameter("ProDes");
-                float ProPrice = Float.parseFloat(request.getParameter("ProPrice"));
-                String ProType = request.getParameter("ProType");
-
-                ProductDAO proDAO = new ProductDAO();
-                proDAO.update(new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType));
-
-                response.sendRedirect("/ProductList/Ds");
+                Username = request.getParameter("Username");
+                String AccPic = request.getParameter("AccPic");
+                String Password = request.getParameter("Password");
+                String Role = request.getParameter("Role");
+                if (Username == null || Username.isEmpty()) {
+                    throw new IllegalArgumentException("Username is null or empty");
+                }
+                AccountDAO apDAO = new AccountDAO();
+                apDAO.update(new Account(Username, Password, Role, AccPic));
+                System.out.println("Test1");
+                response.sendRedirect("/UserProfile");
+                
             } catch (Exception ex) {
-                Logger.getLogger(ProductList.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
-
-        if (request.getParameter("btnAddNew") != null && request.getParameter("btnAddNew").equals("AddNew")) {
+                
+        else if (request.getParameter("btnUpdates") != null && request.getParameter("btnUpdates").equals("Updates")) {
             try {
-                ProductDAO proDAO = new ProductDAO();
-                int i = 1;
-                String ProID = "Pro_" + (proDAO.getTotalProductsCount() + i);
-                while (proDAO.getProducts(ProID) != null) {
-                    ProID = "Pro_" + (proDAO.getTotalProductsCount() + ++i);
-                }
-                String ProName = request.getParameter("ProName");
-                int ProStock = Integer.parseInt(request.getParameter("ProStock"));
-                String ProPic = request.getParameter("ProPic");
-                String ProDes = request.getParameter("ProDes");
-                float ProPrice = Float.parseFloat(request.getParameter("ProPrice"));
-                String ProType = request.getParameter("ProType");
-
-                proDAO.add(new Products(ProID, ProStock, ProName, ProPic, ProDes, ProPrice, ProType));
-
-                response.sendRedirect("/ProductList/Ds");
+                System.out.println("Test2");
+                int result = 0;
+                String UserID = request.getParameter("UserID");
+                String Fullname = request.getParameter("Fullname");
+                String Mail = request.getParameter("Mail");
+                String Address = request.getParameter("Address");
+                String City = request.getParameter("City");
+                String Phone = request.getParameter("Phone");
+                Float Wallet = Float.parseFloat(request.getParameter("Wallet"));
+                
+                UserAccountDAO aDAO = new UserAccountDAO();
+                result = aDAO.update(new UserAccount(UserID, Fullname, Mail, Address, City, Phone, Wallet));
+                System.out.println("Update method called.");
+                System.out.println("Number of rows updated: " + result);
+                response.sendRedirect("/UserProfile");
             } catch (Exception ex) {
-                Logger.getLogger(ProductList.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
     }

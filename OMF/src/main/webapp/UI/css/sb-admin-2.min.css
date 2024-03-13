@@ -2057,8 +2057,8 @@ a.btn.disabled,fieldset:disabled a.btn{
 }
 .btn-warning{
     color:#fff;
-    background-color:#f6c23e;
-    border-color:#f6c23e
+    background-color:#4e73df;
+    border-color:#4e73df
 }
 .btn-warning:hover{
     color:#fff;
@@ -9224,4 +9224,25 @@ body.sidebar-toggled footer.sticky-footer{
 /* You may also need to explicitly set the color of the active link underline */
 .nav-borders .nav-link.active {
   border-bottom-color: #cda45e; /* Set the active link underline to gold if needed */
+}
+
+.ui-w-40 {
+    width: 40px !important;
+    height: auto;
+}
+
+.card{
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);    
+}
+
+.ui-product-color {
+    display: inline-block;
+    overflow: hidden;
+    margin: .144em;
+    width: .875rem;
+    height: .875rem;
+    border-radius: 10rem;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    vertical-align: middle;
 }
