@@ -7,10 +7,10 @@ package Controllers;
 import DAOs.Detail_OrderDAO;
 import DAOs.OrdersDAO;
 import DAOs.ProductDAO;
-import DAOs.accountDAO;
+import DAOs.AccountDAO;
 import Models.Detail_Order;
 import Models.Orders;
-import Models.account;
+import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,7 +20,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
@@ -30,7 +29,7 @@ import java.util.logging.Logger;
  *
  * @author Admin
  */
-public class Orderlist extends HttpServlet {
+public class OrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -75,8 +74,8 @@ public class Orderlist extends HttpServlet {
 
         try {
             boolean isLogin = false;
-            accountDAO adao = new accountDAO();
-            account UserAcc = new account();
+            AccountDAO adao = new AccountDAO();
+            Account UserAcc = new Account();
             String Username = null;
             Cookie[] cookies = request.getCookies();
 
@@ -93,24 +92,24 @@ public class Orderlist extends HttpServlet {
             if (!isLogin) {
                 response.sendRedirect("/Login");
             } else {
-                if (url.endsWith("/olist/ds")) {
-                    request.getRequestDispatcher("/listOrder.jsp").forward(request, response);
-                } else if (url.startsWith("/olist/delete")) {
+                if (url.endsWith("/OrderManagement/Ds")) {
+                    request.getRequestDispatcher("/OrderManagement.jsp").forward(request, response);
+                } else if (url.startsWith("/OrderManagement/Delete")) {
                     String[] datas = url.split("/");
                     String id = datas[datas.length - 1];
                     OrdersDAO odao = new OrdersDAO();
                     Detail_OrderDAO doDAO = new Detail_OrderDAO();
                     doDAO.delete(id);
                     odao.delete(id);
-                    response.sendRedirect("/olist/ds");
-                } else if (url.startsWith("/olist/updateU")) {
+                    response.sendRedirect("/OrderManagement/Ds");
+                } else if (url.startsWith("/OrderManagement/UpdateU")) {
                     String[] datas = url.split("/");
                     String id = datas[datas.length - 1];
                     OrdersDAO odao = new OrdersDAO();
                     Orders o = odao.getOrder(id);
 
                     if (o == null) {
-                        response.sendRedirect("/olist/ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     } else {
                         String Status = o.getStatus();
                         if (Status.equals("Confirming")) {
@@ -121,16 +120,16 @@ public class Orderlist extends HttpServlet {
                             o.setStatus("Delivered");
                         }
                         odao.update(o);
-                        response.sendRedirect("/olist/ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     }
-                } else if (url.startsWith("/olist/updateD")) {
+                } else if (url.startsWith("/OrderManagementt/UpdateD")) {
                     String[] datas = url.split("/");
                     String id = datas[datas.length - 1];
                     OrdersDAO odao = new OrdersDAO();
                     Orders o = odao.getOrder(id);
 
                     if (o == null) {
-                        response.sendRedirect("/olist/ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     } else {
                         String Status = o.getStatus();
                         if (Status.equals("Confirmed")) {
@@ -141,13 +140,13 @@ public class Orderlist extends HttpServlet {
                             o.setStatus("Delivering");
                         }
                         odao.update(o);
-                        response.sendRedirect("/olist/ds");
+                        response.sendRedirect("/OrderManagement/Ds");
                     }
                 }
 
             }
         } catch (Exception ex) {
-            Logger.getLogger(Orderlist.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -174,8 +173,8 @@ public class Orderlist extends HttpServlet {
                 String UserID = request.getParameter("Username");
                 String Status = "Confirming";
                 float TotalPrice = 0;
-                
-                ordersDAO.add(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
+
+                ordersDAO.add(new Orders(OrderID, UserID, "", Status, TotalPrice, "", 0, Timestamp.valueOf(LocalDateTime.now())));
 
                 ProductDAO proDAO = new ProductDAO();
                 ResultSet rsPro = proDAO.getAll();
@@ -192,11 +191,11 @@ public class Orderlist extends HttpServlet {
                     }
                 }
 
-                ordersDAO.update(new Orders(OrderID, UserID, "", Status, TotalPrice, "", Timestamp.valueOf(LocalDateTime.now())));
+                ordersDAO.update(new Orders(OrderID, UserID, "", Status, TotalPrice, "", 0, Timestamp.valueOf(LocalDateTime.now())));
 
-                response.sendRedirect("/olist/ds");
+                response.sendRedirect("/OrderManagement/Ds");
             } catch (Exception ex) {
-                Logger.getLogger(Orderlist.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

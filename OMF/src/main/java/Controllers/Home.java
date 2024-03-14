@@ -4,16 +4,16 @@
  */
 package Controllers;
 
+import DAOs.CartDAO;
 import DAOs.Detail_OrderDAO;
 import DAOs.OrdersDAO;
 import DAOs.ProductDAO;
-import DAOs.accountDAO;
+import Models.Cart;
 import Models.Detail_Order;
 import Models.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -74,9 +74,9 @@ public class Home extends HttpServlet {
         HttpSession session = request.getSession();
 
         try {
-             if (url.equals(request.getContextPath() + "/Home")) {
-        request.getRequestDispatcher("/Home.jsp").forward(request, response);
-    }
+            if (url.equals(request.getContextPath() + "/Home")) {
+                request.getRequestDispatcher("/Home.jsp").forward(request, response);
+            }
         } catch (Exception e) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -105,7 +105,7 @@ public class Home extends HttpServlet {
                 }
                 String Status = "Confirming";
                 float TotalPrice = 0;
-                ordersDAO.add(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", Timestamp.valueOf(LocalDateTime.now())));
+                ordersDAO.add(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", 0, Timestamp.valueOf(LocalDateTime.now())));
                 ProductDAO proDAO = new ProductDAO();
                 ResultSet rsPro = proDAO.getAll();
 
@@ -124,13 +124,27 @@ public class Home extends HttpServlet {
                 if (TotalPrice == 0) {
                     ordersDAO.delete(OrderID);
                 } else {
-                    ordersDAO.update(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", Timestamp.valueOf(LocalDateTime.now())));
+                    ordersDAO.update(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", 0, Timestamp.valueOf(LocalDateTime.now())));
                 }
 
                 response.sendRedirect("/Home");
             } catch (Exception ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else if (request.getParameter("AddToCart") != null && request.getParameter("AddToCart").equals("AddToCart")) {
+            try {
+                String Username = request.getParameter("Username");
+                String ProID = request.getParameter("ProID");
+                String CartID = Username + "_" + ProID;
+
+                CartDAO cartDAO = new CartDAO();
+                Cart cart = new Cart(CartID, Username, ProID, 1);
+                cartDAO.increase(cart);
+
+            } catch (Exception ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.getRequestDispatcher("/Home.jsp").forward(request, response);
         }
     }
 

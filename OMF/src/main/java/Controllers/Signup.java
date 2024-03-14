@@ -4,7 +4,8 @@
  */
 package Controllers;
 
-import DAOs.accountDAO;
+import DAOs.AccountDAO;
+import DAOs.UserAccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -61,21 +62,16 @@ public class Signup extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
+        
         String url = request.getRequestURI();
         HttpSession session = request.getSession();
+        
         try {
-            accountDAO adao = new accountDAO();
-            if (((Cookie) session.getAttribute("cookie")).getValue().equals("")) {
-                response.sendRedirect("/Login");
-
-            } else {
-                if (url.endsWith("/signup")) {
-                    session.setAttribute("User", adao.getAccount(((Cookie) session.getAttribute("cookie")).getValue()));
-                    request.getRequestDispatcher("/signup.jsp").forward(request, response);
-                }
-            }
+             if (url.equals(request.getContextPath() + "/Signup")) {
+        request.getRequestDispatcher("/Signup.jsp").forward(request, response);
+    }
         } catch (Exception e) {
-            response.sendRedirect("/Login");
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -94,26 +90,28 @@ public class Signup extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("userpass");
         String re_pass = request.getParameter("repass");
-   
         String fullname = request.getParameter("fullname");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
 
-        accountDAO dao;
+        AccountDAO dao;
+        UserAccountDAO daos;
+        
         try {
             if (!password.equals(re_pass)) {
-                request.getRequestDispatcher("/signup.jsp?error=Password").forward(request, response);
+                request.getRequestDispatcher("/Signup.jsp?error=Password").forward(request, response);
             } else {
-                dao = new accountDAO();
+                dao = new AccountDAO();
+                daos = new UserAccountDAO();
                 boolean usernameExists = dao.checkUsernameExists(username);
                 if (usernameExists) {
-                    request.getRequestDispatcher("/signup.jsp?error=usernameexists").forward(request, response);
+                    request.getRequestDispatcher("/Signup.jsp?error=usernameexists").forward(request, response);
                 } else {
                     // Insert into Accounts table
                     boolean rs1 = dao.signup(username, password);
 
                     // Insert into UserAccount table
-                    boolean rs2 = dao.signupUserAccount(username, fullname, email, phone);
+                    boolean rs2 = daos.signupUserAccount(username, fullname, email, phone);
 
                     // Redirect based on result
                     if (rs1 && rs2) {
@@ -128,7 +126,7 @@ public class Signup extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            Logger.getLogger(accountLogin.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(AccountLogin.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

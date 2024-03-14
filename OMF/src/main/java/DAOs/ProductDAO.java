@@ -91,7 +91,7 @@ public class ProductDAO {
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, p.getProStock());           
+            ps.setInt(1, p.getProStock());
             ps.setString(2, p.getProName());
             ps.setString(3, p.getProPic());
             ps.setString(4, p.getProDes());
@@ -119,7 +119,7 @@ public class ProductDAO {
             ps.setString(5, p.getProDes());
             ps.setFloat(6, p.getProPrice());
             ps.setString(7, p.getProType());
-            
+
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrdersDAO.class.getName()).log(Level.SEVERE, null, ex);

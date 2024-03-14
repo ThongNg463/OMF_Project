@@ -2057,8 +2057,8 @@ a.btn.disabled,fieldset:disabled a.btn{
 }
 .btn-warning{
     color:#fff;
-    background-color:#f6c23e;
-    border-color:#f6c23e
+    background-color:#4e73df;
+    border-color:#4e73df
 }
 .btn-warning:hover{
     color:#fff;
@@ -9155,4 +9155,94 @@ footer.sticky-footer .copyright{
 }
 body.sidebar-toggled footer.sticky-footer{
     width:100%
+}
+
+.img-account-profile {
+    object-fit: cover;
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Existing styles with modifications */
+.nav-borders .nav-link.active {
+  color: white; /* Change the font color to white */
+  border-bottom-color: #0061f2; /* This sets the underline color for active state */
+}
+
+.nav-borders .nav-link {
+  color: white; /* Change the font color to white */
+  border-bottom-width: 0.125rem;
+  border-bottom-style: solid;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-bottom-color: transparent; /* Ensures underline is not visible by default */
+}
+
+/* New styles for hover effect */
+.nav-borders .nav-link:hover {
+  border-bottom-color: #cda45e; /* Change the underline color to gold on hover */
+}
+
+/* You may also need to explicitly set the color of the active link underline */
+.nav-borders .nav-link.active {
+  border-bottom-color: #cda45e; /* Set the active link underline to gold if needed */
+}
+
+.ui-w-40 {
+    width: 40px !important;
+    height: auto;
+}
+
+.card{
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);    
+}
+
+.ui-product-color {
+    display: inline-block;
+    overflow: hidden;
+    margin: .144em;
+    width: .875rem;
+    height: .875rem;
+    border-radius: 10rem;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    vertical-align: middle;
 }

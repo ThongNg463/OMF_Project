@@ -4,20 +4,26 @@
  */
 package Controllers;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpSession;
+import DAOs.AccountDAO;
+import DAOs.CartDAO;
+import DAOs.UserAccountDAO;
+import Models.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author ADMIN
  */
-public class logout extends HttpServlet {
+public class CartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +42,10 @@ public class logout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Logout</title>");
+            out.println("<title>Servlet Signup</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Signup at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,26 +63,18 @@ public class logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // processRequest(request, response);
 
+        String url = request.getRequestURI();
         HttpSession session = request.getSession();
 
         try {
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("cookie".equals(cookie.getName()) || "User".equals(cookie.getName())) {  // Assuming "user" is the name of your login cookie
-                        cookie.setValue("");
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
-                        break;
-                    }
-                }
+            if (url.equals(request.getContextPath() + "/Cart")) {
+                request.getRequestDispatcher("/Cart.jsp").forward(request, response);
             }
-            response.sendRedirect("/");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }
 
     /**
@@ -90,7 +88,42 @@ public class logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        System.out.println(request.getParameter("Voucher"));
+        if (request.getParameter("Delete") != null && request.getParameter("Delete").equals("Delete")) {
+            try {
+                String CartID = request.getParameter("CartID");
+                CartDAO cartDAO = new CartDAO();
+                cartDAO.delete(CartID);
+            } catch (Exception ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (request.getParameter("Increase") != null && request.getParameter("Increase").equals("Increase")) {
+            try {
+
+                String CartID = request.getParameter("CartID");
+                String Username = request.getParameter("Username");
+                String ProID = request.getParameter("ProID");
+                CartDAO cartDAO = new CartDAO();
+                cartDAO.increase(new Cart(CartID, Username, ProID, 1));
+
+            } catch (Exception ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (request.getParameter("Decrease") != null && request.getParameter("Decrease").equals("Decrease")) {
+            try {
+                String CartID = request.getParameter("CartID");
+                String Username = request.getParameter("Username");
+                String ProID = request.getParameter("ProID");
+                CartDAO cartDAO = new CartDAO();
+                cartDAO.decrease(new Cart(CartID, Username, ProID, 1));
+
+            } catch (Exception ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        request.getRequestDispatcher("/Cart.jsp").forward(request, response);
     }
 
     /**

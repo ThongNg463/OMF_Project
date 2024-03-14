@@ -9,7 +9,10 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Register</title>
+        <title>Sign Up</title>
+        
+        <!-- Favicons -->
+        <link href="./assets/img/favicon.png" rel="icon">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -41,9 +44,9 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                 </div>
-                                <form class="user" action="signup" method="POST">
+                                <form class="user" action="Signup" method="POST">
                                     <% String error = request.getParameter("error");
-        if ("usernameexists".equals(error)) { %>
+                                        if ("usernameexists".equals(error)) { %>
                                     <h2 style="color: #ff0000; text-align: center" class="error-msg">Account already exists! Please try again!</h2>
                                     <% } else if ("Password".equals(error)) { %>
                                     <h2 style="color: #ff0000; text-align: center" class="error-msg">Passwords do not match! Please try again!</h2>
@@ -52,7 +55,7 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="user-name" name="username" placeholder="Username" required>
                                     </div>
-                                   
+
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="user-fullname" name="fullname" placeholder="Fullname" required>
                                     </div>
@@ -70,7 +73,7 @@
                                             <input type="password" class="form-control form-control-user" id="user-repass" name="repass" placeholder="Repeat Password" required>
                                         </div>
                                     </div>
-                                    <input type="submit" class="btn btn-primary btn-user btn-block" id="signup" value="SIGNUP">
+                                    <input type="submit" class="btn btn-primary btn-user btn-block" id="Signup" value="SIGNUP">
                                     <hr>
                                     <a href="index.html" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Register with Google

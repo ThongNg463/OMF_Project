@@ -1,5 +1,7 @@
-<%@page import="Models.account"%>
-<%@page import="DAOs.accountDAO"%>
+<%@page import="DAOs.VoucherDAO"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="Models.Account"%>
+<%@page import="DAOs.AccountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -13,7 +15,9 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Dashboard</title>
+        <title>Voucher Management</title>
+        <!-- Favicons -->
+        <link href="./assets/img/favicon.png" rel="icon">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -32,17 +36,25 @@
 
         <!-- Custom styles for this page -->
         <link href="/UI/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>   
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
     </head>
 
     <body id="page-top">
         <%
-            accountDAO AccDAO = new accountDAO();
-            account UserAcc = new account();
+            AccountDAO AccDAO = new AccountDAO();
+            Account UserAcc = new Account();
             String Username = null;
             String Role = null;
             boolean isLogin = false;
-            
 
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -59,8 +71,8 @@
 
             if (!isLogin) {
                 response.sendRedirect("/Login");
-            } else if (!Role.equals("Admin")) {
-                request.getRequestDispatcher("/accessDenied.jsp").forward(request, response);
+            } else if (!Role.equals("Admin") && !Role.equals("Staff")) {
+                request.getRequestDispatcher("/AccessDenied.jsp").forward(request, response);
             }
         %>
         <!-- Page Wrapper -->
@@ -148,8 +160,11 @@
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Management:</h6>
-                            <a class="collapse-item" href="/prlist/ds">Product Management</a>
-                            <a class="collapse-item" href="/olist/ds">Order Management</a>
+                            <a class="collapse-item" href="/ProductList/Ds">Product Management</a>
+                            <a class="collapse-item" href="/OrderManagement/Ds">Order Management</a>
+                            <a class="collapse-item" href="/UserManagement/Ds">User Management</a>
+                            <a class="collapse-item" href="/StaffManagement/Ds">Staff Management</a>
+                            <a class="collapse-item" href="/VoucherManagement/Ds">Voucher Management</a>
                             <!--                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>-->
                             <div class="collapse-divider"></div>
                             <!--                            <h6 class="collapse-header">Other Pages:</h6>
@@ -370,12 +385,12 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=Username%>
-                                    <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccpic()%>"></span>
+                                        <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccPic()%>"></span>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="/UserProfile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -404,29 +419,48 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
+                        <%
+                            VoucherDAO vouDAO = new VoucherDAO();
 
+                        %>
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Order Management</h1>
-<!--                        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                            For more information about DataTables, please visit the <a target="_blank"
-                                                                                       href="https://datatables.net">official DataTables documentation</a>.</p>-->
+                        <h1 class="h3 mb-2 text-gray-800">Voucher Management</h1>
+                        <!--                        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                                                    For more information about DataTables, please visit the <a target="_blank"
+                                                                                                               href="https://datatables.net">official DataTables documentation</a>.</p>-->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Order List</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Voucher List</h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Username</th>              
-                                                <th>Total Price</th>   
-                                                <th>Status</th>
-                                                <th>Detail</th>
-                                                <th>Delete</th>
+                                                <th>VoucherID</th>              
+                                                <th>VoucherStock</th>   
+                                                <th>VoucherPercent</th>
+                                 
                                             </tr>
                                         </thead>
+
+                                        <tbody>
+                                            <%                                                 
+                                                ResultSet rs = vouDAO.getAllVoucher();
+                                                while (rs.next()) {
+                                            %>
+                                            <tr>
+                                                <td><%= rs.getString("VoucherID")%></td>
+                                                <td><%= rs.getInt("VoucherStock")%></td>
+                                                <td><%= rs.getInt("VoucherPercent")%></td>
+                                             
+                                              
+                                            </tr>
+
+                                        </tbody>
+                                        <%
+                                                }
+                                            %>
 
                                     </table>
                                 </div>
@@ -461,24 +495,24 @@
         </a>
 
         <!-- Logout Modal-->
-<!--        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+        <!--        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="login.html">Logout</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+                </div>-->
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
