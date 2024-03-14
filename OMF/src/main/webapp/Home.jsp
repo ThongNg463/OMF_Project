@@ -1,3 +1,4 @@
+<%@page import="DAOs.CartDAO"%>
 <%@page import="DAOs.ProductDAO"%>
 <%@page import="Models.Account"%>
 <%@page import="DAOs.AccountDAO"%>
@@ -36,6 +37,7 @@
         <link href="./assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
         <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
         <link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.1/css/boxicons.min.css" integrity="sha512-1G4xgZ6x60t7U0LyT0xMl0Zn8DVLb5Qgj5LbLh0zzzFJQaCRW8ZZT3wHjVdYKdY5mreMZc4E6xFVKA+joz9/gQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -49,12 +51,12 @@
             AccountDAO AccDAO = new AccountDAO();
             Account userAcc = new Account();
 
-            String username = null;
+            String Username = null;
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if ("User".equals(cookie.getName())) {
-                        username = cookie.getValue();
+                        Username = cookie.getValue();
                         break;
                     }
                 }
@@ -62,9 +64,9 @@
 
             boolean isLogin = false;
 
-            if (username != null && !username.isEmpty()) {
+            if (Username != null && !Username.isEmpty()) {
                 isLogin = true;
-                userAcc = AccDAO.getAccount(username);
+                userAcc = AccDAO.getAccount(Username);
             }
         %>
         <!-- ======= Top Bar ======= -->
@@ -138,7 +140,7 @@
                         <div class="vr" style="max-height: 100%;"></div>
                         <li class="dropdown">
                             <a href="UserProfile">
-                                <span style="font-family: sans-serif; font-size: 25px" ><%= username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccpic()%>"></span>
+                                <span style="font-family: sans-serif; font-size: 25px" ><%=Username%><img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= userAcc.getAccPic()%>"></span>
                             </a>
                             <ul>
                                 <li><a href="UserProfile"><span><i class="fas fa-user" style="margin-right: 10px"></i>Profile</span></a></li>
@@ -147,6 +149,14 @@
                                 <li><a href="/Logout"><span><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i>Log out</span></a></li>
                             </ul>
                         </li>
+                        <%
+                            CartDAO cartDAO = new CartDAO();
+                            int TotalCart = cartDAO.getTotalCartCount(Username);
+                        %>
+                        <a href='/Cart'>
+                            <i class="fa" style="font-size:24px">&#xf07a;</i>
+                            <span class='badge badge-warning' id='lblCartCount'><%=TotalCart%></span>
+                        </a>
                     </ul>
                 </nav>
                 <%
@@ -285,6 +295,11 @@
                             <img src="<%=rs.getString("ProPic")%>" class="menu-img" alt="Menu Picture">
                             <div class="menu-content">
                                 <a href="#book-a-table"><%=rs.getString("ProName")%></a><span>$<%=rs.getString("ProPrice")%></span>
+                                <form method="post">
+                                    <input type="hidden" name="Username" value="<%=Username%>">
+                                    <input type="hidden" name="ProID" value="<%=rs.getString("ProID")%>">
+                                    <button type="submit" name='AddToCart' value='AddToCart'>Add</button>
+                                </form>
                             </div>
                             <div class="menu-ingredients">
                                 <%= rs.getString("ProDes")%>
@@ -469,7 +484,7 @@
 
                     <form method="post"  data-aos="fade-up" data-aos-delay="100">
                         <div class="row">
-                            <input type="hidden" name="Username" value="<%=username%>">
+                            <input type="hidden" name="Username" value="<%=Username%>">
 
                             <%
                                 rs = proDAO.getAll();

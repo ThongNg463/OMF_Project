@@ -33,4 +33,48 @@ public class VoucherDAO {
         }
         return rs;
     }
+
+    public ResultSet getVoucherByUsername(String Username) {
+        ResultSet rs = null;
+        String sql = "select * from Voucher Where Username=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, Username);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public int getTotalVoucherByUsername(String Username) {
+        int count = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM Voucher WHERE Username=?");
+            ps.setString(1, Username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public Voucher getVoucherByID(String id) {
+        Voucher vou = null;
+        String sql = "select * from Voucher Where VoucherID=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                vou = new Voucher(rs.getString("VoucherID"), rs.getInt("VoucherStock"), rs.getInt("VoucherPercent"), rs.getString("Username"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vou;
+    }
 }

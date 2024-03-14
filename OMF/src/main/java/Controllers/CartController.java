@@ -4,23 +4,18 @@
  */
 package Controllers;
 
+import DAOs.AccountDAO;
 import DAOs.CartDAO;
-import DAOs.Detail_OrderDAO;
-import DAOs.OrdersDAO;
-import DAOs.ProductDAO;
+import DAOs.UserAccountDAO;
 import Models.Cart;
-import Models.Detail_Order;
-import Models.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author ADMIN
  */
-public class Home extends HttpServlet {
+public class CartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,10 +42,10 @@ public class Home extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Home</title>");
+            out.println("<title>Servlet Signup</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Home at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Signup at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,19 +63,18 @@ public class Home extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        // processRequest(request, response);
 
         String url = request.getRequestURI();
         HttpSession session = request.getSession();
 
         try {
-            if (url.equals(request.getContextPath() + "/Home")) {
-                request.getRequestDispatcher("/Home.jsp").forward(request, response);
+            if (url.equals(request.getContextPath() + "/Cart")) {
+                request.getRequestDispatcher("/Cart.jsp").forward(request, response);
             }
         } catch (Exception e) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }
 
     /**
@@ -94,58 +88,42 @@ public class Home extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("btnAddNew") != null && request.getParameter("btnAddNew").equals("AddNew")) {
+        //processRequest(request, response);
+        System.out.println(request.getParameter("Voucher"));
+        if (request.getParameter("Delete") != null && request.getParameter("Delete").equals("Delete")) {
             try {
-                String UserID = request.getParameter("Username");
-                OrdersDAO ordersDAO = new OrdersDAO();
-                int i = 1;
-                String OrderID = "Order_" + (ordersDAO.getTotalOrderCount() + i);
-                while (ordersDAO.getOrder(OrderID) != null) {
-                    OrderID = "Order_" + (ordersDAO.getTotalOrderCount() + ++i);
-                }
-                String Status = "Confirming";
-                float TotalPrice = 0;
-                ordersDAO.add(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", 0, Timestamp.valueOf(LocalDateTime.now())));
-                ProductDAO proDAO = new ProductDAO();
-                ResultSet rsPro = proDAO.getAll();
-
-                Detail_OrderDAO doDAO = new Detail_OrderDAO();
-
-                i = 0;
-                while (rsPro.next()) {
-                    int Quality = Integer.parseInt(request.getParameter("Quality_" + ++i));
-                    if (Quality > 0) {
-                        doDAO.add(new Detail_Order(OrderID, rsPro.getString("ProID"), Quality));
-                        float tempTotal = Quality * Float.parseFloat(rsPro.getString("ProPrice"));
-                        TotalPrice += tempTotal;
-                    }
-                }
-
-                if (TotalPrice == 0) {
-                    ordersDAO.delete(OrderID);
-                } else {
-                    ordersDAO.update(new Orders(OrderID, UserID, UserID, Status, TotalPrice, "None", 0, Timestamp.valueOf(LocalDateTime.now())));
-                }
-
-                response.sendRedirect("/Home");
+                String CartID = request.getParameter("CartID");
+                CartDAO cartDAO = new CartDAO();
+                cartDAO.delete(CartID);
             } catch (Exception ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (request.getParameter("AddToCart") != null && request.getParameter("AddToCart").equals("AddToCart")) {
+        } else if (request.getParameter("Increase") != null && request.getParameter("Increase").equals("Increase")) {
             try {
+
+                String CartID = request.getParameter("CartID");
                 String Username = request.getParameter("Username");
                 String ProID = request.getParameter("ProID");
-                String CartID = Username + "_" + ProID;
-
                 CartDAO cartDAO = new CartDAO();
-                Cart cart = new Cart(CartID, Username, ProID, 1);
-                cartDAO.increase(cart);
+                cartDAO.increase(new Cart(CartID, Username, ProID, 1));
 
             } catch (Exception ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
-            request.getRequestDispatcher("/Home.jsp").forward(request, response);
+        } else if (request.getParameter("Decrease") != null && request.getParameter("Decrease").equals("Decrease")) {
+            try {
+                String CartID = request.getParameter("CartID");
+                String Username = request.getParameter("Username");
+                String ProID = request.getParameter("ProID");
+                CartDAO cartDAO = new CartDAO();
+                cartDAO.decrease(new Cart(CartID, Username, ProID, 1));
+
+            } catch (Exception ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
+        request.getRequestDispatcher("/Cart.jsp").forward(request, response);
     }
 
     /**

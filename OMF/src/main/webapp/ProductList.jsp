@@ -19,7 +19,7 @@
         <meta name="author" content="">
 
         <title>Product Management</title>
-        
+
         <!-- Favicons -->
         <link href="./assets/img/favicon.png" rel="icon">
 
@@ -72,7 +72,7 @@
 
             .modal-button:focus {
                 outline: none; /* Bỏ viền nổi */
-box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như Bootstrap */
+                box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như Bootstrap */
             }
 
             /* Modal Content/Box */
@@ -208,7 +208,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-<h6 class="collapse-header">Custom Utilities:</h6>
+                            <h6 class="collapse-header">Custom Utilities:</h6>
                             <a class="collapse-item" href="utilities-color.html">Colors</a>
                             <a class="collapse-item" href="utilities-border.html">Borders</a>
                             <a class="collapse-item" href="utilities-animation.html">Animations</a>
@@ -260,7 +260,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                 <li class="nav-item active">
                     <a class="nav-link" href="tables.html">
                         <i class="fas fa-fw fa-table"></i>
-<span>Tables</span></a>
+                        <span>Tables</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -318,7 +318,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                      aria-labelledby="searchDropdown">
                                     <form class="form-inline mr-auto w-100 navbar-search">
                                         <div class="input-group">
-<input type="text" class="form-control bg-light border-0 small"
+                                            <input type="text" class="form-control bg-light border-0 small"
                                                    placeholder="Search for..." aria-label="Search"
                                                    aria-describedby="basic-addon2">
                                             <div class="input-group-append">
@@ -361,7 +361,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                             <div class="icon-circle bg-success">
                                                 <i class="fas fa-donate text-white"></i>
                                             </div>
-</div>
+                                        </div>
                                         <div>
                                             <div class="small text-gray-500">December 7, 2019</div>
                                             $290.29 has been deposited into your account!
@@ -403,7 +403,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                             <div class="status-indicator bg-success"></div>
                                         </div>
                                         <div class="font-weight-bold">
-<div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
                                                 problem I've been having.</div>
                                             <div class="small text-gray-500">Emily Fowler · 58m</div>
                                         </div>
@@ -441,7 +441,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
                                                 told me that people say this to all dogs, even if they aren't good...</div>
-<div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -455,12 +455,12 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=Username%>
-                                        <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccpic()%>"></span>
+                                        <img class="img-profile rounded-circle" style="margin-left:10px;height: 30px; width: 30px" src="<%= UserAcc.getAccPic()%>"></span>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="UserProfile">
+                                    <a class="dropdown-item" href="/UserProfile">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -493,7 +493,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                             ProductDAO proDAO = new ProductDAO();
                             int totalCount = proDAO.getTotalProductsCount();
                         %>
-<!-- Page Heading -->
+                        <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Product Management</h1>
 
 
@@ -537,7 +537,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                                 <td><%= rs.getString("ProType")%></td>
                                                 <td>
                                                     <div class="modal-button" data-modal="myModal<%=rs.getString("ProID")%>"><i class="fa-solid fa-file-pen" style="color: #000000; font-size: 200%;"></i></div>
-<div id="myModal<%=rs.getString("ProID")%>" class="modal">
+                                                    <div id="myModal<%=rs.getString("ProID")%>" class="modal">
                                                         <!-- Modal content -->
                                                         <div class="modal-content">
                                                             <H1>Update Product - ProID: <%=rs.getString("ProID")%></H1>
@@ -564,7 +564,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-label h4">Product Price:</label>
-<div><input class="form-control" type="text" name="ProPrice" value="<%=rs.getString("ProPrice")%>" required></div> <br/>    
+                                                                    <div><input class="form-control" type="text" name="ProPrice" value="<%=rs.getString("ProPrice")%>" required></div> <br/>    
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="form-label h4">Product Type:</label>
@@ -603,7 +603,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                     while (proDAO.getProducts(ProID) != null) {
                                         ProID = "Pro_" + (proDAO.getTotalProductsCount() + ++i);
                                     }
-%>
+                                %>
                                 <H1>Add new Product - ProID: <%=ProID%></H1>
                                 <span class="close" style="cursor: pointer">&times;</span>
                                 <br>
@@ -641,7 +641,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                         </div> <br/>        
                                     </div>
                                     <button class="btn btn-warning text-light mb-3 shadow-lg p-3 mb-5 rounded" type="submit" name="btnAddNew" value="AddNew"><i class="fa-solid fa-circle-plus"></i>Add new Product</button>
-</form>
+                                </form>
                             </div>
                         </div>
 
@@ -708,7 +708,7 @@ box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Bóng khi focus giống như
                                                     });
 
                                                     // Attach click event listener to close buttons
-closeSpans.forEach(function (span) {
+                                                    closeSpans.forEach(function (span) {
                                                         span.onclick = function () {
                                                             span.closest('.modal').style.display = "none";
                                                         }

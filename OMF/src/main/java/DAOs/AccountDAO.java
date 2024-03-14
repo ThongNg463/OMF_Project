@@ -6,6 +6,7 @@ package DAOs;
 
 import Models.UserAccount;
 import Models.Account;
+import Models.Products;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,17 +30,17 @@ public class AccountDAO {
         conn = DB.DbConnection.getConnection();
     }
 
-    public Account getAccount(String username) {
+    public Account getAccount(String Username) {
         Account a = null;
         String sql = "SELECT * FROM Accounts WHERE Username=?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, username);
+            ps.setString(1, Username);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                a = new Account(rs.getString("username"), rs.getString("password"), rs.getString("role"), rs.getString("accpic"));
+                a = new Account(rs.getString("Username"), rs.getString("Password"), rs.getString("Role"), rs.getString("AccPic"));
             }
 
         } catch (SQLException ex) {
@@ -47,6 +48,25 @@ public class AccountDAO {
         }
 
         return a;
+    }
+
+    public int update(Account a) {
+        int result = 0;
+        String sql = "UPDATE Accounts SET AccPic=?, Password=?, Role=? WHERE Username=?";
+        if (a.getUsername() == null) {
+            throw new IllegalArgumentException("Username is null");
+        }
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, a.getAccPic());
+            ps.setString(2, a.getPassword());
+            ps.setString(3, a.getRole());
+            ps.setString(4, a.getUsername()); // Corrected order
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     public boolean login(Account tk) throws SQLException {
@@ -145,6 +165,7 @@ public class AccountDAO {
         }
         return rs.next();
     }
+
     public int delete(String id) {
         int result = 0;
         String sql = "DELETE FROM Accounts WHERE Username=?";
